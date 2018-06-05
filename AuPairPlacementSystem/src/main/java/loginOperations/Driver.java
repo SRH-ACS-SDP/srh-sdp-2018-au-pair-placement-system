@@ -29,7 +29,7 @@ public class Driver {
 		String title = "";
 		String aboutMe = "";
 		String passportNumber = "";
-		boolean isSlaaryProvided;
+		boolean isSalaryProvided;
 		int noOfKids = 0;
 		int ageOfKid = 0;
 		boolean hasPhysicalDisability;
@@ -124,7 +124,7 @@ public class Driver {
 					System.out.println(" About me: ");
 					aboutMe = input.next();
 					System.out.println("Is salary Provided(Enter True or False)?");
-					isSlaaryProvided = input.nextBoolean();
+					isSalaryProvided = input.nextBoolean();
 					System.out.println("Number of kids: ");
 					noOfKids = input.nextInt();
 					System.out.println("Age of kid: ");
@@ -158,11 +158,12 @@ public class Driver {
 					myStmt.execute();
 
 					int hostId = myStmt.getInt(19);
-					System.out.println("host id entered " + hostId);
+					
+					System.out.println("***REGISTERATION SUCCESSFUL AS HOST USER***");
 
 				}
 				else {
-					System.out.println("You are an existing host.Please login ");
+					System.out.println("***YOU ARE AN EXISTING HOST USER. PLEASE LOGIN***");
 				}
 			} 
 
@@ -180,7 +181,7 @@ public class Driver {
 				stmt1.registerOutParameter(3, Types.INTEGER);
 				stmt1.execute();
 				int count = stmt1.getInt(3);
-				System.out.println("thecount" + count); 
+				//System.out.println("thecount" + count); 
 
 				if (count == 0) {
 
@@ -261,10 +262,11 @@ public class Driver {
 
 					int auPairId = myStmt.getInt(21);
 
-					System.out.println("Au Pair id entered " + auPairId);
+					//System.out.println("Au Pair id entered " + auPairId);
+					System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
 				} 
 				else {
-					System.out.println("You are an existing Au pair. Please login");
+					System.out.println("***YOU ARE AN EXISTING AU PAIR USER. PLEASE LOGIN***");
 				}
 			} 
 			else {
