@@ -3,7 +3,10 @@ package loginOperations;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;;
+import java.util.Scanner;
+import java.text.DateFormat;
+import java.text.ParseException;
+
 
 public class Driver {
 
@@ -41,16 +44,26 @@ public class Driver {
 		try {
 
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
-					"root", "qwerty@12345");
+					"root", "Pass123$$");
 
+			//Enter DOB in format yyyy-mm-dd 
+			String x = "1990-03-30";
+			
 			Date db = new Date();
+			
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String dob = sdf.format(db);
+			
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			String y =  dateFormat.format(date);			
 
 			java.sql.Date latestOnlineTime = new java.sql.Date(db.getTime());
 
+			
 			// to take input from user
 			Scanner input = new Scanner(System.in);
 			System.out.println(" Do you want to register yourself as Host user or Au Pair user ");
@@ -91,20 +104,34 @@ public class Driver {
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
 					dateOfBirth = input.next();
-					System.out.println("Active on " + db);
-					System.out.println("Last online " + db);
+					
+//					//Scanner sc = new Scanner(System.in); 
+//					System.out.println("Enter bday: "); 
+//					String ind = input.nextLine();
+//					DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+//					java.sql.Date d = null; 
+//					
+//					try {
+//						d=df.parse(ind);			
+//						System.out.println(d);}
+//					catch(ParseException e) 
+//					{
+//					System.out.println("Unable to parse " + ind);
+//					}
+								    
 					System.out.println("Enter title: ");
-					title = input.next();
+					title = input.next(); 
 					System.out.println(" About me: ");
 					aboutMe = input.next();
-					System.out.println("Is salary Provided?");
+					System.out.println("Is salary Provided(Enter True or False)?");
 					isSlaaryProvided = input.nextBoolean();
 					System.out.println("Number of kids: ");
 					noOfKids = input.nextInt();
 					System.out.println("Age of kid: ");
 					ageOfKid = input.nextInt();
-					System.out.println("Has physical disability");
-					hasPhysicalDisability = input.nextBoolean();
+					System.out.println("Has physical disability(Enter True or False)");
+					hasPhysicalDisability = input.nextBoolean();							
+					
 
 					String registerHostUserQuery = "{CALL registerAHostUser(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
@@ -131,16 +158,15 @@ public class Driver {
 					myStmt.execute();
 
 					int hostId = myStmt.getInt(19);
-
 					System.out.println("host id entered " + hostId);
 
-				} // nested if loop ends
+				}
 				else {
 					System.out.println("You are an existing host.Please login ");
 				}
-			} // upper if loop ends
+			} 
 
-			else if (value == 2) // for Au pair
+			else if (value == 2) 
 			{
 				personType = "AU-PAIR";
 				System.out.println("Enter passport number: ");
@@ -154,7 +180,7 @@ public class Driver {
 				stmt1.registerOutParameter(3, Types.INTEGER);
 				stmt1.execute();
 				int count = stmt1.getInt(3);
-				System.out.println("thecount" + count); // to remove later
+				System.out.println("thecount" + count); 
 
 				if (count == 0) {
 
@@ -180,11 +206,11 @@ public class Driver {
 					title = input.next();
 					System.out.println(" About me: ");
 					aboutMe = input.next();
-					System.out.println("Do you have a valid visa?");
+					System.out.println("Do you have a valid visa(Enter True or False)?");
 					hasValidVisa = input.nextBoolean();
-					System.out.println("What is your salary expectation?");
+					System.out.println("Do you have a salary expectation(Enter True or False)?");
 					hasSalaryExpectation = input.nextBoolean();
-					System.out.println("Do you have a driving license");
+					System.out.println("Do you have a driving license(Enter True or False)");
 					hasDrivingLicense = input.nextBoolean();
 					System.out.println("What are your hobbies?");
 					hobbies = input.next();
@@ -192,7 +218,21 @@ public class Driver {
 					supervisesChildOfage = input.next();
 					System.out.println("What is your education qualifiaction");
 					educationQualification = input.next();
-					// TODO
+					
+//					System.out.println("Enter your interview availability /n" );
+//					System.out.println("Enter Date (format: DD/MM/YYYY");
+//					String interviewDate = input.next();
+//					System.out.println("Please select the suitable slot : 1. 10am to 12 pm , 2. 12pm to 2pm , 3. 2pm to 4pm , 4. 4pm to 6pm");
+//					int interviewSlot = input.nextInt();
+//					
+//					if(interviewSlot == 1)
+//					{
+//						String fromTime = "10am";
+//						String toTime =  "12pm";
+//						String slotOne = interviewDate.concat( "," + fromTime + "," + toTime);
+//					}
+					
+					
 					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
@@ -222,17 +262,17 @@ public class Driver {
 					int auPairId = myStmt.getInt(21);
 
 					System.out.println("Au Pair id entered " + auPairId);
-				} // nested if loop ends
+				} 
 				else {
 					System.out.println("You are an existing Au pair. Please login");
 				}
-			} // upper  if ends
+			} 
 			else {
 				System.out.println("Incorrect value entered");
-			} // message change
+			} 
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
+	}	
 }
