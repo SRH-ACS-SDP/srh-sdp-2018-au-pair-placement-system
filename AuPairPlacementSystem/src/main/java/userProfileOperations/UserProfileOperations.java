@@ -10,6 +10,7 @@ public class UserProfileOperations {
 
 		try {
 
+			//test
 			String PERSON_TYPE = "HOST";
 			Connection conn = null;
 			
