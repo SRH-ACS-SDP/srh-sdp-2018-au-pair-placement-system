@@ -1,4 +1,4 @@
-package org.sonatype.examples.JpaAuPairDemo;
+package loginOperations;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
