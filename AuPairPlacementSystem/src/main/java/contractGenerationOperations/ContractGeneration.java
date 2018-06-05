@@ -57,12 +57,9 @@ public class ContractGeneration {
 			JasperExportManager.exportReportToPdfFile(jp, currentUsersHomeDir + "/ContractForHostAndAuPair.pdf");
 			
 //			File f = new File();
-//			f.
+//			f.	
+					
 			
-			
-			
-			
-
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
