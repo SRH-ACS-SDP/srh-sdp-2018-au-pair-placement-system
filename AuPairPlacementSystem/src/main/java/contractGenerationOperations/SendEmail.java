@@ -25,7 +25,6 @@ public class SendEmail {
 		
 
 		String from = "aupairsystem@gmail.com";
-
 		String host = "localhost";
 
 		Properties properties = System.getProperties();
