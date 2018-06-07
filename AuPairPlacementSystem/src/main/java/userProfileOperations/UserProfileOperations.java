@@ -279,7 +279,7 @@ public class UserProfileOperations {
 			}
 
 		}
-
+//
 		statementup.setInt("PERSONID", 1);
 		statementup.setString("FIRSTNAME", firstname);
 		statementup.setString("LASTNAME", lastname);
