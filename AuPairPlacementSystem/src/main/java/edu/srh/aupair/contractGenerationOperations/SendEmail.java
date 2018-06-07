@@ -1,10 +1,8 @@
 package edu.srh.aupair.contractGenerationOperations;
 
-import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
-import org.exolab.castor.mapping.MappingException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -19,16 +17,10 @@ public class SendEmail {
 	public static void main(String[] args) throws AddressException, MessagingException {
 		
 		String to = "selesab17@gmail.com";
-		//String to = "jagtarsinghtandon@gmail.com ";
-		//String to = "neev689@gmail.com ";
-		
-		
-
 		String from = "aupairsystem@gmail.com";
 		String host = "localhost";
 
 		Properties properties = System.getProperties();
-
 		properties.setProperty("mail.smtp.host", host);
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		 

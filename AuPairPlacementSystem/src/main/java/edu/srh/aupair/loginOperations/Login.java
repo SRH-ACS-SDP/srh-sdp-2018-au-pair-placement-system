@@ -2,7 +2,6 @@ package edu.srh.aupair.loginOperations;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Types;
 import java.util.Scanner;
 
@@ -18,8 +17,6 @@ public class Login {
 		
 		{
 			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
-			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
-				//	"root", "qwerty@12345");
 			
 				System.out.println("Enter Username: ");
 				userName = input.next();
