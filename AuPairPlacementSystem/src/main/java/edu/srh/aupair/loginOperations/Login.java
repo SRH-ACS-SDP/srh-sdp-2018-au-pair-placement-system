@@ -36,7 +36,7 @@ public class Login {
 				stmt.registerOutParameter(3, Types.INTEGER);
 				stmt.execute();
 				the_count = stmt.getInt(3);
-				System.out.println("thecount" + the_count);
+				//System.out.println("thecount" + the_count);
 				
 				if(the_count != 0)
 				{
@@ -44,7 +44,7 @@ public class Login {
 								
 			}
 			else {
-				System.out.println("Failed to login...");
+				System.out.println("Failed to login...Try again with correct password");
 			}
 			
 		}

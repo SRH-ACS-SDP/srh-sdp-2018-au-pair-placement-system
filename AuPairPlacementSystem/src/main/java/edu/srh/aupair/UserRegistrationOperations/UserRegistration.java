@@ -82,7 +82,7 @@ public class UserRegistration {
 				stmt.registerOutParameter(3, Types.INTEGER);
 				stmt.execute();
 				int the_count = stmt.getInt(3);
-				System.out.println("thecount" + the_count); // to remove later
+				//System.out.println("thecount" + the_count); // to remove later
 
 				if (the_count == 0) {
 					System.out.println("Enter first name: ");
