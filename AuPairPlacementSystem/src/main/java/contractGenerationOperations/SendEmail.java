@@ -1,4 +1,4 @@
-package contractGenerationOperations;
+package edu.srh.aupair.contractGenerationOperations;
 
 import java.util.*;
 import javax.mail.*;

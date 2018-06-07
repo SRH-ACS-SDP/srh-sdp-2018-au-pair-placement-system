@@ -1,4 +1,4 @@
-package contractGenerationOperations;
+package edu.srh.aupair.contractGenerationOperations;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
