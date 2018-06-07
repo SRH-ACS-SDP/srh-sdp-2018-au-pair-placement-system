@@ -43,10 +43,7 @@ public class UserRegistration {
 		try {
 
 			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
-			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
-				//	"root", "Pass123$$");
-
-			//Enter DOB in format yyyy-mm-dd 
+			
 			String x = "1990-03-30";
 			
 			Date db = new Date();
@@ -121,7 +118,7 @@ public class UserRegistration {
 								    
 					System.out.println("Enter title: ");
 					title = input.next(); 
-					System.out.println(" About me: ");
+					System.out.println("About me: ");
 					aboutMe = input.next();
 					System.out.println("Is salary Provided(Enter True or False)?");
 					isSalaryProvided = input.nextBoolean();
@@ -160,6 +157,8 @@ public class UserRegistration {
 					int hostId = myStmt.getInt(19);
 					
 					System.out.println("***REGISTERATION SUCCESSFUL AS HOST USER***");
+					
+					callingLoginSteps(input);
 
 				}
 				else {
@@ -205,7 +204,7 @@ public class UserRegistration {
 					System.out.println("Last online " + db);
 					System.out.println("Enter title: ");
 					title = input.next();
-					System.out.println(" About me: ");
+					System.out.println("About me: ");
 					aboutMe = input.next();
 					System.out.println("Do you have a valid visa(Enter True or False)?");
 					hasValidVisa = input.nextBoolean();
@@ -264,6 +263,8 @@ public class UserRegistration {
 
 					//System.out.println("Au Pair id entered " + auPairId);
 					System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
+					
+					callingLoginSteps(input);
 				} 
 				else {
 					System.out.println("***YOU ARE AN EXISTING AU PAIR USER. PLEASE LOGIN***");
@@ -275,6 +276,19 @@ public class UserRegistration {
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	public static void callingLoginSteps(Scanner input) {
+		System.out.println("***ENTER 1 TO LOGIN NOW?***");
+		int login = input.nextInt();					
+		if(login == 1)
+		{
+			edu.srh.aupair.loginOperations.Login.loginUser();
+		}
+		else
+		{
+			System.out.println("***EXIT***");
 		}
 	}	
 }

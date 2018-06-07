@@ -8,6 +8,11 @@ import java.util.Scanner;
 public class Login {
 
 	public static void main(String[] args) {
+		loginUser();
+		
+	}
+
+	public static void loginUser() {
 		String userName ="";
 		String userPassword="";
 		Scanner input = new Scanner (System.in);
@@ -47,8 +52,6 @@ public class Login {
 		{
 			ex.printStackTrace();
 		}
-		
-		
 	}
 
 }
