@@ -251,7 +251,6 @@ public class UserProfileOperations {
 				System.out.println("Please enter your Marital Status: ");
 				maritalstatus = sc.next();
 				count++;
-				////
 				updatedchanges += "\nMarital Status: " + maritalstatus;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
