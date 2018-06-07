@@ -43,8 +43,9 @@ public class Driver {
 
 		try {
 
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
-					"root", "Pass123$$");
+			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
+			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
+				//	"root", "Pass123$$");
 
 			//Enter DOB in format yyyy-mm-dd 
 			String x = "1990-03-30";

@@ -20,8 +20,9 @@ public class ContractGeneration {
 			
 			ResultSet rs = null;
 			
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
-					"Pass123$$");
+			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
+			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
+				//	"Pass123$$");
     	   
 			 String query  = "SELECT * FROM \r\n" + 
 			 		"((proposals\r\n" + 

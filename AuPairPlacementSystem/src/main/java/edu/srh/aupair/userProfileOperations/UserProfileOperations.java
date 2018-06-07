@@ -12,10 +12,11 @@ public class UserProfileOperations {
 
 			// test
 			String PERSON_TYPE = "HOST";
-			Connection conn = null;
+			//Connection conn = null;
 
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
-					"password123");
+			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
+			//conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
+				//	"password123");
 
 			String query = "{CALL getProfileDetails(?, ?)}";
 			CallableStatement statement = conn.prepareCall(query);

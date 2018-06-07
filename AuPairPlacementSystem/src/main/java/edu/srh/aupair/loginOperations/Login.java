@@ -17,8 +17,9 @@ public class Login {
 		try
 		
 		{
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
-					"root", "qwerty@12345");
+			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
+			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
+				//	"root", "qwerty@12345");
 			
 				System.out.println("Enter Username: ");
 				userName = input.next();
