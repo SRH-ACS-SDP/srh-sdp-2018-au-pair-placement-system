@@ -127,25 +127,37 @@ public class UserProfileOperations {
 		} else if (userInput == 2) {
 			searchProfile();
 		} else if (userInput == 3) {
-			//// SystString sql = "DELETE FROM PERSON WHERE PERSON_ID = PERSON_ID"; ///
-			//// check ek baar
-			//
-			// // statement.executeUpdate(sql); /////check check
-			// System.out.println("Thank you for being a part of Au-Pair Placement System");
-			//
-			// // OR
-			//
-			// // CallableStatement DELETE WALA FROM NIVEDITHA //)
-			// } else {
-			// System.out.println("Go"); // Ask niveditha about not deleting where to point
-			//// it
-			// }
+			deleteSelfProfile();
 		} else if (userInput == 4) {
 			// Ask niveditha for Proposals Do we need to call the Proposals Operations???
 		} else if (userInput == 5) {
 			////// LOGOUT FUNCTIONALITY 
 		}
 		sc.close();
+	}
+
+	private static void deleteSelfProfile() throws SQLException {
+		
+		Scanner sc = new Scanner(System.in);
+		Character deleteYesOrNo ='\0';
+		
+		System.out.println("Are you sure you want to delete your Profile Y/N ?");
+		deleteYesOrNo =  sc.next().charAt(0);
+		if(deleteYesOrNo == 'y' || deleteYesOrNo == 'Y')
+		
+			{
+			System.out.println("Thank you for being a part of Au-Pair Placement System! :)");
+			//Throw him to APPlication home page 
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
+					"root", "password123");
+			String query = "{CALL deleteSelfProfile(?)}";
+			CallableStatement statementdelete = conn.prepareCall(query);
+			statementdelete.setInt("PERSONID", 1);
+			statementdelete.executeUpdate();
+		}
+		else {
+			mainmenu();
+		}
 	}
 
 	private static void viewProposals() {
@@ -260,7 +272,7 @@ public class UserProfileOperations {
 				interviewtimeslot = sc.next();
 				count++;
 				updatedchanges += "\nInterview Time Slot: " + interviewtimeslot;
-
+//////
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 9) {
