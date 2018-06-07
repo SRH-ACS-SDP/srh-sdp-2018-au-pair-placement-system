@@ -1,4 +1,4 @@
-package UserRegistrationOperations;
+package edu.srh.aupair.UserRegistrationOperations;
 
 /**
  * Hello world!

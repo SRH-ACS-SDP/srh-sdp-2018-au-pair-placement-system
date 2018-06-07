@@ -1,4 +1,4 @@
-package loginOperations;
+package edu.srh.aupair.loginOperations;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

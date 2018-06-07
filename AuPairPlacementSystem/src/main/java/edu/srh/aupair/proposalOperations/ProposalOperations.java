@@ -1,4 +1,4 @@
-package proposalOperations;
+package edu.srh.aupair.proposalOperations;
 
 public class ProposalOperations {
 

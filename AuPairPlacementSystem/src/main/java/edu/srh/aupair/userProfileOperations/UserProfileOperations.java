@@ -1,4 +1,4 @@
-package userProfileOperations;
+package edu.srh.aupair.userProfileOperations;
 
 import java.sql.*;
 import java.util.Date;

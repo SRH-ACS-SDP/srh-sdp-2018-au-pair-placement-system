@@ -1,4 +1,4 @@
-package RatingOperations;
+package edu.srh.aupair.RatingOperations;
 
 public class PersonRationgOperations {
 

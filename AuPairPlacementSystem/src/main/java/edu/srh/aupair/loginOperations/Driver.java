@@ -1,4 +1,4 @@
-package loginOperations;
+package edu.srh.aupair.loginOperations;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
