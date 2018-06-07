@@ -147,7 +147,9 @@ public class UserProfileOperations {
 		} else if (userInput == 5) {
 			////// LOGOUT FUNCTIONALITY ASK NIVEDITHA
 		}
+		sc.close();
 	}
+
 
 	private static void viewProposals() {
 
@@ -194,8 +196,9 @@ public class UserProfileOperations {
 		
 		char wish = 'y';
 		int count = 0;
+		String updatedchanges ="";
 		while (wish == 'y' || wish == 'Y' ) {
-			System.out.println("Which fields do you wish to Update? \n \nPress appropriate numbers: "
+			System.out.println("Which fields do you wish to Update? \n \nPress enter appropriate numbers: "
 					+ "\n1) First name \n2) Last name \n3) Email \n4) Contact \n5) About me \n6) Title \n7) Marital Status"
 					+ "\n8) Interview Time Slot \n9) Passport No.");
 
@@ -204,7 +207,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your first name: ");
 				firstname = sc.next();
 				count++;
-//				String updatedchanges = (+firstname);
+				updatedchanges+= "First Name: " +firstname;
 				
 				
 				System.out.println("Do you wish to update more fields? Y/N ");
@@ -213,6 +216,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your last name: ");
 				lastname = sc.next();
 				count++;
+				updatedchanges+="\nLast Name: "+lastname;  
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -220,6 +224,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your email: ");
 				email = sc.next();
 				count++;
+				updatedchanges+="\nEmail: "+email;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -227,6 +232,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your Contact: ");
 				contact = sc.next();
 				count++;
+				updatedchanges+="\nContact: "+contact;
 			
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -234,6 +240,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your About me section: ");
 				aboutme = sc.next();
 				count++;
+				updatedchanges+="\nAbout me:"+aboutme;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -241,6 +248,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your Title: ");
 				title = sc.next();
 				count++;
+				updatedchanges+="\nTitle: "+title;
 			
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -248,6 +256,7 @@ public class UserProfileOperations {
 				System.out.println("Please enter your Marital Status: ");
 				maritalstatus = sc.next();
 				count++;
+				updatedchanges+="\nMarital Status: "+maritalstatus;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -255,13 +264,15 @@ public class UserProfileOperations {
 				System.out.println("Please enter your Interview Time Slots: "); //// doubtsssss
 				interviewtimeslot = sc.next();
 				count++;
+				updatedchanges+="\nInterview Time Slot: "+interviewtimeslot;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 9) {
 				System.out.println("Please enter your Passport Number: ");
-				passportnumber = sc.next();
+				passportnumber= sc.next();
 				count++;
+				updatedchanges+="\nPassport number: "+passportnumber;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -284,8 +295,10 @@ public class UserProfileOperations {
 		statementup.execute();
 		
 		System.out.println(+count + " changes updated successfully");
+		System.out.println("\n" +updatedchanges);
 		
 			mainmenu();
+			sc.close();
 	}
 
 }
