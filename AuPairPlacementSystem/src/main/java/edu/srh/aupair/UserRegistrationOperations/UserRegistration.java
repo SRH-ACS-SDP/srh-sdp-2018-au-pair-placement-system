@@ -4,6 +4,9 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.text.DateFormat;
 
 
@@ -39,6 +42,7 @@ public class UserRegistration {
 		String supervisesChildOfage = "";
 		String educationQualification = "";
 		boolean isActive = true;
+		String hashedUserPassword = "";
 
 		try {
 
@@ -91,6 +95,9 @@ public class UserRegistration {
 					lastName = input.next();
 					System.out.println("Enter password: ");
 					userPassword = input.next();
+					hashedUserPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
+					
+					System.out.println(hashedUserPassword);
 					System.out.println("Enter email address: ");
 					emailid = input.next();
 					System.out.println("Contact number: ");
@@ -115,7 +122,15 @@ public class UserRegistration {
 //					{
 //					System.out.println("Unable to parse " + ind);
 //					}
-								    
+						
+					
+
+					// Check that an unencrypted password matches or not
+//					if (BCrypt.checkpw(candidate, hashed))
+//					    System.out.println("It matches");
+//					else
+//					    System.out.println("It does not match");
+					
 					System.out.println("Enter title: ");
 					title = input.next(); 
 					System.out.println("About me: ");
@@ -134,7 +149,7 @@ public class UserRegistration {
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
 					myStmt.setString(2, lastName);
-					myStmt.setString(3, userPassword);
+					myStmt.setString(3, hashedUserPassword);
 					myStmt.setString(4, firstName);
 					myStmt.setString(5, emailid);
 					myStmt.setString(6, contactNo);
@@ -284,7 +299,7 @@ public class UserRegistration {
 		int login = input.nextInt();					
 		if(login == 1)
 		{
-			edu.srh.aupair.loginOperations.Login.loginUser();
+			edu.srh.aupair.loginOperations.Login.loginWithUserCredentials();
 		}
 		else
 		{
