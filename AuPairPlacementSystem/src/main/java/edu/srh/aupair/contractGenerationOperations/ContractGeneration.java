@@ -24,13 +24,13 @@ public class ContractGeneration {
 			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
 				//	"Pass123$$");
     	   
-			 String query  = "SELECT * FROM \r\n" + 
+			String query  = "SELECT * FROM \r\n" + 
 			 		"((proposals\r\n" + 
 			 		"INNER JOIN active_interviews ON proposals.ACTIVE_INTERVIEW_ID = active_interviews.ACTIVE_INTERVIEW_ID)\r\n" + 
 			 		"INNER JOIN hostuser ON active_interviews.HOST_ID =  hostuser.HOST_ID);";
 			 
-			 CallableStatement stmt = conn.prepareCall(query);
-			 rs = stmt.executeQuery(query);
+			CallableStatement stmt = conn.prepareCall(query);
+			rs = stmt.executeQuery(query);
 			
 			//rs = (ResultSet) conn.prepareStatement("select Student_Name, Student_Address, Student_Contact,MatriculationNo from student");
 			

@@ -17,6 +17,11 @@ public class UserRegistration {
 	private static final int NUMBER_OF_KIDS = 0;
 	private static final int AGE_OF_KIDS = 0;
 	private static final boolean HAS_PHYSICAL_DISABILITY = false;
+	public enum Gender 
+	{
+		  ONE("Female"), 
+		  TWO("Male");
+		}
 
 	public static void main(String[] args) {
 		String personType = "";
@@ -43,6 +48,7 @@ public class UserRegistration {
 		String educationQualification = "";
 		boolean isActive = true;
 		String hashedUserPassword = "";
+		
 
 		try {
 
