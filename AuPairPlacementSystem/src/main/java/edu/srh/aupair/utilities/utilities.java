@@ -15,12 +15,15 @@ public class utilities {
 		}
 
 	}
-
+	static Connection conn = null; 
+	
 	public static Connection getConnectionString() throws SQLException 
 	{
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
-				"Pass123$$");
+		 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
+			"myroot56");
+				//
 		return conn;
 	}
-
+	
+	
 }

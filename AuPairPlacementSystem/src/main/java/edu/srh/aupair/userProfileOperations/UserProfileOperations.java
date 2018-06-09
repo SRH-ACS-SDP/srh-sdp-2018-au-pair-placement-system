@@ -2,6 +2,9 @@ package edu.srh.aupair.userProfileOperations;
 
 import java.sql.*;
 import java.util.Date;
+
+import com.ibm.icu.util.GenderInfo.Gender;
+
 import java.util.*;
 
 public class UserProfileOperations {
@@ -10,7 +13,6 @@ public class UserProfileOperations {
 
 		try {
 
-			// test
 			String PERSON_TYPE = "HOST";
 			//Connection conn = null;
 
@@ -85,26 +87,26 @@ public class UserProfileOperations {
 			aboutMe = rs.getString("ABOUT_ME");
 
 			if (PERSON_TYPE == "AUPAIR") {
-				System.out.println("Profile Details are : \n1)First Name: " + firstName + "\n2)Last Name: " + lastName
-						+ "\n3)Contact No: " + contactNo + "\n4)Gender: " + gender + "\n5)Marital Status: "
-						+ maritalStatus + "\n6)Date Of Birth: " + dob + "\n7)Is Active User: " + isActive
-						+ "\n8)Address: " + addressLine1 + "\n9)City: " + city + "\n10)Postcode: " + postcode
-						+ "\n11)Country: " + countryName + "\n12)Last Online: " + lastOnline + "\n13)Title: " + title
-						+ "\n14)Passport Number: " + passportNo + "\n15)Has a Valid Visa: " + hasValidVisa
-						+ "\n16)Has Salary Expectations: " + hasSalaryExpectation + "\n17)Has Driving License: "
-						+ hasDrivingLicense + "\n18)Hobbies: " + hobbies + "\n19)Supervises Age of Chidren: "
-						+ supervisesChildOfAge + "\n20)Educational Qualification: " + eduQualification
-						+ "\n21) About me: " + aboutMe);
+				System.out.println("Profile Details are : \n\n1) First Name: " + firstName + "\n2) Last Name: "
+						+ lastName + "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender
+						+ "\n5) Marital Status: " + maritalStatus + "\n6) Date Of Birth: " + dob
+						+ "\n7) Is Active User: " + isActive + "\n8) Address: " + addressLine1 + "\n9) City: " + city
+						+ "\n10) Postcode: " + postcode + "\n11) Country: " + countryName + "\n12)Last Online: "
+						+ lastOnline + "\n13)Title: " + title + "\n14) Passport Number: " + passportNo
+						+ "\n15) Has a Valid Visa: " + hasValidVisa + "\n16) Has Salary Expectations: "
+						+ hasSalaryExpectation + "\n17)Has Driving License: " + hasDrivingLicense + "\n18) Hobbies: "
+						+ hobbies + "\n19) Supervises Age of Chidren: " + supervisesChildOfAge
+						+ "\n20) Educational Qualification: " + eduQualification + "\n21) About me: " + aboutMe);
 			} else if (PERSON_TYPE == "HOST") {
-				System.out.println("Profile Details are : \n1)First Name: " + firstName + "\n2)Last Name: " + lastName
-						+ "\n3)Contact No: " + contactNo + "\n4)Gender: " + gender + "\n5)Marital Status: "
-						+ maritalStatus + "\n6)Date Of Birth: " + dob + "\n7)Is Active User: " + isActive
-						+ "\n8)Address: " + addressLine1 + "\n9)City: " + city + "\n10)Postcode: " + postcode
-						+ "\n11)Country: " + countryName + "\n12)Last Online: " + lastOnline + "\n13)Title: " + title
-						+ "\n14)Passport Number: " + passportNo + "\n15)Is Salary Provided: " + isSalaryProvided
-						+ "\n16)Number Of Kids: " + numberOfKids + "\n17)Age of Kids: " + ageOfKids
-						+ "\n18)Does any of your kid have Physical Disability: " + hasPyhsicalDisability
-						+ "\n19)About me: " + aboutMe);
+				System.out.println("Profile Details are : \n1) First Name: " + firstName + "\n2) Last Name: " + lastName
+						+ "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender + "\n5) Marital Status: "
+						+ maritalStatus + "\n6) Date Of Birth: " + dob + "\n7) Is Active User: " + isActive
+						+ "\n8) Address: " + addressLine1 + "\n9) City: " + city + "\n10) Postcode: " + postcode
+						+ "\n11) Country: " + countryName + "\n12) Last Online: " + lastOnline + "\n13) Title: " + title
+						+ "\n14) Passport Number: " + passportNo + "\n15) Is Salary Provided: " + isSalaryProvided
+						+ "\n16) Number Of Kids: " + numberOfKids + "\n17) Age of Kids: " + ageOfKids
+						+ "\n18) Does any of your kid have Physical Disability: " + hasPyhsicalDisability
+						+ "\n19) About me: " + aboutMe);
 			}
 			mainmenu();
 		}
@@ -118,7 +120,7 @@ public class UserProfileOperations {
 	private static void mainmenu() throws SQLException {
 
 		System.out.println(
-				"\n Please enter the appropriate actions to be performed : \n 1) Update your profile \n 2) Perform Search "
+				"\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
 						+ " \n 3) Delete your profile \n 4) View Proposals \n 5) Logout  ");
 
 		Scanner sc = new Scanner(System.in);
@@ -126,62 +128,159 @@ public class UserProfileOperations {
 		if (userInput == 1) {
 			updateProfile();
 		} else if (userInput == 2) {
-			searchProfile();
+			searchByPreference();
 		} else if (userInput == 3) {
 			deleteSelfProfile();
 		} else if (userInput == 4) {
 			// Ask niveditha for Proposals Do we need to call the Proposals Operations???
 		} else if (userInput == 5) {
-			////// LOGOUT FUNCTIONALITY 
+			////// LOGOUT FUNCTIONALITY
 		}
 		sc.close();
 	}
 
-	private static void deleteSelfProfile() throws SQLException {
-		
+	private static void searchByPreference() throws SQLException {
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
+				"root", "password123");
 		Scanner sc = new Scanner(System.in);
-		Character deleteYesOrNo ='\0';
+		String PERSON_TYPE = "HOST";   ///// REMEMEBER TO REMOVE THIS AND UPAR WALE update MEIN AFTER U GET INPUTS FROM db diRECTLY
+		int searchOptions = '0';
+		Character searchMore = 'y';
+		String gender = "";
+		String qualification = "";
+		String country = "";
+		String city = "";
+		String randomSearch = "";
+		String searchedParameter = "";
+		Boolean salaryProvided = false;
+		Boolean validVisa = false;
+		Boolean drivingLicense = false;
 		
+		
+		
+		while(searchMore =='y' || searchMore =='Y') {
+			
+			System.out.println("\nWhat parameters would you like to choose for searching? \n\nChoose the following options: ");				
+		if (PERSON_TYPE == "AUPAIR") { 
+		System.out.println(" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Is Salary Provided");
+		}
+		else if (PERSON_TYPE == "HOST")
+		System.out.println("\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Has Valid Visa \n7) Has Driving License");
+			/// see if you want to put random search in the end.
+		
+		searchOptions = sc.nextInt();
+			
+		if (searchOptions == 1) {
+			System.out.println("Enter the Gender you want to search: ");
+		gender=sc.next();
+		searchedParameter += "\nGender: " + gender;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); //Try to eliminate this afterwards
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 2) {
+			System.out.println("Enter the Qualification you want to search: ");
+		country=sc.next();
+		searchedParameter += "\nQualification: " + qualification;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 3) {
+			System.out.println("Enter the name of the Country you want to search: ");
+		country=sc.next();
+		searchedParameter += "\nCountry: " + country;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 4) {
+			System.out.println("Enter the name of the City you want to search: ");
+		city=sc.next();
+		searchedParameter += "\nCity: " + city;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 5) {
+			System.out.println("Enter any Random search on the basis of which you want to search: ");
+		randomSearch=sc.next();
+		searchedParameter += "\nRandom Search: " + randomSearch;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 6 && PERSON_TYPE=="AUPAIR") {
+			System.out.println("Enter True/False if you want to know whether Salary is Provided: ");
+		salaryProvided=sc.nextBoolean();
+		searchedParameter += "\nIs Salary Provided: " + salaryProvided;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 6 && PERSON_TYPE=="HOST") {
+			System.out.println("Enter True/False if you want to know about Valid Visa: ");
+		validVisa=sc.nextBoolean();
+		searchedParameter += "\nValid Visa: " + validVisa;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		else if (searchOptions == 7) {
+			System.out.println("Enter True/False if you want to know about Driving License: ");
+		drivingLicense=sc.nextBoolean();
+		searchedParameter += "\nDriving License: " + drivingLicense;
+		System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+		searchMore = sc.next().charAt(0);
+		}
+		}
+
+
+		String query = "{CALL searchByPreference(?,?,?,?,?,?,?,?,?,?)}";
+		CallableStatement statementsearch = conn.prepareCall(query);
+		
+		statementsearch.setInt("PERSONID", 1);
+		statementsearch.setString("PERSONTYPE", "HOST");
+		statementsearch.setString("GENDER", gender);
+		statementsearch.setString("QUALIFICATION", qualification);
+		statementsearch.setString("COUNTRY", country);
+		statementsearch.setString("CITY", city);
+		statementsearch.setBoolean("HAS_VALID_VISA", validVisa);
+		statementsearch.setBoolean("HAS_DRIVING_LICENSE", drivingLicense);
+		statementsearch.setBoolean("IS_SALARY_PROVIDED", salaryProvided);
+		statementsearch.setString("RANDOMSEARCH", randomSearch);
+		
+
+		ResultSet rs = statementsearch.executeQuery();
+		rs.next();
+		System.out.println("Displaying the results based on following parameters :\n" +searchedParameter + "\n");
+		
+		
+		sc.close();
+		
+		
+	}
+
+	private static void deleteSelfProfile() throws SQLException {
+
+		Scanner sc = new Scanner(System.in);
+		Character deleteYesOrNo = '\0';
+
 		System.out.println("Are you sure you want to delete your Profile Y/N ?");
-		deleteYesOrNo =  sc.next().charAt(0);
-		if(deleteYesOrNo == 'y' || deleteYesOrNo == 'Y')
-		
-			{
+		deleteYesOrNo = sc.next().charAt(0);
+		if (deleteYesOrNo == 'y' || deleteYesOrNo == 'Y')
+
+		{
 			System.out.println("Thank you for being a part of Au-Pair Placement System! :)");
-			//Throw him to APPlication home page 
+			// Throw him to APPlication home page
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
 					"root", "password123");
 			String query = "{CALL deleteSelfProfile(?)}";
 			CallableStatement statementdelete = conn.prepareCall(query);
 			statementdelete.setInt("PERSONID", 1);
 			statementdelete.executeUpdate();
-		}
-		else {
+		} else {
 			mainmenu();
+			sc.close();
 		}
 	}
 
 	private static void viewProposals() {
 
-	}
-
-	private static void searchProfile() {
-		// SELECT * from PERSON where LOCATION="", RATING ='' ,AGE = '', TITLE = "";
-
-		// Scanner sc = new Scanner(System.in);
-		// System.out.println("Which Search result do you want to choose? \n 1) or 2) or
-		// 3)");
-		// int useroption = sc.nextInt();
-		// if (useroption == 1 || useroption ==2 || useroption ==3);
-		// {
-		//
-		// CallableStatement statement = conn.prepareCall("{call
-		// getProfileDetails(?,?)}");
-		//
-		//
-		// }
-		//
-		System.out.println("Do you want to book an appointment? ");
 	}
 
 	private static void updateProfile() throws SQLException {
@@ -273,7 +372,7 @@ public class UserProfileOperations {
 				interviewtimeslot = sc.next();
 				count++;
 				updatedchanges += "\nInterview Time Slot: " + interviewtimeslot;
-//////
+				//////
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 9) {
@@ -285,7 +384,6 @@ public class UserProfileOperations {
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			}
-			///
 
 		}
 		//
