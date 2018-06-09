@@ -28,7 +28,7 @@ public class ContractGeneration {
 					"proposals.ACTIVE_INTERVIEW_ID =active_interviews.ACTIVE_INTERVIEW_ID INNER JOIN hostuser \r\n" + 
 					"ON active_interviews.HOST_ID=hostuser.HOST_ID INNER JOIN interview_availability ON \r\n" + 
 					"interview_availability.INTERVIEW_ID=active_interviews.INTERVIEW_ID INNER JOIN au_pair ON \r\n" + 
-					" AU_PAIR.AU_PAIR_ID=interview_availability.AU_PAIR_ID;";
+					"AU_PAIR.AU_PAIR_ID=interview_availability.AU_PAIR_ID;";
 			 
 			CallableStatement stmt = conn.prepareCall(query);
 			rs = stmt.executeQuery(query);
