@@ -73,7 +73,7 @@ public class UserRegistration {
 
 			if (value == 1) // for host
 			{
-				// System.out.println("Enter person type");
+				
 				personType = "HOST";
 				System.out.println("Enter passport number: ");
 				passportNumber = input.next();
@@ -194,8 +194,7 @@ public class UserRegistration {
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
 					dateOfBirth = input.next();
-					System.out.println("Active on " + db);
-					System.out.println("Last online " + db);
+					
 					System.out.println("Enter title: ");
 					title = input.next();
 					System.out.println("About me: ");
@@ -271,8 +270,7 @@ public class UserRegistration {
 					
 					if(auPairId != 0)
 					{
-						saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);			
-						
+						saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);							
 						
 					}
 
