@@ -211,6 +211,7 @@ public class UserRegistration {
 					lastName = input.next();
 					System.out.println("Enter password: ");
 					userPassword = input.next();
+					hashedUserPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
 					System.out.println("Enter email address: ");
 					emailid = input.next();
 					System.out.println("Please provide your contact number: ");
@@ -258,7 +259,7 @@ public class UserRegistration {
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
 					myStmt.setString(2, lastName);
-					myStmt.setString(3, userPassword);
+					myStmt.setString(3, hashedUserPassword);
 					myStmt.setString(4, firstName);
 					myStmt.setString(5, emailid);
 					myStmt.setString(6, contactNo);
