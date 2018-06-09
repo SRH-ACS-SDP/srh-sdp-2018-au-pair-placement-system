@@ -19,7 +19,7 @@ public class utilities {
 	public static Connection getConnectionString() throws SQLException 
 	{
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false", "root",
-			"myslroot56");
+			"myroot56");
 				//
 		return conn;
 	}
