@@ -17,11 +17,11 @@ public class UserRegistration {
 	private static final int NUMBER_OF_KIDS = 0;
 	private static final int AGE_OF_KIDS = 0;
 	private static final boolean HAS_PHYSICAL_DISABILITY = false;
-	public enum Gender 
-	{
-		  ONE("Female"), 
-		  TWO("Male");
-		}
+//	public enum Gender 
+//	{
+//		  ONE("Female"), 
+//		  TWO("Male");
+//		}
 
 	public static void main(String[] args) {
 		String personType = "";
@@ -54,22 +54,16 @@ public class UserRegistration {
 
 			Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
 			
-			String x = "1990-03-30";
-			
-			Date db = new Date();
-			
-
+			String x = "1990-03-30";			
+			Date db = new Date();	
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-			String dob = sdf.format(db);
-			
+			String dob = sdf.format(db);		
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
-			String y =  dateFormat.format(date);			
-
+			String y =  dateFormat.format(date);	
+			
 			java.sql.Date latestOnlineTime = new java.sql.Date(db.getTime());
-
 			
 			// to take input from user
 			Scanner input = new Scanner(System.in);
@@ -113,30 +107,8 @@ public class UserRegistration {
 					System.out.println("Marital Status : ");
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
-					dateOfBirth = input.next();
-					
-//					//Scanner sc = new Scanner(System.in); 
-//					System.out.println("Enter bday: "); 
-//					String ind = input.nextLine();
-//					DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
-//					java.sql.Date d = null; 
-//					
-//					try {
-//						d=df.parse(ind);			
-//						System.out.println(d);}
-//					catch(ParseException e) 
-//					{
-//					System.out.println("Unable to parse " + ind);
-//					}
-						
-					
-
-					// Check that an unencrypted password matches or not
-//					if (BCrypt.checkpw(candidate, hashed))
-//					    System.out.println("It matches");
-//					else
-//					    System.out.println("It does not match");
-					
+					dateOfBirth = input.next();				
+				
 					System.out.println("Enter title: ");
 					title = input.next(); 
 					System.out.println("About me: ");
@@ -241,20 +213,35 @@ public class UserRegistration {
 					System.out.println("What is your education qualifiaction");
 					educationQualification = input.next();
 					
-//					System.out.println("Enter your interview availability /n" );
-//					System.out.println("Enter Date (format: DD/MM/YYYY");
-//					String interviewDate = input.next();
-//					System.out.println("Please select the suitable slot : 1. 10am to 12 pm , 2. 12pm to 2pm , 3. 2pm to 4pm , 4. 4pm to 6pm");
-//					int interviewSlot = input.nextInt();
-//					
-//					if(interviewSlot == 1)
-//					{
-//						String fromTime = "10am";
-//						String toTime =  "12pm";
-//						String slotOne = interviewDate.concat( "," + fromTime + "," + toTime);
-//					}
+					System.out.println("Enter your interview availability /n" );
+					System.out.println("Enter Date (format: DD/MM/YYYY");
+					String interviewDate = input.next();
+					System.out.println("Please select the suitable slot : 1. 10am to 12 pm , 2. 12pm to 2pm , 3. 2pm to 4pm , 4. 4pm to 6pm");
+					int interviewSlot = input.nextInt();
+					String slotOne = ""; String fromTime = ""; String toTime= "";
 					
-					
+					if(interviewSlot == 1)
+					{
+						fromTime = interviewDate.concat( "  " + "10 am");
+						toTime =  interviewDate.concat( "  " + "12 am");
+						//System.out.println(slotOne);
+					}
+					else if(interviewSlot == 2)
+					{
+						fromTime = interviewDate.concat( "  " + "12 am");
+						toTime =  interviewDate.concat( "  " + "2 pm");
+					}
+					else if(interviewSlot == 3)
+					{
+						fromTime = interviewDate.concat( "  " + "2 pm");
+						toTime =  interviewDate.concat( "  " + "4 pm");
+					}
+					else if(interviewSlot == 4)
+					{
+						fromTime = interviewDate.concat( "  " + "4 pm");
+						toTime =  interviewDate.concat( "  " + "6 pm");
+					}
+										
 					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
@@ -278,10 +265,16 @@ public class UserRegistration {
 					myStmt.setString(19, supervisesChildOfage);
 					myStmt.setString(20, educationQualification);
 					myStmt.registerOutParameter(21, Types.INTEGER);
-
+					
 					myStmt.execute();
-
 					int auPairId = myStmt.getInt(21);
+					
+					if(auPairId != 0)
+					{
+						saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);			
+						
+						
+					}
 
 					//System.out.println("Au Pair id entered " + auPairId);
 					System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
@@ -301,7 +294,21 @@ public class UserRegistration {
 		}
 	}
 
-	public static void callingLoginSteps(Scanner input) {
+	private static void saveInterviewSchedulePreference(Connection conn, String fromTime, String toTime, int auPairId)
+			throws SQLException {
+		String insertIntoInterviewScheduleQuery = "{CALL `insertIntoInterviewSchedule`(?,?,?,?)}";
+		CallableStatement cs = conn.prepareCall(insertIntoInterviewScheduleQuery);
+		cs.setInt(1, auPairId);
+		cs.setString(2, fromTime);
+		cs.setString(3, toTime);
+		cs.registerOutParameter(4, Types.INTEGER);							
+		cs.execute();
+		int interviewId = cs.getInt(4);
+		System.out.println(auPairId + " " + fromTime + " " + toTime + " "+ interviewId);
+		System.out.println("YOU CAN ENTER ONE MORE INTERVIEW SLOT, ENTER Yes or No");
+	}
+
+	public static void callingLoginSteps(Scanner input) throws SQLException {
 		System.out.println("***ENTER 1 TO LOGIN NOW?***");
 		int login = input.nextInt();					
 		if(login == 1)
