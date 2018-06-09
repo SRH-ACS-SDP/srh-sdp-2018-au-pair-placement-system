@@ -4,7 +4,7 @@ public class BookingOperations {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			System.out.println("testing jenkins");
+			System.out.println("Jenkins build operation succeed");
 	}
 
 }
