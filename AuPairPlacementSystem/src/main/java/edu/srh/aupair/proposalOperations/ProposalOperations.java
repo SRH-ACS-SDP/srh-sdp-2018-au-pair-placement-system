@@ -18,7 +18,7 @@ public class ProposalOperations {
 			
 			Scanner input = new Scanner(System.in);
 			System.out.println("Do you want to create Proposal for Au Pair?");
-			System.out.println("If yes press 1 or else press 0");//ask 
+			System.out.println("If yes press 1 or else press 0");
 			int value = input.nextInt();
 
 			if (value == 1) // for host
@@ -46,6 +46,12 @@ public class ProposalOperations {
 					myStmt.setString(5, holidaysProposed);
 					myStmt.setString(6, travelCosts);
 					myStmt.registerOutParameter(7, Types.INTEGER);
+					
+					myStmt.execute();
+					
+					int proposal_id = myStmt.getInt(7);
+					
+					System.out.println("***PROPOSAL OFFERED BY HOST***");
 				}
 				else
 				{
