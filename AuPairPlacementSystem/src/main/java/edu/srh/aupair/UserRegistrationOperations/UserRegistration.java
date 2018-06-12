@@ -107,7 +107,7 @@ public class UserRegistration {
 					System.out.println("Marital Status : ");
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
-					dateOfBirth = input.next();			
+					dateOfBirth = input.next();				
 				
 					System.out.println("Enter title: ");
 					title = input.next(); 
