@@ -33,6 +33,13 @@ public class UserRegistration {
 		String gender = "";
 		String maritalStatus = "";
 		String dateOfBirth = "";
+		String languages ="";
+		String proficiency="";
+		String country = "";
+		int countryCurrencyId = 0;
+		String address = "";
+		String city ="";
+		int postCode = 0;
 		String title = "";
 		String aboutMe = "";
 		String passportNumber = "";
@@ -107,10 +114,30 @@ public class UserRegistration {
 					System.out.println("Marital Status : ");
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
-					dateOfBirth = input.next();				
-				
+					dateOfBirth = input.next();	
+					System.out.println("Preferred Language: ");
+					languages = input.next();
+					System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
+					proficiency = input.next();
+					System.out.println("Enter Address Line 1");
+					address = input.next();
+					System.out.println("City: ");
+					city = input.next();
+					System.out.println("Postcode: ");
+					postCode = input.nextInt();
+					System.out.println("Country: ");
+					country = input.next();
+					
+					String query1 = "select country_currency_id from COUNTRY_CURRENCY where COUNTRY_NAME = '" + country+ "'" ; 
+					CallableStatement myStmt1 = conn.prepareCall(query1);
+					ResultSet rs = myStmt1.executeQuery(query1);
+					if(rs.next())
+					{
+					countryCurrencyId = rs.getInt(1);
+					}
+
 					System.out.println("Enter title: ");
-					title = input.next(); 
+					title = input.nextLine(); 
 					System.out.println("About me: ");
 					aboutMe = input.next();
 					System.out.println("Is salary Provided(Enter True or False)?");
@@ -121,9 +148,8 @@ public class UserRegistration {
 					ageOfKid = input.nextInt();
 					System.out.println("Has physical disability(Enter True or False)");
 					hasPhysicalDisability = input.nextBoolean();							
-					
-
-					String registerHostUserQuery = "{CALL registerAHostUser(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?)}";
+	
+					String registerHostUserQuery = "{CALL registerAHostUser(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
 					myStmt.setString(2, lastName);
@@ -133,26 +159,28 @@ public class UserRegistration {
 					myStmt.setString(6, contactNo);
 					myStmt.setString(7, gender);
 					myStmt.setString(8, maritalStatus);
-					myStmt.setDate(9, latestOnlineTime);
-					myStmt.setBoolean(10, isActive);
-					myStmt.setDate(11, latestOnlineTime);
-					myStmt.setString(12, title);
-					myStmt.setString(13, aboutMe);
-					myStmt.setString(14, passportNumber);
-					myStmt.setBoolean(15, IS_SALARY_PROVIDED);
-					myStmt.setInt(16, NUMBER_OF_KIDS);
-					myStmt.setInt(17, AGE_OF_KIDS);
-					myStmt.setBoolean(18, HAS_PHYSICAL_DISABILITY);
-					myStmt.registerOutParameter(19, Types.INTEGER);
-
+					myStmt.setDate(9, latestOnlineTime); //to do DOB
+					myStmt.setString(10, languages);
+					myStmt.setString(11, proficiency);
+					myStmt.setString(12, address);
+					myStmt.setString(13, city);
+					myStmt.setInt(14, postCode);
+					myStmt.setInt(15, countryCurrencyId);
+					myStmt.setBoolean(16, isActive);
+					myStmt.setDate(17, latestOnlineTime);
+					myStmt.setString(18, title);
+					myStmt.setString(19, aboutMe);
+					myStmt.setString(20, passportNumber);
+					myStmt.setBoolean(21, IS_SALARY_PROVIDED);
+					myStmt.setInt(22, NUMBER_OF_KIDS);
+					myStmt.setInt(23, AGE_OF_KIDS);
+					myStmt.setBoolean(24, HAS_PHYSICAL_DISABILITY);
+					myStmt.registerOutParameter(25, Types.INTEGER);
+					
 					myStmt.execute();
-
-					int hostId = myStmt.getInt(19);
-					
+					int hostId = myStmt.getInt(25);
 					System.out.println("***REGISTERATION SUCCESSFUL AS HOST USER***");
-					
 					callingLoginSteps(input);
-
 				}
 				else {
 					System.out.println("***YOU ARE AN EXISTING HOST USER. PLEASE LOGIN***");
@@ -194,6 +222,26 @@ public class UserRegistration {
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
 					dateOfBirth = input.next();
+					System.out.println("Preferred Language: ");
+					languages = input.next();
+					System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
+					proficiency = input.next();
+					System.out.println("Enter Address Line 1");
+					address = input.next();
+					System.out.println("City: ");
+					city = input.next();
+					System.out.println("Postcode: ");
+					postCode = input.nextInt();
+					System.out.println("Country: ");
+					country = input.next();
+					
+					String query2 = "select country_currency_id from COUNTRY_CURRENCY where COUNTRY_NAME = '" + country+ "'" ; 
+					CallableStatement myStmt1 = conn.prepareCall(query2);
+					ResultSet rs = myStmt1.executeQuery(query2);
+					if(rs.next())
+					{
+					countryCurrencyId = rs.getInt(1);
+					}
 					
 					System.out.println("Enter title: ");
 					title = input.next();
@@ -241,7 +289,7 @@ public class UserRegistration {
 						toTime =  interviewDate.concat( "  " + "6 pm");
 					}
 										
-					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?)}";
+					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
 					myStmt.setString(2, lastName);
@@ -252,21 +300,27 @@ public class UserRegistration {
 					myStmt.setString(7, gender);
 					myStmt.setString(8, maritalStatus);
 					myStmt.setDate(9, latestOnlineTime);
-					myStmt.setBoolean(10, isActive);
-					myStmt.setDate(11, latestOnlineTime);
-					myStmt.setString(12, title);
-					myStmt.setString(13, aboutMe);
-					myStmt.setString(14, passportNumber);
-					myStmt.setBoolean(15, hasValidVisa);
-					myStmt.setBoolean(16, hasSalaryExpectation);
-					myStmt.setBoolean(17, hasDrivingLicense);
-					myStmt.setString(18, hobbies);
-					myStmt.setString(19, supervisesChildOfage);
-					myStmt.setString(20, educationQualification);
-					myStmt.registerOutParameter(21, Types.INTEGER);
+					myStmt.setString(10, languages);
+					myStmt.setString(11, proficiency);
+					myStmt.setString(12, address);
+					myStmt.setString(13, city);
+					myStmt.setInt(14, postCode);
+					myStmt.setInt(15, countryCurrencyId);
+					myStmt.setBoolean(16, isActive);
+					myStmt.setDate(17, latestOnlineTime);
+					myStmt.setString(18, title);
+					myStmt.setString(19, aboutMe);
+					myStmt.setString(20, passportNumber);
+					myStmt.setBoolean(21, hasValidVisa);
+					myStmt.setBoolean(22, hasSalaryExpectation);
+					myStmt.setBoolean(23, hasDrivingLicense);
+					myStmt.setString(24, hobbies);
+					myStmt.setString(25, supervisesChildOfage);
+					myStmt.setString(26, educationQualification);
+					myStmt.registerOutParameter(27, Types.INTEGER);
 					
 					myStmt.execute();
-					int auPairId = myStmt.getInt(21);
+					int auPairId = myStmt.getInt(27);
 					
 					if(auPairId != 0)
 					{
@@ -302,7 +356,7 @@ public class UserRegistration {
 		cs.registerOutParameter(4, Types.INTEGER);							
 		cs.execute();
 		int interviewId = cs.getInt(4);
-		System.out.println(auPairId + " " + fromTime + " " + toTime + " "+ interviewId);
+		System.out.println(auPairId + " " + fromTime + " " + toTime + " "+ interviewId);//to do 
 		System.out.println("YOU CAN ENTER ONE MORE INTERVIEW SLOT, ENTER Yes or No");
 	}
 
