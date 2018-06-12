@@ -233,7 +233,8 @@ public class UserRegistration {
 					System.out.println("Postcode: ");
 					postCode = input.nextInt();
 					System.out.println("Country: ");
-					country = input.next();
+					country = input.next(); 
+					//
 					
 					String query2 = "select country_currency_id from COUNTRY_CURRENCY where COUNTRY_NAME = '" + country+ "'" ; 
 					CallableStatement myStmt1 = conn.prepareCall(query2);
