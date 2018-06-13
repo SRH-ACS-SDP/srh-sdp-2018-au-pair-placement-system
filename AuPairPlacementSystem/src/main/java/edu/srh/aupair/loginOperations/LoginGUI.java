@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class LoginGUI {
 
-	public static void main(String[] args) {
-		LoginGUI objeckt=new LoginGUI();
-		objeckt.loginUser();
-		//loginUser();
+	public static void main(String[] args) 
+	{
+		LoginGUI loginGUI =new LoginGUI();
+		loginGUI.loginUser();
+		
 	}
 
 	public  void loginUser() 
@@ -31,7 +32,6 @@ public class LoginGUI {
 		if(loginAs == 1)
 		{
 			personType = "HOST";
-			//LoginService
 			IloginServiceInterface obj=new LoginService();
 			obj.loginUser(userName, userPassword, personType);
 			
@@ -39,7 +39,8 @@ public class LoginGUI {
 		else if(loginAs == 2)
 		{
 			personType = "AUPAIR";
-			//edu.srh.aupair.loginOperations.LoginService.loginUser(userName, userPassword, personType);
+			IloginServiceInterface obj=new LoginService();
+			obj.loginUser(userName, userPassword, personType);
 		}
 		else
 		{
