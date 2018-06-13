@@ -6,10 +6,10 @@ import java.sql.Types;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class LoginConnectionManager {
+public class LoginRepository {
 
 	
-	public static void loginUser(String userName, String userPassword,  String personType) 
+	public  void loginUser(String userName, String userPassword,  String personType) 
 	{
 		try {
 			

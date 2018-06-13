@@ -1,12 +1,13 @@
 package edu.srh.aupair.loginOperations;
 
-public class LoginRepository {
+public class LoginService implements IloginServiceInterface {
 
 	
-	public static void loginUser (String userName, String userPassword,  String personType)
+	public  void loginUser (String userName, String userPassword,  String personType)
 	{
 			
-		edu.srh.aupair.loginOperations.LoginConnectionManager.loginUser(userName, userPassword, personType);
+		LoginRepository obj=new LoginRepository();
+		obj.loginUser(userName, userPassword, personType);
 	}
 
 }
