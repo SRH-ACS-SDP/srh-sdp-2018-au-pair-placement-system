@@ -5,7 +5,13 @@ import java.util.Scanner;
 public class LoginGUI {
 
 	public static void main(String[] args) {
-		
+		LoginGUI objeckt=new LoginGUI();
+		objeckt.loginUser();
+		//loginUser();
+	}
+
+	public  void loginUser() 
+	{
 		String userName = "";
 		String userPassword = "";
 		int the_count = 0;
@@ -21,17 +27,19 @@ public class LoginGUI {
 		System.out.println("Enter Password: ");
 		userPassword = input.next();
 		String personType ;
-		
+					
 		if(loginAs == 1)
 		{
 			personType = "HOST";
-			edu.srh.aupair.loginOperations.LoginRepository.loginUser(userName, userPassword, personType);
+			//LoginService
+			IloginServiceInterface obj=new LoginService();
+			obj.loginUser(userName, userPassword, personType);
 			
 		}
 		else if(loginAs == 2)
 		{
 			personType = "AUPAIR";
-			edu.srh.aupair.loginOperations.LoginRepository.loginUser(userName, userPassword, personType);
+			//edu.srh.aupair.loginOperations.LoginService.loginUser(userName, userPassword, personType);
 		}
 		else
 		{
@@ -40,7 +48,6 @@ public class LoginGUI {
 		}
 		
 		input.close();
-
 	}
 
 }
