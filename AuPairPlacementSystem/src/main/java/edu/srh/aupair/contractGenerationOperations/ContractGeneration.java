@@ -56,10 +56,8 @@ public class ContractGeneration {
 			
 			String currentUsersHomeDir = System.getProperty("user.home");
 			
-			JasperExportManager.exportReportToPdfFile(jp, currentUsersHomeDir + "/ContractForHostAndAuPair.pdf");
-			
-//			File f = new File();
-//			f.	
+			JasperExportManager.exportReportToPdfFile(jp, currentUsersHomeDir + "/ContractForHostAndAuPair.pdf");	
+	
 					
 			
 		} catch (Exception ex) {

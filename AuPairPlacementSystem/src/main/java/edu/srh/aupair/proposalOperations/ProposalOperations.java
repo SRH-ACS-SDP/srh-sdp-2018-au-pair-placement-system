@@ -82,8 +82,8 @@ public class ProposalOperations {
 		String remunerationsProposed="";
 		String holidaysProposed ="";
 		boolean travelCosts;
-		int activeInterviewId = 0;
-		
+		int activeInterviewId = 26;
+		String proposedStartDate, proposedEndDate;	
 				
 		Scanner input = new Scanner(System.in);
 		System.out.println("Do you want to create Proposal for Au Pair?");
@@ -103,8 +103,12 @@ public class ProposalOperations {
 				holidaysProposed = input.next();
 				System.out.println("Travel cost (true/false)");
 				travelCosts = input.nextBoolean();
+				System.out.println("Proposed start date of contract (DD/MM-YYYY)");
+				proposedStartDate = input.next();
+				System.out.println("Proposed end date of contract (DD/MM-YYYY)");
+				proposedEndDate = input.next();
 				
-				String saveProposalDetailsQuery= "{Call saveProposalDetails(?,?,?,?,?,?,?)}";
+				String saveProposalDetailsQuery= "{Call saveProposalDetails(?,?,?,?,?,?,?,?,?)}";
 				CallableStatement myStmt = conn.prepareCall(saveProposalDetailsQuery);
 				myStmt.setInt(1, activeInterviewId);
 				myStmt.setString(2, tasksForAuPair);
@@ -112,9 +116,11 @@ public class ProposalOperations {
 				myStmt.setString(4, remunerationsProposed);
 				myStmt.setString(5, holidaysProposed);
 				myStmt.setBoolean(6, travelCosts);
-				myStmt.registerOutParameter(7, Types.INTEGER);					
+				myStmt.setString(7, proposedStartDate);
+				myStmt.setString(8, proposedEndDate);
+				myStmt.registerOutParameter(9, Types.INTEGER);					
 				myStmt.execute();			
-				int proposaId = myStmt.getInt(7);
+				int proposaId = myStmt.getInt(9);
 				System.out.println(proposaId + "Congratulations your proposal has been created");
 			}
 			else
