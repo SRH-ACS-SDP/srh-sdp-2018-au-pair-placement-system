@@ -168,10 +168,10 @@ public class UserProfileOperations {
 		
 		ResultSet rs = statementview.executeQuery();
 		
-		TableBuilder tb = new TableBuilder();
+		BuildTable table = new BuildTable();
 
 		
-		tb.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||", "PROPOSAL ID   ||  ", 
+		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||", "PROPOSAL ID   ||  ", 
 				"NAME         ||  ",
 				"Tasks for Au Pair   ||  ",
 			"Working Hours Proposed  ||  ",
@@ -207,10 +207,10 @@ public class UserProfileOperations {
 		System.out.println("You have below Proposals: \n");
 		
 		
-		tb.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
+		table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------");
 		
-		tb.addRow(personIdStr , proposalIdStr, 
+		table.addRow(personIdStr , proposalIdStr, 
 				PERSON_TYPE == "HOST" ? hostName:auPairName,
 				tasksForAuPair,
 				workingHoursProposed,
@@ -218,7 +218,7 @@ public class UserProfileOperations {
 				holidaysProposed,
 				travelCostsStr);
 		}
-		System.out.println(tb.toString());
+		System.out.println(table.toString());
 		
 		
 		// TO DO call the Proposal Operations.java where you have the option to accept or reject the proposals 
@@ -344,9 +344,9 @@ public class UserProfileOperations {
 		statementsearch.setString("PREFERREDLANGUAGE", preferredLanguage);
 		
 
-		TableBuilder tb = new TableBuilder();
+		BuildTable table = new BuildTable();
 		
-		tb.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" + "  ", "First Name   ||  ",
+		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" + "  ", "First Name   ||  ",
 				"Last Name   ||  ", "Contact No   ||  ", "Gender   ||  ", "Marital Status   ||  ",
 				"Date of Birth  ||  ", "Is Active User  ||  ", "Address   ||  ", "City   ||  ", "Postcode   ||  ",
 				"Country   ||  ", "Last Online   ||  ", "Title   ||  ", "Passport Number  ||  ", "About me   ||  ",
@@ -358,7 +358,7 @@ public class UserProfileOperations {
 				PERSON_TYPE == "HOST" ? "Educational Qualification   ||  " : " ",
 				"Preferred Language");
 
-		tb.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
+		table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------", "----------");
@@ -415,7 +415,7 @@ public class UserProfileOperations {
 			String salaryProvidedStr = String.valueOf(salaryProvided);
 			String isActiveStr = String.valueOf(isActive);
 
-			tb.addRow(personIdStr, firstName, lastName, contactNoStr, gender, maritalStatus, dobStr, isActiveStr,
+			table.addRow(personIdStr, firstName, lastName, contactNoStr, gender, maritalStatus, dobStr, isActiveStr,
 					addressLine1, city, postCodeStr, country, lastOnline, title, passportNo, aboutMe,
 					PERSON_TYPE == "HOST" ? salaryExpectationStr : salaryProvidedStr,
 					PERSON_TYPE == "HOST" ? validVisaStr : numberOfKidsStr,
@@ -423,14 +423,14 @@ public class UserProfileOperations {
 					PERSON_TYPE == "HOST" ? hobbies : hasPyhsicalDisabilityStr,
 					PERSON_TYPE == "HOST" ? supervisesChildOfAgeStr : "", PERSON_TYPE == "HOST" ? qualification : "", preferredLanguage);
 
-			tb.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
+			table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------");
 			count++;
 		}
 
-		System.out.println(tb.toString());
+		System.out.println(table.toString());
 
 		if (count == 0) {
 			System.out.println("Sorry no searches found ! \n");
