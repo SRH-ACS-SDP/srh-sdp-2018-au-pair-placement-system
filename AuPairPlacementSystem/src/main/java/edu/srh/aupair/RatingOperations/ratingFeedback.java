@@ -48,7 +48,7 @@ public class ratingFeedback {
 				String personType = "AU Pair";
 				System.out.println("Enter the Au Pair username that you want to rate: ");
 				String hostUsername = input.next();
-				System.out.println("Enter ratings for Host: ");
+				System.out.println("Enter ratings for Au Pair: ");
 				ratings = input.nextInt();
 				System.out.println(" Enter comments: ");
 				comments = input.next();
