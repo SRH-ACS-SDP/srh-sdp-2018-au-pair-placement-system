@@ -10,9 +10,9 @@ public class BuildTable {
 
 	private int[] columnWidths() {
 		int column = -1;
-		int[] widthOfColumns = new int[column];
 		for (String[] singleRow : allRows)
 			column = Math.max(column, singleRow.length);
+		int[] widthOfColumns = new int[column];
 		for (String[] singleRow : allRows) {
 			for (int columnNo = 0; columnNo < singleRow.length; columnNo++) {
 				int length=StringUtils.length(singleRow[columnNo]);
