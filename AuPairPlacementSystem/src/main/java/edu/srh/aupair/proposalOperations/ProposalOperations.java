@@ -38,16 +38,41 @@ public class ProposalOperations {
 				//accept proposal code	
 				System.out.println("Enter the proposal id that you want to accept");
 				int proposalIdForAcceptance = input.nextInt(); 
-				String query = "{CALL `acceptProposalByAuPair`(?,?)}";
+				String query = "{CALL `acceptProposalByAuPair`(?,?,?,?)}";
 	 			CallableStatement cs = conn.prepareCall(query);		 				
 				cs.setInt(1, proposalIdForAcceptance);		 		
 				//cs.setInt(2, activeIntId);	 			
-	 			cs.registerOutParameter(2, Types.INTEGER);							
+	 			cs.registerOutParameter(2, Types.INTEGER);
+	 			cs.registerOutParameter(3, Types.INTEGER);
+	 			cs.registerOutParameter(4, Types.INTEGER);
 	 			cs.execute();			
 	 			int activeInterviewId = cs.getInt(2);
+	 			int hostID = cs.getInt(3);
+	 			int auPairId = cs.getInt(4);
 	 			System.out.println("Congratulations you have accepted the proposal. Your contract will now be created." + activeInterviewId); 	//TO do remove the id later 			
 	 			
 	 			//Call the contract creation code TO DO 
+	 			
+	 			//call the rating code TO DO decide where to put this code
+	 			
+	 			System.out.println("DO you rate this host : enter 1 ?");
+	 			int uInput = input.nextInt(); 
+	 			System.out.println("Enter the rating you want to give this host?");
+	 			int ratings = input.nextInt(); 
+	 			System.out.println("Enter the feedback you want to give this host?");
+	 			String comments = input.next(); 
+	 			
+	 			query = "{CALL `saveRatingsAndFeedback`(?,?,?,?,?,?)}";
+	 			CallableStatement stat = conn.prepareCall(query);
+	 			stat.setInt(1, hostID);
+	 			stat.setInt(2, auPairId);
+	 			stat.setInt(3, ratings);
+	 			stat.setString(4, comments);
+	 			stat.setBoolean(5, false);
+	 			stat.registerOutParameter(6, Types.INTEGER);
+	 			stat.execute();	 			
+	 						
+	 			
 			}
 			
 			else if (userInput == 2)
