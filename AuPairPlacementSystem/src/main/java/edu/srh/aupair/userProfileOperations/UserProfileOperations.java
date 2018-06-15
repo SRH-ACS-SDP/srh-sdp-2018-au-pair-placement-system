@@ -108,7 +108,7 @@ public class UserProfileOperations {
 						+ "\n17) Age of Kids: " + ageOfKids + "\n18) Does any of your kid have Physical Disability: "
 						+ hasPyhsicalDisability + "\n19) About me: " + aboutMe);
 			}
-			mainmenu();
+			mainMenu();
 		}
 
 		catch (Exception ex) {
@@ -117,7 +117,7 @@ public class UserProfileOperations {
 
 	}
 
-	public static void mainmenu() throws SQLException {
+	public static void mainMenu() throws SQLException {
 
 		System.out.println(
 				"\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
@@ -132,9 +132,7 @@ public class UserProfileOperations {
 		} else if (userInput == 3) {
 			deleteSelfProfile();
 		} else if (userInput == 4) {
-			
 				viewProposals();
-			
 		} else if (userInput == 5) {
 			////// LOGOUT FUNCTIONALITY
 		}
@@ -145,7 +143,6 @@ public class UserProfileOperations {
 
 		
 		int personId = 0;
-
 		int proposalId=0;
 		
 		String auPairName ="";
@@ -217,10 +214,16 @@ public class UserProfileOperations {
 				RemunerationsProposed,
 				holidaysProposed,
 				travelCostsStr);
+		count++;
 		}
-		System.out.println(table.toString());
+		System.out.println(tb.toString());
 		
-		
+		if(count==0)
+		{
+			System.out.println("Sorry no Proposals found !!! \n");
+			mainMenu();
+		}
+
 		// TO DO call the Proposal Operations.java where you have the option to accept or reject the proposals 
 	}
 
@@ -272,15 +275,16 @@ public class UserProfileOperations {
 		int ageOfKids = 0;
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
-
+		int ratings =0;
+		
 		while (searchMore == 'y' || searchMore == 'Y') {
 
 			System.out.println(
 					"\nWhat parameters would you like to choose for searching? \n\nChoose the following options: ");
 			if (PERSON_TYPE == "AUPAIR") {
-				System.out.println(" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language");
+				System.out.println(" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
 			} else if (PERSON_TYPE == "HOST")
-				System.out.println("\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language");
+				System.out.println("\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
 			/// see if you want to put random search in the end.
 
 			searchOptions = sc.nextInt();
@@ -323,6 +327,12 @@ public class UserProfileOperations {
 				System.out.println("Enter the preferred language you want to search: ");
 				preferredLanguage = sc.next();
 				searchedParameter += "\nPreferred Language " + preferredLanguage;
+				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
+				searchMore = sc.next().charAt(0);
+			} else if (searchOptions == 7) {
+				System.out.println("Enter the rating between 1 to 5: ");
+				ratings = sc.nextInt();
+				searchedParameter += "\nRatings" + ratings;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
 			}
@@ -400,7 +410,8 @@ public class UserProfileOperations {
 			} // check boolean type
 			aboutMe = rs.getString("ABOUT_ME");
 			preferredLanguage = rs.getString("LANGUAGES");
-
+			ratings = rs.getInt("RATINGS");
+			
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
@@ -414,19 +425,21 @@ public class UserProfileOperations {
 			String salaryExpectationStr = String.valueOf(salaryExpectation);
 			String salaryProvidedStr = String.valueOf(salaryProvided);
 			String isActiveStr = String.valueOf(isActive);
-
+			String ratingsStr = String.valueOf(ratings);
+			
+			
 			table.addRow(personIdStr, firstName, lastName, contactNoStr, gender, maritalStatus, dobStr, isActiveStr,
 					addressLine1, city, postCodeStr, country, lastOnline, title, passportNo, aboutMe,
 					PERSON_TYPE == "HOST" ? salaryExpectationStr : salaryProvidedStr,
 					PERSON_TYPE == "HOST" ? validVisaStr : numberOfKidsStr,
 					PERSON_TYPE == "HOST" ? drivingLicenseStr : ageOfKidsStr,
 					PERSON_TYPE == "HOST" ? hobbies : hasPyhsicalDisabilityStr,
-					PERSON_TYPE == "HOST" ? supervisesChildOfAgeStr : "", PERSON_TYPE == "HOST" ? qualification : "", preferredLanguage);
+					PERSON_TYPE == "HOST" ? supervisesChildOfAgeStr : "", PERSON_TYPE == "HOST" ? qualification : "", preferredLanguage, ratingsStr);
 
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
-					"----------", "----------");
+					"----------", "----------", "----------");
 			count++;
 		}
 
@@ -447,7 +460,7 @@ public class UserProfileOperations {
 			if (personIdChoosed != 0) {
 				//// TO DO call the BOOK APPOINTMENT METHOD
 			} else if (personIdChoosed == 0) {
-				mainmenu();
+				mainMenu();
 			}
 		}
 
@@ -460,7 +473,7 @@ public class UserProfileOperations {
 				System.out.println("You have successfully contacted the HOST");
 				searchByPreference();
 			} else if (personIdChoosed == 0) {
-				mainmenu();
+				mainMenu();
 			}
 		}
 
@@ -493,7 +506,7 @@ public class UserProfileOperations {
 			statementdelete.setInt("PERSONID", 1);
 			statementdelete.executeUpdate();
 		} else {
-			mainmenu();
+			mainMenu();
 			sc.close();
 		}
 	}
@@ -620,7 +633,7 @@ public class UserProfileOperations {
 		System.out.println(+count + " changes updated successfully");
 		System.out.println("\n" + updatedchanges);
 
-		mainmenu();
+		mainMenu();
 		sc.close();
 	}
 }
