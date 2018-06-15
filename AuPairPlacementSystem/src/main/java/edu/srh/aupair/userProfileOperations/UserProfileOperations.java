@@ -119,119 +119,114 @@ public class UserProfileOperations {
 
 	public static void mainMenu() throws SQLException {
 
-		System.out.println("\n =============== MAIN MENU =============== \n" +
-				"\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
-						+ " \n 3) Delete your profile \n 4) View Proposals \n 5) Logout  ");
+		System.out.println("\n =============== MAIN MENU =============== \n"
+				+ "\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
+				+ " \n 3) Delete your profile \n 4) View Proposals \n 5) Logout  ");
 
 		Scanner sc = new Scanner(System.in);
 		int userInput = sc.nextInt();
 		if (userInput == 1) {
-			updateProfile();
+			updateProfile(sc);
 		} else if (userInput == 2) {
-			searchByPreference();
+			searchByPreference(sc);
 		} else if (userInput == 3) {
-			deleteSelfProfile();
+			deleteSelfProfile(sc);
 		} else if (userInput == 4) {
-				viewProposals();
+			viewProposals();
 		} else if (userInput == 5) {
-			////// LOGOUT FUNCTIONALITY
+			logout(sc);
 		}
 		sc.close();
 	}
 
-	private static void viewProposals() throws SQLException {
+	public static void logout(Scanner sc) throws SQLException {
+		
+		char logout = '\0';
+		System.out.println("\n Are you sure you want to logout of the system? Y/N");
+		logout = sc.next().charAt(0);
+		if(logout =='Y'  || logout =='y' )
+		{
+			System.out.println("\nSuccessfully Logged out!\n");
+		}	
+		else
+		{
+			mainMenu();
+		}
+	}
 
-		
-		int personId = 0;
-		int proposalId=0;
-		
-		String auPairName ="";
-		String hostName ="";
-		String tasksForAuPair ="";
-		String workingHoursProposed ="";
-		String RemunerationsProposed ="";
-		String holidaysProposed ="";
-		boolean travelCosts  = false;
+	public static void viewProposals() throws SQLException {
+
+		int proposalId = 0;
+
+		String auPairName = "";
+		String hostName = "";
+		String tasksForAuPair = "";
+		String workingHoursProposed = "";
+		String RemunerationsProposed = "";
+		String holidaysProposed = "";
+		boolean travelCosts = false;
 		String travelCostsStr = String.valueOf(travelCosts);
-		
-		String PERSON_TYPE ="HOST";
+
+		String PERSON_TYPE = "HOST";
 		Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
-		
+
 		String query = "{CALL viewProposal(?,?)}";
 		CallableStatement statementview = conn.prepareCall(query);
-		
+
 		statementview.setInt("PERSONID", 1);
 		statementview.setString("PERSONTYPE", "HOST");
-		
+
 		ResultSet rs = statementview.executeQuery();
-		
+
 		BuildTable table = new BuildTable();
 
 		System.out.println("\n =============== PROPOSALS =============== \n");
-		
-		
-		table.addRow("PROPOSAL ID   ||  ", 
-				"      NAME         ||  ",
-				"Tasks for Au Pair   ||  ",
-			"Working Hours Proposed  ||  ",
-			 "Remuneration Proposed  ||  ",
-			    "Holidays Proposed   ||  ",
-			 "Travel Costs");
-		
-		int count =0;
+
+		table.addRow("PROPOSAL ID   ||  ", "      NAME         ||  ", "Tasks for Au Pair   ||  ",
+				"Working Hours Proposed  ||  ", "Remuneration Proposed  ||  ", "Holidays Proposed   ||  ",
+				"Travel Costs");
+
+		int count = 0;
 		while (rs.next()) {
-			
-			
-		personId=rs.getInt("PERSON_ID");
-		proposalId=rs.getInt("PROPOSAL_ID");
-//		auPairId=rs.getInt("AU_PAIR_ID");
-//		hostId=rs.getInt("HOST_ID");
-			
-		
-//		firstName=rs.getString("FIRST_NAME");
-//		lastName=rs.getString("LAST_NAME");
-		tasksForAuPair=rs.getString("TASKS_FOR_AU_PAIR");
-		workingHoursProposed=rs.getString("WORKING_HOURS_PROPOSED");
-		RemunerationsProposed=rs.getString("REMUNERATIONS_PROPOSED");
-		holidaysProposed=rs.getString("HOLIDAYS_PROPOSED");
-		travelCosts=rs.getBoolean("TRAVEL_COSTS");
-		
-		String proposalIdStr = String.valueOf(proposalId);
-	
-	hostName=rs.getString("HOSTNAME");
-	auPairName=rs.getString("AUPAIRNAME");
-		
-		table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
-				"----------");
-		
-		table.addRow(proposalIdStr, 
-				PERSON_TYPE == "HOST" ? auPairName:hostName,
-				tasksForAuPair,
-				workingHoursProposed,
-				RemunerationsProposed,
-				holidaysProposed,
-				travelCostsStr);
-		count++;
+
+			proposalId = rs.getInt("PROPOSAL_ID");
+
+			tasksForAuPair = rs.getString("TASKS_FOR_AU_PAIR");
+			workingHoursProposed = rs.getString("WORKING_HOURS_PROPOSED");
+			RemunerationsProposed = rs.getString("REMUNERATIONS_PROPOSED");
+			holidaysProposed = rs.getString("HOLIDAYS_PROPOSED");
+			travelCosts = rs.getBoolean("TRAVEL_COSTS");
+
+			String proposalIdStr = String.valueOf(proposalId);
+
+			hostName = rs.getString("HOSTNAME");
+			auPairName = rs.getString("AUPAIRNAME");
+
+			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
+					"----------");
+
+			table.addRow(proposalIdStr, PERSON_TYPE == "HOST" ? auPairName : hostName, tasksForAuPair,
+					workingHoursProposed, RemunerationsProposed, holidaysProposed, travelCostsStr);
+			count++;
 		}
 		System.out.println(table.toString());
-		
-		if(count==0)
-		{
+
+		if (count == 0) {
 			System.out.println("Sorry no Proposals found !!! \n");
 			mainMenu();
 		}
 
-		// TO DO call the Proposal Operations.java where you have the option to accept or reject the proposals 
+		// TO DO call the Proposal Operations.java where you have the option to accept
+		// or reject the proposals
 	}
 
-
-	public static void searchByPreference() throws SQLException {
+	public static void searchByPreference(Scanner sc) throws SQLException {
 
 		Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
 		// Connection conn =
 		// DriverManager.getConnection("jdbc:mysql://localhost:3306/AU_PAIR_MANAGEMENT?useSSL=false",
 		// "root", "password123");
-		Scanner sc = new Scanner(System.in);
+//		Scanner sc = new Scanner(System.in);
 		String PERSON_TYPE = "HOST"; ///// REMEMEBER TO REMOVE THIS AND UPAR WALE update MEIN AFTER U GET INPUTS FROM
 										///// db diRECTLY ***********TO DO
 		int searchOptions = '0';
@@ -244,7 +239,7 @@ public class UserProfileOperations {
 		String searchedParameter = "";
 		Boolean salaryProvided = false;
 		Boolean salaryExpectation = false;
-		String preferredLanguage ="";
+		String preferredLanguage = "";
 
 		Boolean validVisa = false;
 		Boolean drivingLicense = false;
@@ -272,16 +267,18 @@ public class UserProfileOperations {
 		int ageOfKids = 0;
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
-		int ratings =0;
-		
+		int ratings = 0;
+
 		while (searchMore == 'y' || searchMore == 'Y') {
 
 			System.out.println(
 					"\nWhat parameters would you like to choose for searching? \n\nChoose the following options: ");
 			if (PERSON_TYPE == "AUPAIR") {
-				System.out.println(" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
+				System.out.println(
+						" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
 			} else if (PERSON_TYPE == "HOST")
-				System.out.println("\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
+				System.out.println(
+						"\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
 			/// see if you want to put random search in the end.
 
 			searchOptions = sc.nextInt();
@@ -349,10 +346,9 @@ public class UserProfileOperations {
 		// statementsearch.setBoolean("IS_SALARY_PROVIDED", salaryProvided);
 		statementsearch.setString("RANDOMSEARCH", randomSearch);
 		statementsearch.setString("PREFERREDLANGUAGE", preferredLanguage);
-		
 
 		BuildTable table = new BuildTable();
-		
+
 		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" + "  ", "First Name   ||  ",
 				"Last Name   ||  ", "Contact No   ||  ", "Gender   ||  ", "Marital Status   ||  ",
 				"Date of Birth  ||  ", "Is Active User  ||  ", "Address   ||  ", "City   ||  ", "Postcode   ||  ",
@@ -362,8 +358,7 @@ public class UserProfileOperations {
 				PERSON_TYPE == "HOST" ? "Has Driving License   ||  " : "Age of Kids",
 				PERSON_TYPE == "HOST" ? "Hobbies   ||  " : "Kids with Disability   ||  ",
 				PERSON_TYPE == "HOST" ? "Supervises Age of Children   ||  " : " ",
-				PERSON_TYPE == "HOST" ? "Educational Qualification   ||  " : " ",
-				"Preferred Language");
+				PERSON_TYPE == "HOST" ? "Educational Qualification   ||  " : " ", "Preferred Language");
 
 		table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------", "----------", "----------", "----------", "----------", "----------", "----------",
@@ -408,7 +403,7 @@ public class UserProfileOperations {
 			aboutMe = rs.getString("ABOUT_ME");
 			preferredLanguage = rs.getString("LANGUAGES");
 			ratings = rs.getInt("RATINGS");
-			
+
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
@@ -423,20 +418,20 @@ public class UserProfileOperations {
 			String salaryProvidedStr = String.valueOf(salaryProvided);
 			String isActiveStr = String.valueOf(isActive);
 			String ratingsStr = String.valueOf(ratings);
-			
-			
+
 			table.addRow(personIdStr, firstName, lastName, contactNoStr, gender, maritalStatus, dobStr, isActiveStr,
 					addressLine1, city, postCodeStr, country, lastOnline, title, passportNo, aboutMe,
 					PERSON_TYPE == "HOST" ? salaryExpectationStr : salaryProvidedStr,
 					PERSON_TYPE == "HOST" ? validVisaStr : numberOfKidsStr,
 					PERSON_TYPE == "HOST" ? drivingLicenseStr : ageOfKidsStr,
 					PERSON_TYPE == "HOST" ? hobbies : hasPyhsicalDisabilityStr,
-					PERSON_TYPE == "HOST" ? supervisesChildOfAgeStr : "", PERSON_TYPE == "HOST" ? qualification : "", preferredLanguage, ratingsStr);
+					PERSON_TYPE == "HOST" ? supervisesChildOfAgeStr : "", PERSON_TYPE == "HOST" ? qualification : "",
+					preferredLanguage, ratingsStr);
 
-			table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
+			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------", "----------", "----------",
-					"----------", "----------", "----------");
+					"----------", "----------", "----------", "----------");
 			count++;
 		}
 
@@ -444,7 +439,7 @@ public class UserProfileOperations {
 
 		if (count == 0) {
 			System.out.println("Sorry no searches found ! \n");
-			searchByPreference();
+			searchByPreference(sc);
 		}
 
 		int personIdChoosed = 0;
@@ -468,7 +463,7 @@ public class UserProfileOperations {
 			personIdChoosed = sc.nextInt();
 			if (personIdChoosed != 0) {
 				System.out.println("You have successfully contacted the HOST");
-				searchByPreference();
+				searchByPreference(sc);
 			} else if (personIdChoosed == 0) {
 				mainMenu();
 			}
@@ -476,14 +471,14 @@ public class UserProfileOperations {
 
 		// TO DO Merge the book appointment here
 
-		//// TO DO Display available slots of that person ID
-		sc.close();
+//		//// TO DO Display available slots of that person ID
+//		sc.close();
 
 	}
 
-	public static void deleteSelfProfile() throws SQLException {
+	public static void deleteSelfProfile(Scanner sc) throws SQLException {
 
-		Scanner sc = new Scanner(System.in);
+//		Scanner sc = new Scanner(System.in);
 		Character deleteYesOrNo = '\0';
 
 		System.out.println("Are you sure you want to delete your Profile Y/N ?");
@@ -504,11 +499,10 @@ public class UserProfileOperations {
 			statementdelete.executeUpdate();
 		} else {
 			mainMenu();
-			sc.close();
 		}
 	}
 
-	public static void updateProfile() throws SQLException {
+	public static void updateProfile(Scanner sc) throws SQLException {
 		//
 
 		Connection conn = edu.srh.aupair.utilities.utilities.getConnectionString();
@@ -525,8 +519,8 @@ public class UserProfileOperations {
 		String maritalstatus = "";
 		String interviewtimeslot = "";
 		String passportnumber = "";
-		Scanner sc = new Scanner(System.in);
-
+//		Scanner sc = new Scanner(System.in);
+//			
 		String query = "{CALL updateSelfProfile(?,?,?,?,?,?,?,?,?,?)}";
 		CallableStatement statementup = conn.prepareCall(query);
 
