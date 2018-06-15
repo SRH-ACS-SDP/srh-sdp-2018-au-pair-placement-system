@@ -119,7 +119,7 @@ public class UserProfileOperations {
 
 	public static void mainMenu() throws SQLException {
 
-		System.out.println(
+		System.out.println("\n =============== MAIN MENU =============== \n" +
 				"\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
 						+ " \n 3) Delete your profile \n 4) View Proposals \n 5) Logout  ");
 
@@ -167,16 +167,18 @@ public class UserProfileOperations {
 		
 		BuildTable table = new BuildTable();
 
+		System.out.println("\n =============== PROPOSALS =============== \n");
 		
-		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||", "PROPOSAL ID   ||  ", 
-				"NAME         ||  ",
+		
+		table.addRow("PROPOSAL ID   ||  ", 
+				"      NAME         ||  ",
 				"Tasks for Au Pair   ||  ",
 			"Working Hours Proposed  ||  ",
 			 "Remuneration Proposed  ||  ",
 			    "Holidays Proposed   ||  ",
 			 "Travel Costs");
 		
-		
+		int count =0;
 		while (rs.next()) {
 			
 			
@@ -195,20 +197,15 @@ public class UserProfileOperations {
 		travelCosts=rs.getBoolean("TRAVEL_COSTS");
 		
 		String proposalIdStr = String.valueOf(proposalId);
-		String personIdStr = String.valueOf(personId);
 	
 	hostName=rs.getString("HOSTNAME");
 	auPairName=rs.getString("AUPAIRNAME");
-
 		
-		System.out.println("You have below Proposals: \n");
-		
-		
-		table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
+		table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
 				"----------");
 		
-		table.addRow(personIdStr , proposalIdStr, 
-				PERSON_TYPE == "HOST" ? hostName:auPairName,
+		table.addRow(proposalIdStr, 
+				PERSON_TYPE == "HOST" ? auPairName:hostName,
 				tasksForAuPair,
 				workingHoursProposed,
 				RemunerationsProposed,
@@ -216,7 +213,7 @@ public class UserProfileOperations {
 				travelCostsStr);
 		count++;
 		}
-		System.out.println(tb.toString());
+		System.out.println(table.toString());
 		
 		if(count==0)
 		{
