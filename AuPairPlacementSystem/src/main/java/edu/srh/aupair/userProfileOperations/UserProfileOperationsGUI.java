@@ -542,7 +542,6 @@ public class UserProfileOperationsGUI {
 				updatedchanges += "\nMarital Status: " + maritalstatus;
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
-	
 			}
 		}
 
