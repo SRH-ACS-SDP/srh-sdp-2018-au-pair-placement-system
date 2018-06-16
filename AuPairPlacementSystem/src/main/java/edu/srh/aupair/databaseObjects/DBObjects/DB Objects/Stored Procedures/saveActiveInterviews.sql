@@ -1,9 +1,6 @@
 CREATE DEFINER=`root`@`localhost` PROCEDURE `saveActiveInterviews`( 
 IN interviewId INT(10),
 IN hostId INT(10),
-#IN proposalOffers bit,
-#IN jobOfferedByHosts bit(1) = null ,
-#IN jobAcceptedbyAuPair bit(1) = null ,
 OUT active_interview_id int)
 BEGIN
 
