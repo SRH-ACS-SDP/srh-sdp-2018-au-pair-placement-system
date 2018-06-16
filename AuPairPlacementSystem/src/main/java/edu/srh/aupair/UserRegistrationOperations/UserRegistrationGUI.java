@@ -18,7 +18,7 @@ public class UserRegistrationGUI {
 
 	public static String personType = "";
 	
-	static IUserRegistrationInterface userRegistrationServiceObject;
+	public static IUserRegistrationInterface userRegistrationServiceObject;
 
 	public 	UserRegistrationGUI() throws SQLException {
 		userRegistrationServiceObject = new  UserRegistrationService();
@@ -118,10 +118,17 @@ public class UserRegistrationGUI {
 			personType = "HOST";
 			System.out.println(">Enter passport number: ");
 			passportNumber = input.next();
-			hostUser.setPassportNumber(input.next());			
+			
+			System.out.println("Enter email address: ");
+			emailid = input.next();
+			
+			//hostUser.setPassportNumber(input.next());			
 
-			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber);
+			//int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber);
 
+			//IUserRegistrationInterface iUserRegistrationInterface = new UserRegistrationService();
+			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber, emailid);
+			
 			if (the_count == 0) {
 				System.out.println("Enter first name: ");
 				firstName = input.next();
@@ -136,8 +143,8 @@ public class UserRegistrationGUI {
 				hashedUserPassword = encryptPassword(userPassword);
 
 				// System.out.println(hashedUserPassword);
-				System.out.println("Enter email address: ");
-				emailid = input.next();
+//				System.out.println("Enter email address: ");
+//				emailid = input.next();
 				System.out.println("Contact number: ");
 				contactNo = input.next();
 				System.out.println("Gender ");
@@ -172,9 +179,9 @@ public class UserRegistrationGUI {
 				System.out.println("Has physical disability(Enter True or False)");
 				hasPhysicalDisability = input.nextBoolean();
 
-				countryCurrencyId = iUserRegistrationInterface.getCountryIdFromCountryName(country, countryCurrencyId);
+				countryCurrencyId = userRegistrationServiceObject.getCountryIdFromCountryName(country, countryCurrencyId);
 
-				int personId = iUserRegistrationInterface.registerNewHostUser(personType, firstName, lastName, emailid,
+				int personId = userRegistrationServiceObject.registerNewHostUser(personType, firstName, lastName, emailid,
 						contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId, address, city,
 						postCode, title, aboutMe, passportNumber, isActive, hashedUserPassword, latestOnlineTime,
 						isSalaryProvided, noOfKids, ageOfKid, hasPhysicalDisability);
@@ -191,11 +198,14 @@ public class UserRegistrationGUI {
 
 		else if (userChoice == 2) {
 			personType = "AU-PAIR";
+			
 			System.out.println("Enter passport number: ");
 			passportNumber = input.next();
-
+			System.out.println("Enter email address: ");
+			emailid = input.next();
+			
 			//IUserRegistrationInterface iUserRegistrationInterface = new UserRegistrationService();
-			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber);
+			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber, emailid);
 
 			// System.out.println("thecount" + count);
 
@@ -210,8 +220,8 @@ public class UserRegistrationGUI {
 
 				hashedUserPassword = encryptPassword(userPassword);
 
-				System.out.println("Enter email address: ");
-				emailid = input.next();
+//				System.out.println("Enter email address: ");
+//				emailid = input.next();
 				System.out.println("Please provide your contact number: ");
 				contactNo = input.next();
 				System.out.println("Gender ");
@@ -275,9 +285,9 @@ public class UserRegistrationGUI {
 					toTime = interviewDate.concat("  " + "6 pm");
 				}
 
-				countryCurrencyId = iUserRegistrationInterface.getCountryIdFromCountryName(country, countryCurrencyId);
+				countryCurrencyId = userRegistrationServiceObject.getCountryIdFromCountryName(country, countryCurrencyId);
 
-				int personId = iUserRegistrationInterface.registerNewAuPairUser(personType, firstName, lastName,
+				int personId = userRegistrationServiceObject.registerNewAuPairUser(personType, firstName, lastName,
 						emailid, contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId, address,
 						city, postCode, title, aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation,
 						hasDrivingLicense, hobbies, supervisesChildOfage, educationQualification, isActive,
@@ -326,7 +336,6 @@ public class UserRegistrationGUI {
 			System.out.println("***EXIT***");
 		}
 	}
-
 	private static String encryptPassword(String userPassword) {
 		String hashedUserPassword;
 		hashedUserPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());

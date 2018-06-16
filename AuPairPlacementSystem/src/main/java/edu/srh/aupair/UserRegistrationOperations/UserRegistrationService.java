@@ -5,19 +5,19 @@ import java.sql.SQLException;
 
 public class UserRegistrationService implements IUserRegistrationInterface {
 
-	public int verifyUserExistenceInSystem(String personType, String passportNumber) {
+	public int verifyUserExistenceInSystem(String personType, String passportNumber, String emailid) {
 		UserRegistrationRepository userRegistrationRepository = null;
 		int userExists = 0;
 		try {
-			userRegistrationRepository = new UserRegistrationRepository();
-			userExists = userRegistrationRepository.verifyUserExistenceInSystem(personType, passportNumber);
+		userRegistrationRepository = new UserRegistrationRepository();
+		userExists = userRegistrationRepository.verifyUserExistenceInSystem(personType, passportNumber, emailid);
 		} catch (SQLException e) {
-			e.printStackTrace();
+		e.printStackTrace();
 		}
 
 		return userExists;
 
-	}
+		}
 
 	public int getCountryIdFromCountryName(String country, int countryCurrencyId) {
 		int ccId = 0;

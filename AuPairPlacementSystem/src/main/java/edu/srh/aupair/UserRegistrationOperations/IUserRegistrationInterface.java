@@ -12,7 +12,7 @@ public interface IUserRegistrationInterface {
 			boolean isActive, String hashedUserPassword,Date latestOnlineTime, 
 			boolean isSalaryProvided,int noOfKids,int ageOfKid,boolean hasPhysicalDisability);
 
-	int verifyUserExistenceInSystem(String personType, String passportNumber);
+	int verifyUserExistenceInSystem(String personType, String passportNumber, String emailid);
 	
 	int registerNewAuPairUser(String personType, String firstName, String lastName, String emailid, String contactNo, 
 			String gender, String maritalStatus, String languages, String proficiency, int countryCurrencyId,

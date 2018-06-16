@@ -9,24 +9,24 @@ import java.sql.Types;
 
 public class UserRegistrationRepository {
 
-	Connection connection = null; 
-	
-	public UserRegistrationRepository() throws SQLException
-	{
-		connection = edu.srh.aupair.utilities.utilities.getConnectionString(); 
+	Connection connection = null;
+
+	public UserRegistrationRepository() throws SQLException {
+		connection = edu.srh.aupair.utilities.utilities.getConnectionString();
 	}
-		
-	public int verifyUserExistenceInSystem(String personType, String passportNumber)
+
+	public int verifyUserExistenceInSystem(String personType, String passportNumber, String emailid)
 			throws SQLException {
-		
-		String query = "{CALL registerUser(?, ? ,?)}";            
+
+		String query = "{CALL registerUser(?, ? ,?, ?)}";
 		CallableStatement stmt = connection.prepareCall(query);
 
 		stmt.setString(1, passportNumber);
 		stmt.setString(2, personType);
-		stmt.registerOutParameter(3, Types.INTEGER);
+		stmt.setString(3, emailid);
+		stmt.registerOutParameter(4, Types.INTEGER);
 		stmt.execute();
-		int the_count = stmt.getInt(3);
+		int the_count = stmt.getInt(4);
 		return the_count;
 	}
 
@@ -39,14 +39,14 @@ public class UserRegistrationRepository {
 		}
 		return countryCurrencyId;
 	}
-	
+
 	public int registerNewHostUser(String personType, String firstName, String lastName, String emailid,
 			String contactNo, String gender, String maritalStatus, String languages, String proficiency,
 			int countryCurrencyId, String address, String city, int postCode, String title, String aboutMe,
-			String passportNumber, boolean isActive, String hashedUserPassword, 
-			Date latestOnlineTime ,boolean IS_SALARY_PROVIDED,int NUMBER_OF_KIDS,int AGE_OF_KIDS,boolean HAS_PHYSICAL_DISABILITY) throws SQLException {
-		
-		
+			String passportNumber, boolean isActive, String hashedUserPassword, Date latestOnlineTime,
+			boolean IS_SALARY_PROVIDED, int NUMBER_OF_KIDS, int AGE_OF_KIDS, boolean HAS_PHYSICAL_DISABILITY)
+			throws SQLException {
+
 		String registerHostUserQuery = "{CALL registerAHostUser(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?)}";
 		CallableStatement myStmt = connection.prepareCall(registerHostUserQuery);
 		myStmt.setString(1, personType);
@@ -76,12 +76,10 @@ public class UserRegistrationRepository {
 		myStmt.registerOutParameter(25, Types.INTEGER);
 		myStmt.execute();
 		int personId = myStmt.getInt(25);
-		
-		//System.out.println("host id testing " + hostId);
+
+		// System.out.println("host id testing " + hostId);
 		return personId;
-		
-		
-		
+
 	}
 
 	public int registerNewAuPairUser(String personType, String firstName, String lastName, String emailid,
@@ -89,8 +87,7 @@ public class UserRegistrationRepository {
 			int countryCurrencyId, String address, String city, int postCode, String title, String aboutMe,
 			String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation, boolean hasDrivingLicense,
 			String hobbies, String supervisesChildOfage, String educationQualification, boolean isActive,
-			String hashedUserPassword, Date latestOnlineTime, String fromTime , String toTime) throws SQLException 
-	{
+			String hashedUserPassword, Date latestOnlineTime, String fromTime, String toTime) throws SQLException {
 		String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		CallableStatement myStmt = connection.prepareCall(registerHostUserQuery);
 		myStmt.setString(1, personType);
@@ -122,27 +119,23 @@ public class UserRegistrationRepository {
 		myStmt.setString(27, fromTime);
 		myStmt.setString(28, toTime);
 		myStmt.registerOutParameter(29, Types.INTEGER);
-		
+
 		myStmt.execute();
 		int personId = myStmt.getInt(29);
 		return personId;
-		
+
 	}
 
-	
-	public int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId)
-			throws SQLException {
+	public int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId) throws SQLException {
 		String insertIntoInterviewScheduleQuery = "{CALL `insertIntoInterviewSchedule`(?,?,?,?)}";
 		CallableStatement cs = connection.prepareCall(insertIntoInterviewScheduleQuery);
 		cs.setInt(1, auPairId);
 		cs.setString(2, fromTime);
 		cs.setString(3, toTime);
-		cs.registerOutParameter(4, Types.INTEGER);							
+		cs.registerOutParameter(4, Types.INTEGER);
 		cs.execute();
 		int interviewId = cs.getInt(4);
 		return interviewId;
 	}
 
-	
-	
 }
