@@ -18,7 +18,7 @@ public class UserRegistrationRepository {
 	public int verifyUserExistenceInSystem(String personType, String passportNumber, String emailid)
 			throws SQLException {
 
-		String query = "{CALL registerUser(?, ? ,?, ?)}";
+		String query = "{CALL verifyExistingUser(?, ? ,?, ?)}";
 		CallableStatement stmt = connection.prepareCall(query);
 
 		stmt.setString(1, passportNumber);
@@ -88,6 +88,7 @@ public class UserRegistrationRepository {
 			String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation, boolean hasDrivingLicense,
 			String hobbies, String supervisesChildOfage, String educationQualification, boolean isActive,
 			String hashedUserPassword, Date latestOnlineTime, String fromTime, String toTime) throws SQLException {
+		
 		String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		CallableStatement myStmt = connection.prepareCall(registerHostUserQuery);
 		myStmt.setString(1, personType);

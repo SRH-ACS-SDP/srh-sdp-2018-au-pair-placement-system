@@ -197,7 +197,7 @@ public class UserRegistrationGUI {
 		} // host code ends here
 
 		else if (userChoice == 2) {
-			personType = "AU-PAIR";
+			personType = "AUPAIR";
 			
 			System.out.println("Enter passport number: ");
 			passportNumber = input.next();
