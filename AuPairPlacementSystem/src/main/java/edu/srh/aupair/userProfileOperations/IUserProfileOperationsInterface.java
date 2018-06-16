@@ -9,5 +9,6 @@ public interface IUserProfileOperationsInterface {
 	public ResultSet searchByPreference(int personId,String persontype,String gender,String qualification,String country,String city,String randomSearch,String preferredLanguage,int rating) throws SQLException;
 	public void deleteSelfProfile(int personId) throws SQLException;
 	public ResultSet viewProposals(int personId,String persontype) throws SQLException;
+	public int getHostId(int personId) throws SQLException;
 }
 

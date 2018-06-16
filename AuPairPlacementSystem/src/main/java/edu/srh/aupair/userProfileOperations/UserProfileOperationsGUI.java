@@ -249,7 +249,7 @@ public class UserProfileOperationsGUI {
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
 		int ratings = 0;
-		int hostId = "";
+		int hostId =0;
 
 		while (searchMore == 'y' || searchMore == 'Y') {
 
@@ -335,7 +335,7 @@ public class UserProfileOperationsGUI {
 		System.out.println("Displaying the results based on following parameters :\n" + searchedParameter + "\n");
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
-				randomSearch, preferredLanguage);
+				randomSearch, preferredLanguage,ratings);
 		// result.next();
 
 		int count = 0;
@@ -364,7 +364,7 @@ public class UserProfileOperationsGUI {
 				supervisesChildOfAge = result.getString("SUPERVISES_CHILD_OF_AGE");
 				qualification = result.getString("EDU_QUALIFICATION");
 			} else {
-				hostId = result.getInt("HOST_ID");
+				hostId =serviceObject.getHostId(person_Id);
 				// salaryProvided = rs.getBoolean("IS_SALARY_PROVIDED");
 				// numberOfKids = rs.getInt("NUMBER_OF_KIDS");
 				// ageOfKids = rs.getInt("AGE_OF_KIDS");
