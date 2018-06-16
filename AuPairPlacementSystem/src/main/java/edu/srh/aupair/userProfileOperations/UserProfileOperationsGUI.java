@@ -138,7 +138,6 @@ public class UserProfileOperationsGUI {
 		} else if (userInput == 5) {
 			logout(sc);
 		}
-		// sc.close();
 	}
 
 	public void logout(Scanner sc) throws SQLException {
