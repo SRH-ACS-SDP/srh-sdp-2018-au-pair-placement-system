@@ -17,3 +17,6 @@ CREATE TABLE `person` (
   PRIMARY KEY (`PERSON_ID`),
   UNIQUE KEY `person_id_UNIQUE` (`PERSON_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `au_pair_management`.`person` 
+MODIFY COLUMN DOB varchar(45);

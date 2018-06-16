@@ -1,5 +1,7 @@
 package edu.srh.aupair.UserRegistrationOperations;
 
+import java.sql.Date;
+
 public class AuPairUser {
 	
 	private String personType;
@@ -27,6 +29,10 @@ public class AuPairUser {
 	private boolean isActive;
 	private String hashedUserPassword;
 	private Date latestOnlineTime;
+	private String DOB;
+	private String InterviewAvailabilityFromTime;
+	private String InterviewAvailabilityToTime;
+	
 	public String getPersonType() {
 		return personType;
 	}
@@ -176,6 +182,24 @@ public class AuPairUser {
 	}
 	public void setLatestOnlineTime(Date latestOnlineTime) {
 		this.latestOnlineTime = latestOnlineTime;
+	}
+	public String getDOB() {
+		return DOB;
+	}
+	public void setDOB(String dOB) {
+		DOB = dOB;
+	}
+	public String getInterviewAvailabilityFromTime() {
+		return InterviewAvailabilityFromTime;
+	}
+	public void setInterviewAvailabilityFromTime(String interviewAvailabilityFromTime) {
+		InterviewAvailabilityFromTime = interviewAvailabilityFromTime;
+	}
+	public String getInterviewAvailabilityToTime() {
+		return InterviewAvailabilityToTime;
+	}
+	public void setInterviewAvailabilityToTime(String interviewAvailabilityToTime) {
+		InterviewAvailabilityToTime = interviewAvailabilityToTime;
 	}
 	
 	

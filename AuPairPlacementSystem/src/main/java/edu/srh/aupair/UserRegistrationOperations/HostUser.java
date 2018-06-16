@@ -27,6 +27,7 @@ public class HostUser {
 	private int NUMBER_OF_KIDS; 
 	private int AGE_OF_KIDS; 
 	private boolean HAS_PHYSICAL_DISABILITY;
+	private String DOB;
 	
 	public String getPersonType() {
 		return personType;
@@ -165,6 +166,12 @@ public class HostUser {
 	}
 	public void setHAS_PHYSICAL_DISABILITY(boolean hAS_PHYSICAL_DISABILITY) {
 		HAS_PHYSICAL_DISABILITY = hAS_PHYSICAL_DISABILITY;
+	}
+	public String getDOB() {
+		return DOB;
+	}
+	public void setDOB(String dOB) {
+		DOB = dOB;
 	}
 	
 	

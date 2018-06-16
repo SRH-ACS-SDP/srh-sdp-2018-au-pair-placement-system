@@ -7,3 +7,10 @@ CREATE TABLE `interview_availability` (
   KEY `AU_PAIR_ID_idx` (`AU_PAIR_ID`),
   CONSTRAINT `FK_INTERVIEW_AVAILABILITY_AU_PAIR_ID` FOREIGN KEY (`AU_PAIR_ID`) REFERENCES `au_pair` (`au_pair_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `au_pair_management`.`interview_availability` 
+modify COLUMN `FROM_TIME`  VARCHAR(45) null default null;
+
+ALTER TABLE `au_pair_management`.`interview_availability` 
+modify COLUMN `TO_TIME`  VARCHAR(45) null default null;

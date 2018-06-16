@@ -9,15 +9,15 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 		UserRegistrationRepository userRegistrationRepository = null;
 		int userExists = 0;
 		try {
-		userRegistrationRepository = new UserRegistrationRepository();
-		userExists = userRegistrationRepository.verifyUserExistenceInSystem(personType, passportNumber, emailid);
+			userRegistrationRepository = new UserRegistrationRepository();
+			userExists = userRegistrationRepository.verifyUserExistenceInSystem(personType, passportNumber, emailid);
 		} catch (SQLException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		return userExists;
 
-		}
+	}
 
 	public int getCountryIdFromCountryName(String country, int countryCurrencyId) {
 		int ccId = 0;
@@ -39,12 +39,13 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 			boolean isSalaryProvided, int noOfKids, int ageOfKid, boolean hasPhysicalDisability) {
 		{
 
-			UserRegistrationRepository userRegistrationRepository = null;int personId = -1;
+			UserRegistrationRepository userRegistrationRepository = null;
+			int personId = -1;
 			try {
 				userRegistrationRepository = new UserRegistrationRepository();
-				personId = userRegistrationRepository.registerNewHostUser(personType, firstName, lastName, emailid, contactNo,
-						gender, maritalStatus, languages, proficiency, countryCurrencyId, address, city, postCode,
-						title, aboutMe, passportNumber, isActive, hashedUserPassword, latestOnlineTime,
+				personId = userRegistrationRepository.registerNewHostUser(personType, firstName, lastName, emailid,
+						contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId, address, city,
+						postCode, title, aboutMe, passportNumber, isActive, hashedUserPassword, latestOnlineTime,
 						isSalaryProvided, ageOfKid, ageOfKid, hasPhysicalDisability);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -54,42 +55,49 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 		}
 	}
 
-	
-	
-//	public int registerNewAuPairUser(String personType, String firstName, String lastName, String emailid,
-//			String contactNo, String gender, String maritalStatus, String languages, String proficiency,
-//			int countryCurrencyId, String address, String city, int postCode, String title, String aboutMe,
-//			String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation, boolean hasDrivingLicense,
-//			String hobbies, String supervisesChildOfage, String educationQualification, boolean isActive,
-//			String hashedUserPassword, Date latestOnlineTime) 
-//	{
-//		UserRegistrationRepository userRegistrationRepository = null;
-//		int auPairId = -1; 
-//		try {
-//			userRegistrationRepository = new UserRegistrationRepository();
-//			auPairId = userRegistrationRepository.registerNewAuPairUser(personType, firstName, lastName, emailid, contactNo, gender,
-//					maritalStatus, languages, proficiency, countryCurrencyId, address, city, postCode, title,
-//					aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation, hasDrivingLicense, hobbies,
-//					supervisesChildOfage, educationQualification, isActive, hashedUserPassword, 
-//					latestOnlineTime);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//
-//		}
-//		return auPairId;	
-//		
-//	}
+	// public int registerNewAuPairUser(String personType, String firstName, String
+	// lastName, String emailid,
+	// String contactNo, String gender, String maritalStatus, String languages,
+	// String proficiency,
+	// int countryCurrencyId, String address, String city, int postCode, String
+	// title, String aboutMe,
+	// String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation,
+	// boolean hasDrivingLicense,
+	// String hobbies, String supervisesChildOfage, String educationQualification,
+	// boolean isActive,
+	// String hashedUserPassword, Date latestOnlineTime)
+	// {
+	// UserRegistrationRepository userRegistrationRepository = null;
+	// int auPairId = -1;
+	// try {
+	// userRegistrationRepository = new UserRegistrationRepository();
+	// auPairId = userRegistrationRepository.registerNewAuPairUser(personType,
+	// firstName, lastName, emailid, contactNo, gender,
+	// maritalStatus, languages, proficiency, countryCurrencyId, address, city,
+	// postCode, title,
+	// aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation,
+	// hasDrivingLicense, hobbies,
+	// supervisesChildOfage, educationQualification, isActive, hashedUserPassword,
+	// latestOnlineTime);
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	//
+	// }
+	// return auPairId;
+	//
+	// }
 
 	public int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId) {
 
-		UserRegistrationRepository userRegistrationRepository = null;int interviewId = -1;
+		UserRegistrationRepository userRegistrationRepository = null;
+		int interviewId = -1;
 		try {
 			userRegistrationRepository = new UserRegistrationRepository();
-			interviewId = userRegistrationRepository.insertIntoInterviewSchedule( fromTime, toTime, auPairId);
+			interviewId = userRegistrationRepository.insertIntoInterviewSchedule(fromTime, toTime, auPairId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return interviewId;
 	}
 
@@ -101,18 +109,48 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 			String hashedUserPassword, Date latestOnlineTime, String fromTime, String toTime) {
 
 		UserRegistrationRepository userRegistrationRepository = null;
-		int auPairId = -1; 
+		int auPairId = -1;
 		try {
 			userRegistrationRepository = new UserRegistrationRepository();
-			auPairId = userRegistrationRepository.registerNewAuPairUser(personType, firstName, lastName, emailid, contactNo, gender,
-					maritalStatus, languages, proficiency, countryCurrencyId, address, city, postCode, title,
-					aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation, hasDrivingLicense, hobbies,
-					supervisesChildOfage, educationQualification, isActive, hashedUserPassword, 
-					latestOnlineTime,fromTime,toTime);
+			auPairId = userRegistrationRepository.registerNewAuPairUser(personType, firstName, lastName, emailid,
+					contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId, address, city,
+					postCode, title, aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation, hasDrivingLicense,
+					hobbies, supervisesChildOfage, educationQualification, isActive, hashedUserPassword,
+					latestOnlineTime, fromTime, toTime);
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return auPairId;	
+		return auPairId;
+	}
+
+	public int registerNewHostUser(HostUser hostUser) {
+
+		// userRegistrationRepository = new UserRegistrationRepository();
+		// return 0;
+		UserRegistrationRepository userRegistrationRepository = null;
+		int personIdForCreatedHost = 0;
+		try {
+			userRegistrationRepository = new UserRegistrationRepository();
+			personIdForCreatedHost = userRegistrationRepository.registerNewHostUser(hostUser);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return personIdForCreatedHost;
+	}
+
+	public int registerNewAuPairUser(AuPairUser aupairUser) {
+		
+		UserRegistrationRepository userRegistrationRepository = null;
+		int personIdForCreatedHost = 0;
+		try {
+			userRegistrationRepository = new UserRegistrationRepository();
+			personIdForCreatedHost = userRegistrationRepository.registerNewAuPairUser(aupairUser);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return personIdForCreatedHost;
 	}
 }

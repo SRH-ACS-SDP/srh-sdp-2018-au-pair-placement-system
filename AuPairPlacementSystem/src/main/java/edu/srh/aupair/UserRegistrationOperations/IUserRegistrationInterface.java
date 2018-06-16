@@ -23,4 +23,8 @@ public interface IUserRegistrationInterface {
 			Date latestOnlineTime, String fromTime, String toTime);
 	
 	int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId);
+
+	int registerNewHostUser(HostUser hostUser);
+
+	int registerNewAuPairUser(AuPairUser aupairUser);
 }

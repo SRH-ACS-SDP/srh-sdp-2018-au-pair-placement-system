@@ -7,7 +7,7 @@ in emailid VARCHAR(45),
 in contactNo VARCHAR(25), 
 in gender varchar(45), 
 in maritalStatus varchar(45), 
-in Dob datetime, 
+in Dob varchar(45), 
 in languages varchar(45),
 in proficiency varchar(45),
 in address varchar(45),
@@ -52,9 +52,9 @@ Insert INTO au_pair_management.au_pair
 HAS_DRIVING_LICENSE,HOBBIES,SUPERVISES_CHILD_OF_AGE,
 EDU_QUALIFICATION)
 values 
-(@pid,HAS_VALID_VISA, HAS_SALARY_EXPECTATION, 
-HAS_DRIVING_LICENSE,HOBBIES,SUPERVISES_CHILD_OF_AGE,
-EDU_QUALIFICATION);
+(@pid,hasValidVisa, hasSalaryExpectation, 
+hasDrivingLicense,hobbies,supervisesChildOfAge,
+eduQualification);
 
 INSERT INTO au_pair_management.languages(PERSON_ID,LANGUAGES,PROFICIENCY) 
 VALUES (@pid,languages,proficiency);
