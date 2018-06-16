@@ -20,18 +20,16 @@ public class UserProfileOperationsRepository {
 		return result;
 	}
 	
-	public void updateProfile(int personId,String firstname,String lastname,String email,String contact,String aboutme,String title,String maritalstatus,String interviewtimeslot,String passportnumber) throws SQLException {
-		String query = "{CALL updateSelfProfile(?,?,?,?,?,?,?,?,?,?)}";
+	public void updateProfile(int personId,String firstname,String lastname,String contact,String aboutme,String title,String maritalstatus,String passportnumber) throws SQLException {
+		String query = "{CALL updateSelfProfile(?,?,?,?,?,?,?,?)}";
 		CallableStatement statement = connection.prepareCall(query);
-		statement.setInt("PERSONID", 1);
+		statement.setInt("PERSONID", personId);
 		statement.setString("FIRSTNAME", firstname);
 		statement.setString("LASTNAME", lastname);
-		statement.setString("EMAIL", email);
 		statement.setString("CONTACT", contact);
 		statement.setString("ABOUTME", aboutme);
 		statement.setString("TITLE", title);
 		statement.setString("MARITALSTATUS", maritalstatus);
-		statement.setString("INTERVIEW_TIME_SLOT", interviewtimeslot);
 		statement.setString("PASSPORT", passportnumber);
 		statement.execute();
 	}

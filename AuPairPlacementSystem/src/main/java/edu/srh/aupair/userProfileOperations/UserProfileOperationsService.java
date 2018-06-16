@@ -14,8 +14,8 @@ public class UserProfileOperationsService implements IUserProfileOperationsInter
 		return result;
 	}
 
-	public void updateProfile(int personId,String firstname,String lastname,String email,String contact,String aboutme,String title,String maritalstatus,String interviewtimeslot,String passportnumber) throws SQLException{
-		repository.updateProfile(personId,firstname,lastname,email,contact,aboutme,title,maritalstatus,interviewtimeslot,passportnumber);
+	public void updateProfile(int personId,String firstname,String lastname,String contact,String aboutme,String title,String maritalstatus,String passportnumber) throws SQLException{
+		repository.updateProfile(personId,firstname,lastname,contact,aboutme,title,maritalstatus,passportnumber);
 	}
 
 	public ResultSet searchByPreference(int personId,String persontype,String gender,String qualification,String country,String city,String randomSearch,String preferredLanguage,int rating) throws SQLException{

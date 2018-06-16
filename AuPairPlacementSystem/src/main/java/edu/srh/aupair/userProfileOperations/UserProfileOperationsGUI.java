@@ -487,8 +487,7 @@ public class UserProfileOperationsGUI {
 		String updatedchanges = "";
 		while (wish == 'y' || wish == 'Y') {
 			System.out.println("Which fields do you wish to Update? \n \nPress enter appropriate numbers: "
-					+ "\n1) First name \n2) Last name \n3) Email \n4) Contact \n5) About me \n6) Title \n7) Marital Status"
-					+ "\n8) Interview Time Slot \n9) Passport No.");
+					+ "\n1) First name \n2) Last name \n3) Passport No. \n4) Contact \n5) About me \n6) Title \n7) Marital Status");
 
 			int updateSelf = sc.nextInt();
 			if (updateSelf == 1) {
@@ -508,10 +507,10 @@ public class UserProfileOperationsGUI {
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 3) {
-				System.out.println("Please enter your email: ");
-				email = sc.next();
+				System.out.println("Please enter your passport No.: ");
+				passportnumber= sc.next();
 				count++;
-				updatedchanges += "\nEmail: " + email;
+				updatedchanges += "\nPassport no.: " + passportnumber;
 
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
@@ -520,7 +519,6 @@ public class UserProfileOperationsGUI {
 				contact = sc.next();
 				count++;
 				updatedchanges += "\nContact: " + contact;
-
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 5) {
@@ -528,7 +526,6 @@ public class UserProfileOperationsGUI {
 				aboutme = sc.next();
 				count++;
 				updatedchanges += "\nAbout me:" + aboutme;
-
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
 			} else if (updateSelf == 6) {
@@ -544,30 +541,13 @@ public class UserProfileOperationsGUI {
 				maritalstatus = sc.next();
 				count++;
 				updatedchanges += "\nMarital Status: " + maritalstatus;
-
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
-			} else if (updateSelf == 8) {
-				System.out.println("Please enter your Interview Time Slots: "); //// doubtsssss
-				interviewtimeslot = sc.next();
-				count++;
-				updatedchanges += "\nInterview Time Slot: " + interviewtimeslot;
-				//////
-				System.out.println("Do you wish to update more fields? Y/N ");
-				wish = sc.next().charAt(0);
-			} else if (updateSelf == 9) {
-				System.out.println("Please enter your Passport Number: ");
-				passportnumber = sc.next();
-				count++;
-				updatedchanges += "\nPassport number: " + passportnumber;
-
-				System.out.println("Do you wish to update more fields? Y/N ");
-				wish = sc.next().charAt(0);
+	
 			}
 		}
 
-		serviceObject.updateProfile(personId, firstname, lastname, email, contact, aboutme, title, maritalstatus,
-				interviewtimeslot, passportnumber);
+		serviceObject.updateProfile(personId, firstname, lastname, contact, aboutme, title, maritalstatus, passportnumber);
 		System.out.println(+count + " changes updated successfully");
 		System.out.println("\n" + updatedchanges);
 		mainMenu(person_Id);
