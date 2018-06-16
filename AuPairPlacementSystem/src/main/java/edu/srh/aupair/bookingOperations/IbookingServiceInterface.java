@@ -7,5 +7,7 @@ public interface IbookingServiceInterface {
 
 	int bookingOperation(int interviewId, int hostId) throws SQLException;
 
-	ResultSet getInterviewSlotForAuPair(int interviewId, int AU_PAIR_ID) throws SQLException;
+	ResultSet getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException;
+
+	int getAuPairIdFromPersonId(int personId);
 }

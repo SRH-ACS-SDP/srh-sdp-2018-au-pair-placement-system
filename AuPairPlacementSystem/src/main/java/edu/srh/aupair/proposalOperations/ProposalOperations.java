@@ -21,7 +21,7 @@ public class ProposalOperations {
 		Scanner input = new Scanner(System.in);		
 		System.out.println("Hey ! you have a pending proposal. Do you want to view it?");
 		System.out.println("If yes press 1 or else press 0");
-		int value = input.nextInt();
+		int value = input.nextInt();int activeInterviewId, hostID,auPairId;
 
 		if (value == 1) // for AU pair
 		{	
@@ -46,9 +46,9 @@ public class ProposalOperations {
 	 			cs.registerOutParameter(3, Types.INTEGER);
 	 			cs.registerOutParameter(4, Types.INTEGER);
 	 			cs.execute();			
-	 			int activeInterviewId = cs.getInt(2);
-	 			int hostID = cs.getInt(3);
-	 			int auPairId = cs.getInt(4);
+	 			 activeInterviewId = cs.getInt(2);
+	 			 hostID = cs.getInt(3);
+	 			 auPairId = cs.getInt(4);
 	 			System.out.println("Congratulations you have accepted the proposal. Your contract will now be created." + activeInterviewId); 	//TO do remove the id later 			
 	 			
 	 			//Call the contract creation code TO DO 
@@ -86,8 +86,8 @@ public class ProposalOperations {
 				//cs.setInt(2, activeIntId);	 			
 	 			cs.registerOutParameter(2, Types.INTEGER);							
 	 			cs.execute();			
-	 			int activeInterviewId = cs.getInt(2);
-	 			System.out.println("Proposal rejected . We hope you find a better suited proposal soon." + activeInterviewId); //TO do remove the id later
+	 			int activeInterviewId1 = cs.getInt(2);
+	 			System.out.println("Proposal rejected . We hope you find a better suited proposal soon." + activeInterviewId1); //TO do remove the id later
 			}
 			
 			

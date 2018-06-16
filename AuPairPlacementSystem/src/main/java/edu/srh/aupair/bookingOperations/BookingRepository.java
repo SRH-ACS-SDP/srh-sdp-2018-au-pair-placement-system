@@ -17,7 +17,7 @@ public class BookingRepository {
 		}
 	}
 
-	public ResultSet getInterviewSlotForAuPair(int interviewId, int AU_PAIR_ID) throws SQLException {
+	public ResultSet getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException {
 		String query = "SELECT * FROM interview_availability  where AU_PAIR_ID = " + AU_PAIR_ID;
 		CallableStatement stmt = conn.prepareCall(query);
 		return stmt.executeQuery(query);
@@ -36,5 +36,16 @@ public class BookingRepository {
 		cs.execute();
 		int activeInterviewId = cs.getInt(3);
 		return activeInterviewId;
+	}
+
+	public int getAuPairIdFromPersonId(int personId) throws SQLException {
+		String query;
+		query = "{CALL `getAuPairIdFromPersonId`(?,?)}";
+		CallableStatement cs = conn.prepareCall(query);
+		cs.setInt(1, personId);
+		cs.registerOutParameter(2, Types.INTEGER);
+		cs.execute();
+		int auPairId = cs.getInt(2);
+		return auPairId;
 	}
 }

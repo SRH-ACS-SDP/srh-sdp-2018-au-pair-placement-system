@@ -74,13 +74,15 @@ public class Login {
 			String personType = "HOST";
 
 			try {
-				String getEncryptedPassword = "{Call VerifyEncryptedPassword(?,?,?)}";
+				String getEncryptedPassword = "{Call VerifyEncryptedPassword(?,?,?,?)}";
 				CallableStatement cs = conn.prepareCall(getEncryptedPassword);
 				cs.setString(1, userName);
 				cs.setString(2, personType);
 				cs.registerOutParameter(3, Types.VARCHAR);
+				cs.registerOutParameter(4, Types.VARCHAR);
 				cs.execute();
 				String hashedPassword = cs.getString(3);
+				int personId = cs.getInt(4);
 				// System.out.println(hashedPassword);
 				if (BCrypt.checkpw(userPassword, hashedPassword)) {
 					System.out.println("Login successful");
@@ -104,16 +106,20 @@ public class Login {
 			userPassword = input.next();
 			String personType = "AUPAIR";
 			try {
-				String getEncryptedPassword = "{Call VerifyEncryptedPassword(?,?,?)}";
+				String getEncryptedPassword = "{Call VerifyEncryptedPassword(?,?,?,?)}";
 				CallableStatement cs = conn.prepareCall(getEncryptedPassword);
 				cs.setString(1, userName);
 				cs.setString(2, personType);
 				cs.registerOutParameter(3, Types.VARCHAR);
+				cs.registerOutParameter(4, Types.INTEGER);
 				cs.execute();
 				String hashedPassword = cs.getString(3);
+				int person_id = cs.getInt(4);
+				
 				// System.out.println(hashedPassword);
 				if (BCrypt.checkpw(userPassword, hashedPassword)) {
 					System.out.println("Login successful");
+					//System.out.println(person_id);
 				}
 
 				else {
@@ -121,7 +127,6 @@ public class Login {
 				}
 
 			}
-
 			catch (Exception ex) {
 				System.out.println("Failed to login...Try again with correct password");
 			}

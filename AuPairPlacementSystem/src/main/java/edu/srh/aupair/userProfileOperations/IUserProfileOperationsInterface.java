@@ -10,3 +10,4 @@ public interface IUserProfileOperationsInterface {
 	public void deleteSelfProfile(int personId) throws SQLException;
 	public ResultSet viewProposals(int personId,String persontype) throws SQLException;
 }
+

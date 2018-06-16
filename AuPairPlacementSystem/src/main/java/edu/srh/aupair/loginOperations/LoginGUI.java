@@ -1,23 +1,34 @@
 package edu.srh.aupair.loginOperations;
 
+import java.sql.SQLException;
 import java.util.Scanner;
+import edu.srh.aupair.userProfileOperations.UserProfileOperationsGUI;
 
 public class LoginGUI {
 
-	public static void main(String[] args) 
-	{
+	public static String personType ; 
+	
+	public static void main(String[] args) throws SQLException 
+	{	
 		LoginGUI loginGUI =new LoginGUI();
-		loginGUI.loginUser();
+		int personId = loginGUI.loginUser();
+		
+		if(personId != 0)
+		{
+			UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
+			userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+		}
 		
 	}
 
-	public  void loginUser() 
+	public  int loginUser() 
 	{
+		int person_id = 0 ;
 		String userName = "";
 		String userPassword = "";
 		int the_count = 0;
 		Scanner input = new Scanner(System.in);
-		System.out.println("***WELCOME TO AU PAIR PLACEMENT SYSTEM***\n");
+		//System.out.println("***WELCOME TO AU PAIR PLACEMENT SYSTEM***\n");
 		
 		System.out.println("***PRESS 1 TO LOGIN AS HOST && PRESS 2 TO LOGIN AS AUPAIR*** \n");
 					
@@ -27,20 +38,21 @@ public class LoginGUI {
 		userName = input.next();
 		System.out.println("Enter Password: ");
 		userPassword = input.next();
-		String personType ;
+		
 					
 		if(loginAs == 1)
 		{
 			personType = "HOST";
 			IloginServiceInterface obj=new LoginService();
-			obj.loginUser(userName, userPassword, personType);
+			person_id = obj.loginUser(userName, userPassword, personType);
+			
 			
 		}
 		else if(loginAs == 2)
 		{
 			personType = "AUPAIR";
-			IloginServiceInterface obj=new LoginService();
-			obj.loginUser(userName, userPassword, personType);
+			IloginServiceInterface obj = new LoginService();
+			person_id = obj.loginUser(userName, userPassword, personType);
 		}
 		else
 		{
@@ -48,7 +60,8 @@ public class LoginGUI {
 			
 		}
 		
-		input.close();
+		
+		return person_id;
 	}
 
 }

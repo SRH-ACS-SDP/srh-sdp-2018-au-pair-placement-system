@@ -89,9 +89,9 @@ public class UserRegistrationRepository {
 			int countryCurrencyId, String address, String city, int postCode, String title, String aboutMe,
 			String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation, boolean hasDrivingLicense,
 			String hobbies, String supervisesChildOfage, String educationQualification, boolean isActive,
-			String hashedUserPassword, Date latestOnlineTime) throws SQLException 
+			String hashedUserPassword, Date latestOnlineTime, String fromTime , String toTime) throws SQLException 
 	{
-		String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		CallableStatement myStmt = connection.prepareCall(registerHostUserQuery);
 		myStmt.setString(1, personType);
 		myStmt.setString(2, lastName);
@@ -119,11 +119,13 @@ public class UserRegistrationRepository {
 		myStmt.setString(24, hobbies);
 		myStmt.setString(25, supervisesChildOfage);
 		myStmt.setString(26, educationQualification);
-		myStmt.registerOutParameter(27, Types.INTEGER);
+		myStmt.setString(27, fromTime);
+		myStmt.setString(28, toTime);
+		myStmt.registerOutParameter(29, Types.INTEGER);
 		
 		myStmt.execute();
-		int auPairId = myStmt.getInt(27);
-		return auPairId;
+		int personId = myStmt.getInt(29);
+		return personId;
 		
 	}
 

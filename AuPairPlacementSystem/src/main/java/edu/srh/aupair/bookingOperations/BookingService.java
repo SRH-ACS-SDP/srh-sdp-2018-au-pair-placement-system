@@ -10,9 +10,21 @@ public class BookingService implements IbookingServiceInterface {
 		return obj.bookingRepository(interviewId, hostId);
 	}
 
-	public ResultSet getInterviewSlotForAuPair(int interviewId, int AU_PAIR_ID) throws SQLException {
+	public ResultSet getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException {
 		BookingRepository obj = new BookingRepository();
-		return obj.getInterviewSlotForAuPair(interviewId, AU_PAIR_ID);
+		return obj.getInterviewSlotForAuPair(AU_PAIR_ID);
+	}
+
+	public int getAuPairIdFromPersonId(int personId) {
+
+		BookingRepository obj = new BookingRepository();
+		try {
+			return obj.getAuPairIdFromPersonId(personId);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return personId;
 	}
 
 }

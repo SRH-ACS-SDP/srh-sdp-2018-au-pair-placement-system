@@ -20,7 +20,7 @@ public interface IUserRegistrationInterface {
 			String aboutMe, String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation, 
 			boolean hasDrivingLicense, String hobbies,
 			String supervisesChildOfage, String educationQualification, boolean isActive, String hashedUserPassword, 
-			Date latestOnlineTime);
+			Date latestOnlineTime, String fromTime, String toTime);
 	
 	int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId);
 }

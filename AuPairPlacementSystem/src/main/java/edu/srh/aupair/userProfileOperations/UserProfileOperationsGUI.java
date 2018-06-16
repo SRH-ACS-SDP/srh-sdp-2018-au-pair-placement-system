@@ -2,12 +2,16 @@ package edu.srh.aupair.userProfileOperations;
 
 import java.sql.*;
 import java.util.Date;
+
+import edu.srh.aupair.bookingOperations.BookingGUI;
+
 import java.util.*;
 
-public class UserProfileOperations {
+public class UserProfileOperationsGUI {
+	int person_Id = -1;
 	static IUserProfileOperationsInterface serviceObject;
 
-	public UserProfileOperations() throws SQLException {
+	public UserProfileOperationsGUI() throws SQLException {
 		serviceObject = new UserProfileOperationsService();
 	}
 
@@ -16,7 +20,7 @@ public class UserProfileOperations {
 		try {
 			String PERSON_TYPE = "HOST";
 			int personId = 1;
-			UserProfileOperations userProfileOperationsObject=new UserProfileOperations();
+			UserProfileOperationsGUI userProfileOperationsObject = new UserProfileOperationsGUI();
 			userProfileOperationsObject.getProfile(PERSON_TYPE, personId);
 		}
 
@@ -27,6 +31,7 @@ public class UserProfileOperations {
 	}
 
 	public void getProfile(String PERSON_TYPE, int personId) throws SQLException {
+		person_Id = personId;
 		ResultSet result = serviceObject.getProfileDetails(PERSON_TYPE, personId);
 		result.next();
 
@@ -88,37 +93,38 @@ public class UserProfileOperations {
 		aboutMe = result.getString("ABOUT_ME");
 
 		if (PERSON_TYPE == "AUPAIR") {
-			System.out.println("Profile Details are : \n\n1) First Name: " + firstName + "\n2) Last Name: "
-					+ lastName + "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender
-					+ "\n5) Marital Status: " + maritalStatus + "\n6) Date Of Birth: " + dob
-					+ "\n7) Is Active User: " + isActive + "\n8) Address: " + addressLine1 + "\n9) City: " + city
-					+ "\n10) Postcode: " + postcode + "\n11) Country: " + countryName + "\n12)Last Online: "
-					+ lastOnline + "\n13)Title: " + title + "\n14) Passport Number: " + passportNo
-					+ "\n15) Has a Valid Visa: " + hasValidVisa + "\n16) Has Salary Expectations: "
-					+ hasSalaryExpectation + "\n17)Has Driving License: " + hasDrivingLicense + "\n18) Hobbies: "
-					+ hobbies + "\n19) Supervises Age of Chidren: " + supervisesChildOfAge
-					+ "\n20) Educational Qualification: " + eduQualification + "\n21) About me: " + aboutMe);
+			System.out.println("Profile Details are : \n\n1) First Name: " + firstName + "\n2) Last Name: " + lastName
+					+ "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender + "\n5) Marital Status: "
+					+ maritalStatus + "\n6) Date Of Birth: " + dob + "\n7) Is Active User: " + isActive
+					+ "\n8) Address: " + addressLine1 + "\n9) City: " + city + "\n10) Postcode: " + postcode
+					+ "\n11) Country: " + countryName + "\n12)Last Online: " + lastOnline + "\n13)Title: " + title
+					+ "\n14) Passport Number: " + passportNo + "\n15) Has a Valid Visa: " + hasValidVisa
+					+ "\n16) Has Salary Expectations: " + hasSalaryExpectation + "\n17)Has Driving License: "
+					+ hasDrivingLicense + "\n18) Hobbies: " + hobbies + "\n19) Supervises Age of Chidren: "
+					+ supervisesChildOfAge + "\n20) Educational Qualification: " + eduQualification + "\n21) About me: "
+					+ aboutMe);
 		} else if (PERSON_TYPE == "HOST") {
-			System.out.println("Profile Details are : \n1) First Name: " + firstName + "\t\n2) Last Name: "
-					+ lastName + "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender
-					+ "\n5) Marital Status: " + maritalStatus + "\n6) Date Of Birth: " + dob
-					+ "\n7) Is Active User: " + isActive + "\n8) Address: " + addressLine1 + "\n9) City: " + city
-					+ "\n10) Postcode: " + postcode + "\n11) Country: " + countryName + "\n12) Last Online: "
-					+ lastOnline + "\n13) Title: " + title + "\n14) Passport Number: " + passportNo
-					+ "\n15) Is Salary Provided: " + isSalaryProvided + "\n16) Number Of Kids: " + numberOfKids
-					+ "\n17) Age of Kids: " + ageOfKids + "\n18) Does any of your kid have Physical Disability: "
-					+ hasPyhsicalDisability + "\n19) About me: " + aboutMe);
+			System.out.println("Profile Details are : \n1) First Name: " + firstName + "\t\n2) Last Name: " + lastName
+					+ "\n3) Contact No: " + contactNo + "\n4) Gender: " + gender + "\n5) Marital Status: "
+					+ maritalStatus + "\n6) Date Of Birth: " + dob + "\n7) Is Active User: " + isActive
+					+ "\n8) Address: " + addressLine1 + "\n9) City: " + city + "\n10) Postcode: " + postcode
+					+ "\n11) Country: " + countryName + "\n12) Last Online: " + lastOnline + "\n13) Title: " + title
+					+ "\n14) Passport Number: " + passportNo + "\n15) Is Salary Provided: " + isSalaryProvided
+					+ "\n16) Number Of Kids: " + numberOfKids + "\n17) Age of Kids: " + ageOfKids
+					+ "\n18) Does any of your kid have Physical Disability: " + hasPyhsicalDisability
+					+ "\n19) About me: " + aboutMe);
 		}
-		mainMenu();
+		mainMenu(person_Id);
 	}
 
-	public void mainMenu() throws SQLException {
-		int personId = 1;
+	public void mainMenu(int person_Id) throws SQLException {
+
+		Scanner sc = new Scanner(System.in);
+
 		System.out.println("\n =============== MAIN MENU =============== \n"
 				+ "\nPlease enter the appropriate actions to be performed : \n\n 1) Update your profile \n 2) Perform Search "
 				+ " \n 3) Delete your profile \n 4) View Proposals \n 5) Logout  ");
 
-		Scanner sc = new Scanner(System.in);
 		int userInput = sc.nextInt();
 		if (userInput == 1) {
 			updateProfile(sc);
@@ -127,11 +133,11 @@ public class UserProfileOperations {
 		} else if (userInput == 3) {
 			deleteSelfProfile(sc);
 		} else if (userInput == 4) {
-			viewProposals(personId);
+			viewProposals(person_Id);
 		} else if (userInput == 5) {
 			logout(sc);
 		}
-		sc.close();
+		// sc.close();
 	}
 
 	public void logout(Scanner sc) throws SQLException {
@@ -142,7 +148,7 @@ public class UserProfileOperations {
 		if (logout == 'Y' || logout == 'y') {
 			System.out.println("\nSuccessfully Logged out!\n");// redirect to login todo
 		} else {
-			mainMenu();
+			mainMenu(person_Id);
 		}
 	}
 
@@ -194,7 +200,7 @@ public class UserProfileOperations {
 
 		if (count == 0) {
 			System.out.println("Sorry no Proposals found !!! \n");
-			mainMenu();
+			mainMenu(person_Id);
 		}
 
 		// TO DO call the Proposal Operations.java where you have the option to accept
@@ -243,6 +249,7 @@ public class UserProfileOperations {
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
 		int ratings = 0;
+		int hostId = "";
 
 		while (searchMore == 'y' || searchMore == 'Y') {
 
@@ -263,7 +270,7 @@ public class UserProfileOperations {
 				gender = sc.next();
 				searchedParameter += "\nGender: " + gender;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); // Try to
-																										// eliminate
+				// eliminate
 																										// this
 																										// afterwards.
 																										// // afterwards
@@ -329,7 +336,7 @@ public class UserProfileOperations {
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
 				randomSearch, preferredLanguage);
-		//result.next();
+		// result.next();
 
 		int count = 0;
 		while (result.next()) {
@@ -357,6 +364,7 @@ public class UserProfileOperations {
 				supervisesChildOfAge = result.getString("SUPERVISES_CHILD_OF_AGE");
 				qualification = result.getString("EDU_QUALIFICATION");
 			} else {
+				hostId = result.getInt("HOST_ID");
 				// salaryProvided = rs.getBoolean("IS_SALARY_PROVIDED");
 				// numberOfKids = rs.getInt("NUMBER_OF_KIDS");
 				// ageOfKids = rs.getInt("AGE_OF_KIDS");
@@ -404,17 +412,20 @@ public class UserProfileOperations {
 			searchByPreference(sc);
 		}
 
-		int personIdChoosed = 0;
+		int personIdChoosen = 0;
 
 		if (PERSON_TYPE == "HOST") { /////// to do yAHA PE SAMPLE DIYA HAI HOST CHECK KARO BAAD MEIN
 			System.out.println(
 					"Do you want to book an appointment with any of the searches above? Please enter the respective AU-PAIR ID"
 							+ "\n\nOR \n\nEnter 0 to go back to the Main Menu");
-			personIdChoosed = sc.nextInt();
-			if (personIdChoosed != 0) {
+			personIdChoosen = sc.nextInt();
+			if (personIdChoosen != 0) {
 				//// TO DO call the BOOK APPOINTMENT METHOD
-			} else if (personIdChoosed == 0) {
-				mainMenu();
+				BookingGUI bookingGUI = new BookingGUI();
+				bookingGUI.bookingOperation(personIdChoosen, hostId);
+
+			} else if (personIdChoosen == 0) {
+				mainMenu(person_Id);
 			}
 		}
 
@@ -422,12 +433,12 @@ public class UserProfileOperations {
 			System.out
 					.println("Do you want to contact to any of the searches above? Please enter the respective HOST ID"
 							+ "\n\nOR \n\nEnter 0 to go back to the Main Menu");
-			personIdChoosed = sc.nextInt();
-			if (personIdChoosed != 0) {
+			personIdChoosen = sc.nextInt();
+			if (personIdChoosen != 0) {
 				System.out.println("You have successfully contacted the HOST");
 				searchByPreference(sc);
-			} else if (personIdChoosed == 0) {
-				mainMenu();
+			} else if (personIdChoosen == 0) {
+				mainMenu(person_Id);
 			}
 		}
 
@@ -448,12 +459,12 @@ public class UserProfileOperations {
 			// to do Throw him to APPlication home page
 			serviceObject.deleteSelfProfile(personId);
 		} else {
-			mainMenu();
+			mainMenu(person_Id);
 		}
 	}
 
 	public void updateProfile(Scanner sc) throws SQLException {
-		int personId=0;
+		int personId = 0;
 		String firstname = "";
 		String lastname = "";
 		String email = "";
@@ -546,11 +557,12 @@ public class UserProfileOperations {
 				wish = sc.next().charAt(0);
 			}
 		}
-		
-		serviceObject.updateProfile(personId, firstname, lastname, email, contact, aboutme, title, maritalstatus, interviewtimeslot, passportnumber);
+
+		serviceObject.updateProfile(personId, firstname, lastname, email, contact, aboutme, title, maritalstatus,
+				interviewtimeslot, passportnumber);
 		System.out.println(+count + " changes updated successfully");
 		System.out.println("\n" + updatedchanges);
-		mainMenu();
-		sc.close();
+		mainMenu(person_Id);
+		// sc.close();
 	}
 }

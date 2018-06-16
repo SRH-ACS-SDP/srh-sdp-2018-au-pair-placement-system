@@ -9,37 +9,58 @@ import java.util.Scanner;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import edu.srh.aupair.bookingOperations.BookingService;
+import edu.srh.aupair.bookingOperations.IbookingServiceInterface;
 import edu.srh.aupair.loginOperations.LoginGUI;
+import edu.srh.aupair.userProfileOperations.UserProfileOperationsGUI;
 
 public class UserRegistrationGUI {
 
+	public static String personType = "";
+	
+	static IUserRegistrationInterface userRegistrationServiceObject;
+
+	public 	UserRegistrationGUI() throws SQLException {
+		userRegistrationServiceObject = new  UserRegistrationService();
+	}
+	
+	
 	public static void main(String[] args) throws SQLException {
 
-		System.out.println("                    <=== WELCOME TO AU PAIR PLACEMENT SYSTEM ===>                        \n");
-		//System.out.println("                    ===== ===== ==== ==== ==== ==== ==== ==== ====                        \n");
-		//System.out.println("===== ===== ==== ==== ==== ==== ==== ==== ==== ");
+		System.out
+				.println("                    <=== WELCOME TO AU PAIR PLACEMENT SYSTEM ===>                        \n");
+		
 		System.out.println("* ENTER 1 TO LOGIN \n");
 		System.out.println("* ENTER 2 TO REGISTER \n");
 		Scanner input = new Scanner(System.in);
 		int userChoice = input.nextInt();
 
-		if (userChoice == 1) {
+		if (userChoice == 1) 
+		{
 			LoginGUI loginGUI = new LoginGUI();
-			loginGUI.loginUser();
-		} else if (userChoice == 2) {
+			int personId = loginGUI.loginUser();
+				
+			if(personId != 0)
+			{
+				UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
+				userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+			}		
+			
+		} 
+		else if (userChoice == 2)
+		{
 			UserRegistrationGUI userRegistrationGUI = new UserRegistrationGUI();
 			userRegistrationGUI.registerUser();
 
 		} else {
 			System.out.println("<=== SORRY, YOU ENTERED A WRONG CHOICE ===>");
-			
-		}
 
+		}
 	}
 
 	public void registerUser() throws SQLException {
 
-		String personType = "";
+		
 		String firstName = "";
 		String lastName = "";
 		String userPassword = "";
@@ -86,10 +107,10 @@ public class UserRegistrationGUI {
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("<=== Do you want to register yourself as Host user or Au Pair user ===>\n");
-		
-		
+
 		System.out.println("<=== Enter 1 to register as Host user or enter 2 to register as Au Pair user: ===> \n ");
 		int userChoice = input.nextInt();
+		HostUser hostUser = new HostUser();
 
 		if (userChoice == 1) // for host
 		{
@@ -97,16 +118,16 @@ public class UserRegistrationGUI {
 			personType = "HOST";
 			System.out.println(">Enter passport number: ");
 			passportNumber = input.next();
+			hostUser.setPassportNumber(input.next());			
 
-			IUserRegistrationInterface iUserRegistrationInterface = new UserRegistrationService();
-
-			int the_count = iUserRegistrationInterface.verifyUserExistenceInSystem(personType, passportNumber);
-
-			// System.out.println("thecount" + the_count); // to remove later
+			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber);
 
 			if (the_count == 0) {
 				System.out.println("Enter first name: ");
 				firstName = input.next();
+				 
+				
+				
 				System.out.println("Enter last name: ");
 				lastName = input.next();
 				System.out.println("Enter password: ");
@@ -173,8 +194,8 @@ public class UserRegistrationGUI {
 			System.out.println("Enter passport number: ");
 			passportNumber = input.next();
 
-			IUserRegistrationInterface iUserRegistrationInterface = new UserRegistrationService();
-			int the_count = iUserRegistrationInterface.verifyUserExistenceInSystem(personType, passportNumber);
+			//IUserRegistrationInterface iUserRegistrationInterface = new UserRegistrationService();
+			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber);
 
 			// System.out.println("thecount" + count);
 
@@ -256,19 +277,21 @@ public class UserRegistrationGUI {
 
 				countryCurrencyId = iUserRegistrationInterface.getCountryIdFromCountryName(country, countryCurrencyId);
 
-				int auPairId = iUserRegistrationInterface.registerNewAuPairUser(personType, firstName, lastName,
+				int personId = iUserRegistrationInterface.registerNewAuPairUser(personType, firstName, lastName,
 						emailid, contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId, address,
 						city, postCode, title, aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation,
 						hasDrivingLicense, hobbies, supervisesChildOfage, educationQualification, isActive,
-						hashedUserPassword, latestOnlineTime);
+						hashedUserPassword, latestOnlineTime, fromTime, toTime);
 
-				if (auPairId != 0) {
-					// saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);
-					int interviewId = iUserRegistrationInterface.insertIntoInterviewSchedule(fromTime, toTime,
-							auPairId);
-					System.out.println(auPairId + " " + fromTime + " " + toTime + " " + interviewId);// to do
-
-				}
+				// if (auPairId != 0) {
+				// // saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);
+				// int interviewId =
+				// iUserRegistrationInterface.insertIntoInterviewSchedule(fromTime, toTime,
+				// auPairId);
+				// System.out.println(auPairId + " " + fromTime + " " + toTime + " " +
+				// interviewId);// to do
+				//
+				// }
 
 				// System.out.println("Au Pair id entered " + auPairId);
 				System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
@@ -287,9 +310,18 @@ public class UserRegistrationGUI {
 
 		System.out.println("***ENTER 1 TO LOGIN NOW?***");
 		int login = input.nextInt();
-		if (login == 1) {
+		if (login == 1) 
+		{
 			LoginGUI loginGUI = new LoginGUI();
-			loginGUI.loginUser();
+			int personId = loginGUI.loginUser();
+			
+			if(personId != 0)
+			{
+				UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
+				userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+			}
+			
+			
 		} else {
 			System.out.println("***EXIT***");
 		}

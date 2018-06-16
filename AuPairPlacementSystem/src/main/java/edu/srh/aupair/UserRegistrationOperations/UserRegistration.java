@@ -17,11 +17,6 @@ public class UserRegistration {
 	private static final int NUMBER_OF_KIDS = 0;
 	private static final int AGE_OF_KIDS = 0;
 	private static final boolean HAS_PHYSICAL_DISABILITY = false;
-//	public enum Gender 
-//	{
-//		  ONE("Female"), 
-//		  TWO("Male");
-//		}
 
 	public static void main(String[] args) {
 		String personType = "";
@@ -32,7 +27,6 @@ public class UserRegistration {
 		String contactNo = "";
 		String gender = "";
 		String maritalStatus = "";
-		String dateOfBirth = "";
 		String languages ="";
 		String proficiency="";
 		String country = "";
@@ -114,7 +108,6 @@ public class UserRegistration {
 					System.out.println("Marital Status : ");
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
-					dateOfBirth = input.next();	
 					System.out.println("Preferred Language: ");
 					languages = input.next();
 					System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
@@ -221,7 +214,6 @@ public class UserRegistration {
 					System.out.println("Marital Status : ");
 					maritalStatus = input.next();
 					System.out.println("Date of birth: ");
-					dateOfBirth = input.next();
 					System.out.println("Preferred Language: ");
 					languages = input.next();
 					System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
@@ -235,15 +227,7 @@ public class UserRegistration {
 					System.out.println("Country: ");
 					country = input.next(); 
 					//
-					
-					String query2 = "select country_currency_id from COUNTRY_CURRENCY where COUNTRY_NAME = '" + country+ "'" ; 
-					CallableStatement myStmt1 = conn.prepareCall(query2);
-					ResultSet rs = myStmt1.executeQuery(query2);
-					if(rs.next())
-					{
-					countryCurrencyId = rs.getInt(1);
-					}
-					
+								
 					System.out.println("Enter title: ");
 					title = input.next();
 					System.out.println("About me: ");
@@ -289,8 +273,16 @@ public class UserRegistration {
 						fromTime = interviewDate.concat( "  " + "4 pm");
 						toTime =  interviewDate.concat( "  " + "6 pm");
 					}
-										
-					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,? ,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+						
+					String query2 = "select country_currency_id from COUNTRY_CURRENCY where COUNTRY_NAME = '" + country+ "'" ; 
+					CallableStatement myStmt1 = conn.prepareCall(query2);
+					ResultSet rs = myStmt1.executeQuery(query2);
+					if(rs.next())
+					{
+					countryCurrencyId = rs.getInt(1);
+					}
+					
+					String registerHostUserQuery = "{CALL `registerAuPairUser`(?,?,?,?,?,?,?,? ,? ,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 					CallableStatement myStmt = conn.prepareCall(registerHostUserQuery);
 					myStmt.setString(1, personType);
 					myStmt.setString(2, lastName);
@@ -318,16 +310,18 @@ public class UserRegistration {
 					myStmt.setString(24, hobbies);
 					myStmt.setString(25, supervisesChildOfage);
 					myStmt.setString(26, educationQualification);
-					myStmt.registerOutParameter(27, Types.INTEGER);
+					myStmt.setString(27, fromTime);
+					myStmt.setString(28, toTime);
+					myStmt.registerOutParameter(29, Types.INTEGER);
 					
 					myStmt.execute();
-					int auPairId = myStmt.getInt(27);
-					
-					if(auPairId != 0)
-					{
-						saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);							
-						
-					}
+//					int auPairId = myStmt.getInt(27);
+//					
+//					if(auPairId != 0)
+//					{
+//						saveInterviewSchedulePreference(conn, fromTime, toTime, auPairId);							
+//						
+//					}
 
 					//System.out.println("Au Pair id entered " + auPairId);
 					System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
@@ -347,19 +341,19 @@ public class UserRegistration {
 		}
 	}
 
-	private static void saveInterviewSchedulePreference(Connection conn, String fromTime, String toTime, int auPairId)
-			throws SQLException {
-		String insertIntoInterviewScheduleQuery = "{CALL `insertIntoInterviewSchedule`(?,?,?,?)}";
-		CallableStatement cs = conn.prepareCall(insertIntoInterviewScheduleQuery);
-		cs.setInt(1, auPairId);
-		cs.setString(2, fromTime);
-		cs.setString(3, toTime);
-		cs.registerOutParameter(4, Types.INTEGER);							
-		cs.execute();
-		int interviewId = cs.getInt(4);
-		System.out.println(auPairId + " " + fromTime + " " + toTime + " "+ interviewId);//to do 
-		System.out.println("YOU CAN ENTER ONE MORE INTERVIEW SLOT, ENTER Yes or No");
-	}
+//	private static void saveInterviewSchedulePreference(Connection conn, String fromTime, String toTime, int auPairId)
+//			throws SQLException {
+//		String insertIntoInterviewScheduleQuery = "{CALL `insertIntoInterviewSchedule`(?,?,?,?)}";
+//		CallableStatement cs = conn.prepareCall(insertIntoInterviewScheduleQuery);
+//		cs.setInt(1, auPairId);
+//		cs.setString(2, fromTime);
+//		cs.setString(3, toTime);
+//		cs.registerOutParameter(4, Types.INTEGER);							
+//		cs.execute();
+//		int interviewId = cs.getInt(4);
+//		System.out.println(auPairId + " " + fromTime + " " + toTime + " "+ interviewId);//to do 
+//		System.out.println("YOU CAN ENTER ONE MORE INTERVIEW SLOT, ENTER Yes or No");
+//	}
 
 	public static void callingLoginSteps(Scanner input) throws SQLException {
 		System.out.println("***ENTER 1 TO LOGIN NOW?***");
