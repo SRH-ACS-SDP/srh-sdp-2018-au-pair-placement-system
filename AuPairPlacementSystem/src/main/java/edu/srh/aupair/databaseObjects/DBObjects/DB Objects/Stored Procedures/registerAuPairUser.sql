@@ -25,7 +25,9 @@ in hasDrivingLicense bit,
 in hobbies varchar(45),
 in supervisesChildOfAge varchar(10),
 in eduQualification varchar(45),
-out the_au_pair_id int
+in fromTime VARCHAR(45),
+in toTime VARCHAR(45),
+out the_person_id int
 )
 BEGIN
 
@@ -42,7 +44,7 @@ lastOnline,title,aboutMe,passportNumber);
 
 SELECT @pid := PERSON_ID FROM 
 au_pair_management.person 
-WHERE person.passport_no = passportNumber;
+WHERE person.passport_no = passportNumber and person.EMAIL = emailid and person.PERSON_TYPE= 'AUPAIR';
 
 if @pid IS NOT NULL THEN
 Insert INTO au_pair_management.au_pair
@@ -60,8 +62,20 @@ VALUES (@pid,languages,proficiency);
 INSERT INTO au_pair_management.address(PERSON_ID,COUNTRY_CURRENCY_ID,ADDRESS_LINE1,CITY,POSTCODE)
 VALUES (@pid,countryCurrencyId,address,city,postCode);
 
-SELECT AU_PAIR_ID INTO the_au_pair_id FROM au_pair_management.au_pair 
+SELECT @AU_PAIR_ID :=  AU_PAIR_ID FROM au_pair_management.au_pair 
 WHERE au_pair.PERSON_ID = @pid;
+
+if @AU_PAIR_ID IS NOT NULL THEN
+Insert into interview_availability(AU_PAIR_ID,FROM_TIME ,TO_TIME)
+values (@AU_PAIR_ID , fromTime ,toTime); 
+END IF;  
+        
+#SELECT INTERVIEW_ID  into interviewId
+#from interview_availability where  AU_PAIR_ID = auPairID and FROM_TIME=fromTime 
+#and TO_TIME  = toTime;
+    
+SELECT PERSON_ID INTO the_person_id FROM au_pair_management.person 
+WHERE person.passport_no = passportNumber;
 
 END IF;
 

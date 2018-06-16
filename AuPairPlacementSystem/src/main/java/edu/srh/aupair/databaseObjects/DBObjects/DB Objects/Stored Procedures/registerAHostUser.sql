@@ -22,7 +22,7 @@ in passportNumber varchar(45),
 in IS_SALARY_PROVIDED bit,
 in NUMBER_OF_KIDS int(11),
 in AGE_OF_KIDS int(11),
-in HAS_PHYSICAL_DISABILITY bit, OUT the_host_id int)
+in HAS_PHYSICAL_DISABILITY bit, OUT the_person_id int)
 BEGIN
 Insert INTO au_pair_management.person(person_type,last_name,
 user_password,
@@ -34,9 +34,10 @@ values
 emailid,contactNo,gender,maritalStatus,Dob,isActive,
 lastOnline,title,aboutMe,passportNumber);
 
-SELECT @pid := PERSON_ID FROM au_pair_management.person 
-WHERE person.passport_no = passportNumber;
-
+SELECT @pid := PERSON_ID FROM 
+au_pair_management.person 
+WHERE person.passport_no = passportNumber and person.EMAIL = emailid 
+and person.PERSON_TYPE= 'HOST';
 
 if @pid IS NOT NULL THEN
 Insert INTO au_pair_management.HostUser
@@ -51,8 +52,11 @@ VALUES (@pid,languages,proficiency);
 INSERT INTO au_pair_management.address(PERSON_ID,COUNTRY_CURRENCY_ID,ADDRESS_LINE1,CITY,POSTCODE)
 VALUES (@pid,countryCurrencyId,address,city,postCode);
 
-select  HOST_ID  INTO the_host_id From au_pair_management.hostuser
- where hostuser.PERSON_ID = @pid;
+#select  PERSON_ID  INTO the_person_id From au_pair_management.person
+#where hostuser.PERSON_ID = @pid;
+
+SELECT PERSON_ID INTO the_person_id FROM au_pair_management.person 
+WHERE person.passport_no = passportNumber;
 
 END IF;
 END
