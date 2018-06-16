@@ -35,8 +35,8 @@ public class UserProfileOperationsRepository {
 		statement.execute();
 	}
 	
-	public ResultSet searchByPreference(int personId,String persontype,String gender,String qualification,String country,String city,String randomSearch,String preferredLanguage) throws SQLException {
-		String query = "{CALL searchByPreference(?,?,?,?,?,?,?,?)}";
+	public ResultSet searchByPreference(int personId,String persontype,String gender,String qualification,String country,String city,String randomSearch,String preferredLanguage,int rating) throws SQLException {
+		String query = "{CALL searchByPreference(?,?,?,?,?,?,?,?,?)}";
 		CallableStatement statement = connection.prepareCall(query);
 		statement.setInt("PERSONID",personId);
 		statement.setString("PERSONTYPE",persontype);
@@ -46,6 +46,7 @@ public class UserProfileOperationsRepository {
 		statement.setString("CITY", city);
 		statement.setString("RANDOMSEARCH", randomSearch);
 		statement.setString("PREFERREDLANGUAGE", preferredLanguage);
+		statement.setInt("RATINGS",rating);
 		ResultSet result = statement.executeQuery();
 		return result;
 	}
