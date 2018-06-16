@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class UserProfileOperationsRepository {
 	Connection connection;
@@ -69,4 +70,14 @@ public class UserProfileOperationsRepository {
 		ResultSet result = statementview.executeQuery();
 		return result;
 	}
-}
+	
+	public int getHostId(int personId) throws SQLException {
+		String query = "{CALL `getHostIdFromPersonId`(?,?)}";
+		CallableStatement cs = connection.prepareCall(query);
+		cs.setInt(1, personId);
+		cs.registerOutParameter(2, Types.INTEGER);
+		cs.execute();
+		int hostId = cs.getInt(2);
+		return hostId;
+	}
+	}

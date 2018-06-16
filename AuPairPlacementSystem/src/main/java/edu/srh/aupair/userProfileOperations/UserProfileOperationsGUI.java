@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.Date;
 
 import edu.srh.aupair.bookingOperations.BookingGUI;
+import edu.srh.aupair.loginOperations.LoginGUI;
 
 import java.util.*;
 
@@ -146,7 +147,10 @@ public class UserProfileOperationsGUI {
 		System.out.println("\n Are you sure you want to logout of the system? Y/N");
 		logout = sc.next().charAt(0);
 		if (logout == 'Y' || logout == 'y') {
-			System.out.println("\nSuccessfully Logged out!\n");// redirect to login todo
+			System.out.println("\nSuccessfully Logged out!\n");
+			LoginGUI login=new LoginGUI();
+			person_Id=0;
+			login.loginUser();
 		} else {
 			mainMenu(person_Id);
 		}
@@ -249,7 +253,7 @@ public class UserProfileOperationsGUI {
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
 		int ratings = 0;
-		int hostId = "";
+		int hostId =0;
 
 		while (searchMore == 'y' || searchMore == 'Y') {
 
@@ -335,7 +339,7 @@ public class UserProfileOperationsGUI {
 		System.out.println("Displaying the results based on following parameters :\n" + searchedParameter + "\n");
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
-				randomSearch, preferredLanguage);
+				randomSearch, preferredLanguage,ratings);
 		// result.next();
 
 		int count = 0;
@@ -356,19 +360,15 @@ public class UserProfileOperationsGUI {
 			lastOnline = result.getString("LAST_ONLINE");
 			title = result.getString("TITLE");
 			passportNo = result.getString("passport_no");
-			if (PERSON_TYPE == "AUPAIR") {
+			if (PERSON_TYPE == "HOST") {
 				validVisa = result.getBoolean("HAS_VALID_VISA");
 				salaryExpectation = result.getBoolean("HAS_SALARY_EXPECTATION");
 				drivingLicense = result.getBoolean("HAS_DRIVING_LICENSE");
 				hobbies = result.getString("HOBBIES");
 				supervisesChildOfAge = result.getString("SUPERVISES_CHILD_OF_AGE");
 				qualification = result.getString("EDU_QUALIFICATION");
+				hostId =serviceObject.getHostId(person_Id);
 			} else {
-				hostId = result.getInt("HOST_ID");
-				// salaryProvided = rs.getBoolean("IS_SALARY_PROVIDED");
-				// numberOfKids = rs.getInt("NUMBER_OF_KIDS");
-				// ageOfKids = rs.getInt("AGE_OF_KIDS");
-				// hasPyhsicalDisability = rs.getBoolean("HAS_PHYSICAL_DISABILITY");
 			} // check boolean type
 			aboutMe = result.getString("ABOUT_ME");
 			preferredLanguage = result.getString("LANGUAGES");

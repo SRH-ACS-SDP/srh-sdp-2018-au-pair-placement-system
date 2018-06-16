@@ -31,4 +31,9 @@ public class UserProfileOperationsService implements IUserProfileOperationsInter
 		ResultSet result=repository.viewProposals(personId,persontype);
 		return result;
 	}
+
+	public int getHostId(int personId) throws SQLException{
+		return repository.getHostId(personId);
+	}
+
 }
