@@ -6,7 +6,7 @@ import edu.srh.aupair.userProfileOperations.UserProfileOperationsGUI;
 
 public class LoginGUI {
 
-	public static String personType ; 
+	public static String loggedInPersonType ; 
 	
 	public static void main(String[] args) throws SQLException 
 	{	
@@ -16,7 +16,7 @@ public class LoginGUI {
 		if(personId != 0)
 		{
 			UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
-			userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+			userProfileOperationsGUI.getProfile(LoginGUI.loggedInPersonType, personId);
 		}
 		
 	}
@@ -42,17 +42,17 @@ public class LoginGUI {
 					
 		if(loginAs == 1)
 		{
-			personType = "HOST";
+			loggedInPersonType = "HOST";
 			IloginServiceInterface obj=new LoginService();
-			person_id = obj.loginUser(userName, userPassword, personType);
+			person_id = obj.loginUser(userName, userPassword, loggedInPersonType);
 			
 			
 		}
 		else if(loginAs == 2)
 		{
-			personType = "AUPAIR";
+			loggedInPersonType = "AUPAIR";
 			IloginServiceInterface obj = new LoginService();
-			person_id = obj.loginUser(userName, userPassword, personType);
+			person_id = obj.loginUser(userName, userPassword, loggedInPersonType);
 		}
 		else
 		{

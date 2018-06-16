@@ -5,15 +5,20 @@ import java.util.Date;
 
 import edu.srh.aupair.bookingOperations.BookingGUI;
 import edu.srh.aupair.loginOperations.LoginGUI;
+import edu.srh.aupair.proposalOperations.ProposalOperationsGUI;
 
 import java.util.*;
 
 public class UserProfileOperationsGUI {
 	int person_Id = -1;
+	public String loggedInPersonType;
 	static IUserProfileOperationsInterface serviceObject;
 
+	public ProposalOperationsGUI proposalGUI;
+	
 	public UserProfileOperationsGUI() throws SQLException {
 		serviceObject = new UserProfileOperationsService();
+		proposalGUI=new ProposalOperationsGUI();
 	}
 
 	public static void main(String[] args) throws SQLException {
@@ -33,6 +38,7 @@ public class UserProfileOperationsGUI {
 
 	public void getProfile(String PERSON_TYPE, int personId) throws SQLException {
 		person_Id = personId;
+		loggedInPersonType = PERSON_TYPE;
 		ResultSet result = serviceObject.getProfileDetails(PERSON_TYPE, personId);
 		result.next();
 
@@ -147,8 +153,8 @@ public class UserProfileOperationsGUI {
 		logout = sc.next().charAt(0);
 		if (logout == 'Y' || logout == 'y') {
 			System.out.println("\nSuccessfully Logged out!\n");
-			LoginGUI login=new LoginGUI();
-			person_Id=0;
+			LoginGUI login = new LoginGUI();
+			person_Id = 0;
 			login.loginUser();
 		} else {
 			mainMenu(person_Id);
@@ -158,7 +164,6 @@ public class UserProfileOperationsGUI {
 	public void viewProposals(int personId) throws SQLException {
 
 		int proposalId = 0;
-
 		String auPairName = "";
 		String hostName = "";
 		String tasksForAuPair = "";
@@ -168,7 +173,7 @@ public class UserProfileOperationsGUI {
 		boolean travelCosts = false;
 		String travelCostsStr = String.valueOf(travelCosts);
 
-		String PERSON_TYPE = "HOST";
+		String PERSON_TYPE = loggedInPersonType;
 		ResultSet result = serviceObject.viewProposals(personId, PERSON_TYPE);
 		result.next();
 
@@ -188,7 +193,6 @@ public class UserProfileOperationsGUI {
 			RemunerationsProposed = result.getString("REMUNERATIONS_PROPOSED");
 			holidaysProposed = result.getString("HOLIDAYS_PROPOSED");
 			travelCosts = result.getBoolean("TRAVEL_COSTS");
-
 			String proposalIdStr = String.valueOf(proposalId);
 			hostName = result.getString("HOSTNAME");
 			auPairName = result.getString("AUPAIRNAME");
@@ -200,10 +204,14 @@ public class UserProfileOperationsGUI {
 			count++;
 		}
 		System.out.println(table.toString());
-
 		if (count == 0) {
 			System.out.println("Sorry no Proposals found !!! \n");
 			mainMenu(person_Id);
+		}
+		else {
+			if (loggedInPersonType == "AUPAIR") {
+				proposalGUI.saveProposalResponseByAuPair();
+			}
 		}
 
 		// TO DO call the Proposal Operations.java where you have the option to accept
@@ -211,8 +219,9 @@ public class UserProfileOperationsGUI {
 	}
 
 	public void searchByPreference(Scanner sc) throws SQLException {
-		String PERSON_TYPE = "HOST"; ///// REMEMEBER TO REMOVE THIS AND UPAR WALE update MEIN AFTER U GET INPUTS FROM
-										///// db diRECTLY ***********TO DO
+		String PERSON_TYPE = loggedInPersonType; ///// REMEMEBER TO REMOVE THIS AND UPAR WALE update MEIN AFTER U GET
+													///// INPUTS FROM
+		///// db diRECTLY ***********TO DO
 		int searchOptions = '0';
 		Character searchMore = 'y';
 		String gender = "";
@@ -252,7 +261,7 @@ public class UserProfileOperationsGUI {
 		Boolean hasPyhsicalDisability = false;
 		String aboutMe = "";
 		int ratings = 0;
-		int hostId =0;
+		int hostId = 0;
 
 		while (searchMore == 'y' || searchMore == 'Y') {
 
@@ -274,9 +283,9 @@ public class UserProfileOperationsGUI {
 				searchedParameter += "\nGender: " + gender;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); // Try to
 				// eliminate
-																										// this
-																										// afterwards.
-																										// // afterwards
+				// this
+				// afterwards.
+				// // afterwards
 				searchMore = sc.next().charAt(0);
 			} else if (searchOptions == 2) {
 				System.out.println("Enter the Qualification you want to search: ");
@@ -338,7 +347,7 @@ public class UserProfileOperationsGUI {
 		System.out.println("Displaying the results based on following parameters :\n" + searchedParameter + "\n");
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
-				randomSearch, preferredLanguage,ratings);
+				randomSearch, preferredLanguage, ratings);
 		// result.next();
 
 		int count = 0;
@@ -366,7 +375,7 @@ public class UserProfileOperationsGUI {
 				hobbies = result.getString("HOBBIES");
 				supervisesChildOfAge = result.getString("SUPERVISES_CHILD_OF_AGE");
 				qualification = result.getString("EDU_QUALIFICATION");
-				hostId =serviceObject.getHostId(person_Id);
+				hostId = serviceObject.getHostId(person_Id);
 			} else {
 			} // check boolean type
 			aboutMe = result.getString("ABOUT_ME");
@@ -562,6 +571,5 @@ public class UserProfileOperationsGUI {
 		System.out.println(+count + " changes updated successfully");
 		System.out.println("\n" + updatedchanges);
 		mainMenu(person_Id);
-		// sc.close();
 	}
 }
