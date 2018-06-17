@@ -298,7 +298,7 @@ public class UserProfileOperationsGUI {
 				// afterwards.
 				// // afterwards
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 7 || PERSON_TYPE =="HOST") {
+			} else if (searchOptions == 7 && PERSON_TYPE =="HOST") {
 				System.out.println("Enter the Qualification you want to search: ");
 				qualification = sc.next();
 				searchedParameter += "\nQualification: " + qualification;
