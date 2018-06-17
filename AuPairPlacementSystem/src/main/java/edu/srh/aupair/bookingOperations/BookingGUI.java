@@ -10,17 +10,15 @@ import edu.srh.aupair.proposalOperations.ProposalOperationsService;
 
 public class BookingGUI {
 
-		
 	static IbookingServiceInterface bookingServiceObject;
 
-	public 	BookingGUI() throws SQLException {
+	public BookingGUI() throws SQLException {
 		bookingServiceObject = new BookingService();
 	}
-	
 
-	public void bookingOperation(int auPairpersonId,int hostId ) throws SQLException {
+	public void bookingOperation(int auPairpersonId, int hostId) throws SQLException {
 
-		//IbookingServiceInterface serviceObj = new BookingService();
+		// IbookingServiceInterface serviceObj = new BookingService();
 
 		int auPairId = bookingServiceObject.getAuPairIdFromPersonId(auPairpersonId);
 		// int AU_PAIR_ID = 23; // to do get this from search grid
@@ -36,49 +34,41 @@ public class BookingGUI {
 		// to do Assume that user has clicked on an AU pair, and pass that AU pair id to
 		// db and fetch his/her interview availability schedule
 
-		if (activeInterviewIds.next()) 
-		{
+		if (activeInterviewIds.next()) {
 			String availableInterviewSlot = activeInterviewIds.getString(3) + " TO " + activeInterviewIds.getString(4);
 			interviewId = activeInterviewIds.getInt(1);
-			System.out.println("Available interview slot" + availableInterviewSlot);
-			System.out.println(interviewId);
+			System.out.println("The available interview slot are " + availableInterviewSlot);
+			//System.out.println(interviewId);
 			
-			//int hostId = 1; // to be changed later, this value should come from previous search method
-			System.out.println("Do you want to book this slot? \n");
+			System.out.println("Do you want to book this slot? Press 1 for yes \n");
 
-			System.out.println("Press 1 for yes \n");
 			Scanner input = new Scanner(System.in);
 			int userWantsToBookInterviewSlot = input.nextInt();
-			System.out.println("Please enter your  \n");
 
-			if (userWantsToBookInterviewSlot == 1) 
-			{
-				//IbookingServiceInterface ibookingServiceInterface = new BookingService();
+			if (userWantsToBookInterviewSlot == 1) {
+				
+				System.out.println(interviewId +  hostId);
 				int activeInterviewId = bookingServiceObject.bookingOperation(interviewId, hostId);
+				
+				System.out.println("aaa" + activeInterviewId);
+				
 				System.out.println(activeInterviewId + "Congratulations your interview has been scheduled");
 
-				//Assuming that interview has happened
-				//send email to do
-				
+				// Assuming that interview has happened
+				// send email to do
+
 				ProposalOperationsGUI proposalOperationsGUI = new ProposalOperationsGUI();
 				proposalOperationsGUI.saveProposalDetailsByHost(activeInterviewId);
-				
-				proposalOperationsGUI.saveProposalResponseByAuPair();				
-				
-				
-			} 
-			else 
-			{
+
+				//proposalOperationsGUI.saveProposalResponseByAuPair();
+
+			} else {
 				System.out.println("No slots booked yet");
 			}
-			
-		} 
-		else 
-		{
+
+		} else {
 			System.out.println("No interview slots available for this Au pair");
 		}
-
-		
 
 	}
 }

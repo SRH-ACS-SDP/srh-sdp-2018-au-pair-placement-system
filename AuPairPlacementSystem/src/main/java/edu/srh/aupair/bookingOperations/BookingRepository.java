@@ -29,9 +29,6 @@ public class BookingRepository {
 		CallableStatement cs = conn.prepareCall(query);
 		cs.setInt(1, interviewId);
 		cs.setInt(2, hostId);
-		// cs.setBoolean(3, true);
-		// cs.setBoolean(4, );
-		// cs.setBoolean(5, );
 		cs.registerOutParameter(3, Types.INTEGER);
 		cs.execute();
 		int activeInterviewId = cs.getInt(3);

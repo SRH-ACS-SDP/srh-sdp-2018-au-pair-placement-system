@@ -14,7 +14,13 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-	public static void main(String[] args) throws AddressException, MessagingException {
+//	public static void main(String[] args) throws AddressException, MessagingException {
+//		
+//		sendEmail();
+//
+//	}
+
+	public static void sendEmail() {
 		
 		String to = "selesab17@gmail.com";
 		String from = "aupairsystem@gmail.com";
@@ -83,6 +89,5 @@ public class SendEmail {
 		} catch (Exception mex) {
 			mex.printStackTrace();
 		}
-
 	}
 }

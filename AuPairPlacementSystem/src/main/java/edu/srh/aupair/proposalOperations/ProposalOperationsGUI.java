@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 import edu.srh.aupair.contractGenerationOperations.ContractGenerationService;
 import edu.srh.aupair.contractGenerationOperations.IContractGenerationInterface;
-import edu.srh.aupair.loginOperations.IloginServiceInterface;
-import edu.srh.aupair.loginOperations.LoginService;
+import edu.srh.aupair.utilities.SendEmail;
 
 public class ProposalOperationsGUI {
 
@@ -21,8 +20,7 @@ public class ProposalOperationsGUI {
 	public void saveProposalResponseByAuPair() throws SQLException {
 		Scanner input = new Scanner(System.in);
 		int activeInterviewId, hostID, auPairId;
-		// 1. Show the proposal that is created for this au pair
-		// 2. Provide the option to accept / reject
+		
 		System.out.println("Do you want to accept / reject any proposals?");
 		System.out.println("----SELECT YOUR CHOICE----" + "\n" + "ENTER 1 for accepting proposals" + "\n"
 				+ "ENTER 2 for rejecting proposals");
@@ -31,7 +29,6 @@ public class ProposalOperationsGUI {
 			// accept proposal code
 			System.out.println("Enter the proposal id that you want to accept");
 			int proposalIdForAcceptance = input.nextInt();
-			// IProposalOperations iProposalOperations = new ProposalOperationsService();
 			int[] arrayofIds = serviceObject.acceptProposalByAuPair(proposalIdForAcceptance);
 
 			activeInterviewId = arrayofIds[0];
@@ -42,8 +39,8 @@ public class ProposalOperationsGUI {
 
 			contractObject.DynamicJasperReport();
 
-			// call the rating code TO DO decide where to put this code
-
+			SendEmail.sendEmail();
+			
 			System.out.println("DO you rate this host : enter 1 ?");
 			int uInput = input.nextInt();
 			System.out.println("Enter the rating you want to give this host?");
@@ -56,11 +53,11 @@ public class ProposalOperationsGUI {
 		}
 
 		else if (userInput == 2) {
-			// reject proposal code
+			
 			System.out.println("Enter the proposal id that you want to reject");
 			int proposalIdForRejection = input.nextInt();
 			int aId = serviceObject.rejectProposalByAupair(proposalIdForRejection);
-			System.out.println("Proposal rejected . We hope you find a better suited proposal soon." + aId); // the
+			System.out.println("Proposal rejected . We hope you find a better suited proposal soon." + aId); 
 		}
 	}
 
@@ -92,18 +89,22 @@ public class ProposalOperationsGUI {
 			holidaysProposed = input.next();
 			System.out.println("Travel cost (true/false)");
 			travelCosts = input.nextBoolean();
-			System.out.println("Proposed start date of contract (DD/MM-YYYY)");
+			System.out.println("Proposed start date of contract (DD/MM/YYYY)");
 			proposedStartDate = input.next();
-			System.out.println("Proposed end date of contract (DD/MM-YYYY)");
+			System.out.println("Proposed end date of contract (DD/MM/YYYY)");
 			proposedEndDate = input.next();
-
-			// IProposalOperations iProposalOperations = new ProposalOperationsService() ;
 
 			int proposaId = serviceObject.saveProposalDetailsByHost(tasksForAuPair, workingHrsProposed,
 					remunerationsProposed, holidaysProposed, travelCosts, activeInterviewId, proposedStartDate,
 					proposedEndDate);
 
-			System.out.println(proposaId + "Congratulations your proposal has been created");
+			System.out.println( "Congratulations your proposal has been created\n");
+			System.out.println("Plesae wait for the au-pair's response");
+			
+			//contractObject.DynamicJasperReport();
+						
+			//SendEmail.sendEmail();
+			
 		} else {
 			System.out.println("Exit");
 		}

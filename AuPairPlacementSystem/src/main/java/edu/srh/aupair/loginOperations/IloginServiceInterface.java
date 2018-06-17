@@ -1,6 +1,8 @@
 package edu.srh.aupair.loginOperations;
 
+import java.sql.SQLException;
+
 public interface IloginServiceInterface {
 
-	 int loginUser (String userName, String userPassword,  String personType);
+	public String[] loginUser(String userName, String personType, String userPassword) throws SQLException;
 }

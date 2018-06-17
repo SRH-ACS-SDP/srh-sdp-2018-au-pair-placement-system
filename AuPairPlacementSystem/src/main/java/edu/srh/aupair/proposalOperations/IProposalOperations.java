@@ -6,7 +6,7 @@ public interface IProposalOperations {
 
 	public int saveProposalDetailsByHost(String tasksForAuPair, String workingHrsProposed,
 			String remunerationsProposed, String holidaysProposed, boolean travelCosts, int activeInterviewId,
-			String proposedStartDate, String proposedEndDate);
+			String proposedStartDate, String proposedEndDate) throws SQLException;
 
 	public int[] acceptProposalByAuPair(int proposalIdForAcceptance);
 

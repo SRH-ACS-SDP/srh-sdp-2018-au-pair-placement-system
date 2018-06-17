@@ -36,7 +36,7 @@ public class UserRegistrationGUI {
 
 			if (personId != 0) {
 				UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
-				userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+				userProfileOperationsGUI.getProfile(LoginGUI.loggedInPersonType, personId);
 			}
 
 		} else if (userChoice == 2) {
@@ -97,9 +97,9 @@ public class UserRegistrationGUI {
 		java.sql.Date latestOnlineTime = new java.sql.Date(db.getTime());
 
 		Scanner input = new Scanner(System.in);
-		System.out.println("<=== Do you want to register yourself as Host user or Au Pair user ===>\n");
+		System.out.println("\n* DO YOU WANT TO REGISTER YOURSELF AS HOST/AUPAIR USER?");
 
-		System.out.println("<=== Enter 1 to register as Host user or enter 2 to register as Au Pair user: ===> \n ");
+		System.out.println("ENTER 1 FOR HOST or ENTER 2 FOR AU PAIR \n ");
 		int userChoice = input.nextInt();
 		// HostUser hostUser = new HostUser();
 
@@ -117,14 +117,7 @@ public class UserRegistrationGUI {
 			System.out.println("Enter email address: ");
 			emailid = input.next();
 			hostUser.setEmailid(emailid);
-			// hostUser.setPassportNumber(input.next());
 
-			// int the_count =
-			// userRegistrationServiceObject.verifyUserExistenceInSystem(personType,
-			// passportNumber);
-
-			// IUserRegistrationInterface iUserRegistrationInterface = new
-			// UserRegistrationService();
 			int the_count = userRegistrationServiceObject.verifyUserExistenceInSystem(personType, passportNumber,
 					emailid);
 
@@ -143,9 +136,6 @@ public class UserRegistrationGUI {
 				hashedUserPassword = encryptPassword(userPassword);
 				hostUser.setHashedUserPassword(hashedUserPassword);
 
-				// System.out.println(hashedUserPassword);
-				// System.out.println("Enter email address: ");
-				// emailid = input.next();
 				System.out.println("Contact number: ");
 				contactNo = input.next();
 				hostUser.setContactNo(contactNo);
@@ -213,27 +203,17 @@ public class UserRegistrationGUI {
 						countryCurrencyId);
 				hostUser.setCountryCurrencyId(countryCurrencyId);
 
-				// System.out.println(countryCurrencyId);
-
-				// int personId = userRegistrationServiceObject.registerNewHostUser(personType,
-				// firstName, lastName, emailid,
-				// contactNo, gender, maritalStatus, languages, proficiency, countryCurrencyId,
-				// address, city,
-				// postCode, title, aboutMe, passportNumber, isActive, hashedUserPassword,
-				// latestOnlineTime,
-				// isSalaryProvided, noOfKids, ageOfKid, hasPhysicalDisability);
-
 				int personId = userRegistrationServiceObject.registerNewHostUser(hostUser);
 
 				System.out.println("***REGISTERATION SUCCESSFUL AS HOST USER***");
 
 				callingLoginSteps(input);
-				// callingLoginSteps(input);
+
 			} else {
 				System.out.println("***YOU ARE AN EXISTING HOST USER. PLEASE LOGIN***");
 				callingLoginSteps(input);
 			}
-		} // host code ends here
+		}
 
 		else if (userChoice == 2) {
 			personType = "AUPAIR";
@@ -409,7 +389,7 @@ public class UserRegistrationGUI {
 
 			if (personId != 0) {
 				UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
-				userProfileOperationsGUI.getProfile(LoginGUI.personType, personId);
+				userProfileOperationsGUI.getProfile(LoginGUI.loggedInPersonType, personId);
 			}
 
 		} else {
