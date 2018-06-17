@@ -380,8 +380,9 @@ public class UserProfileOperationsGUI {
 			} // check boolean type
 			aboutMe = result.getString("ABOUT_ME");
 			preferredLanguage = result.getString("LANGUAGES");
+			if(ratings!=0) {
 			ratings = result.getInt("RATINGS");
-
+			}
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
