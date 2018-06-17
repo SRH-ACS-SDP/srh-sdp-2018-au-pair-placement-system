@@ -21,5 +21,30 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+	 <groupId>javax.mail</groupId>
+	 <artifactId>mail</artifactId>
+	 <version>1.4.3</version>
+    </dependency>
+    <dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>6.0.6</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>ar.com.fdvs</groupId>
+  		<artifactId>DynamicJasper</artifactId>
+  		<version>5.1.1</version>
+	</dependency>
+	<dependency>
+    <groupId>de.svenkubiak</groupId>
+    <artifactId>jBCrypt</artifactId>
+    <version>0.4.1</version>    
+</dependency>
+<dependency>
+  	<groupId>org.apache.commons</groupId>
+  	<artifactId>commons-lang3</artifactId>
+  	<version>3.7</version>
+</dependency>
   </dependencies>
 </project>
