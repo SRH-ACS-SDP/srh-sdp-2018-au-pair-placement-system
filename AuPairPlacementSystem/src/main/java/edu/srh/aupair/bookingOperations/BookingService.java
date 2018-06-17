@@ -1,6 +1,5 @@
 package edu.srh.aupair.bookingOperations;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BookingService implements IbookingServiceInterface {

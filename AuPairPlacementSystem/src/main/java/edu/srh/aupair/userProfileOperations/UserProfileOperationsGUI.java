@@ -280,7 +280,7 @@ public class UserProfileOperationsGUI {
 			} else if (PERSON_TYPE == "HOST")
 				System.out.println(
 						"\n1) Gender  \n2) Country \n3) City \n4) Random Search \n5) Preferred Language \n6) Ratings \n7) Qualification");
-			/// see if you want to put random search in the end.
+			
 
 			searchOptions = sc.nextInt();
 
@@ -288,11 +288,7 @@ public class UserProfileOperationsGUI {
 				System.out.println("Enter the Gender you want to search: ");
 				gender = sc.next();
 				searchedParameter += "\nGender: " + gender;
-				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); // Try to
-				// eliminate
-				// this
-				// afterwards.
-				// // afterwards
+				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); 
 				searchMore = sc.next().charAt(0);
 			} else if (searchOptions == 7 && PERSON_TYPE =="HOST") {
 				System.out.println("Enter the Qualification you want to search: ");
