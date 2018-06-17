@@ -182,7 +182,6 @@ public class UserProfileOperationsGUI {
 		String PERSON_TYPE = loggedInPersonType;		
 		
 		ResultSet result = serviceObject.viewProposals(personId, PERSON_TYPE);
-		result.next();
 
 		System.out.println(PERSON_TYPE +personId);
 		BuildTable table = new BuildTable();
@@ -204,8 +203,8 @@ public class UserProfileOperationsGUI {
 			String proposalIdStr = String.valueOf(proposalId);
 			hostName = result.getString("HOSTNAME");
 			auPairName = result.getString("AUPAIRNAME");
-			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU-PAIR");
-			jobOfferedByHost = result.getString("JOB_OFFERED	_BY_HOSTS");
+			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU_PAIR");
+			jobOfferedByHost = result.getString("JOB_OFFERED_BY_HOSTS");
 
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------");
@@ -363,7 +362,6 @@ public class UserProfileOperationsGUI {
 			if (personIdChoosen != 0) {
 				BookingGUI bookingGUI = new BookingGUI();	
 				int host_id= serviceObject.getHostId(person_Id);
-				System.out.println("in booking host id" + host_id);
 				bookingGUI.bookingOperation(personIdChoosen, host_id);
 				
 			} else if (personIdChoosen == 0) {
