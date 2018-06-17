@@ -55,38 +55,6 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 		}
 	}
 
-	// public int registerNewAuPairUser(String personType, String firstName, String
-	// lastName, String emailid,
-	// String contactNo, String gender, String maritalStatus, String languages,
-	// String proficiency,
-	// int countryCurrencyId, String address, String city, int postCode, String
-	// title, String aboutMe,
-	// String passportNumber, boolean hasValidVisa, boolean hasSalaryExpectation,
-	// boolean hasDrivingLicense,
-	// String hobbies, String supervisesChildOfage, String educationQualification,
-	// boolean isActive,
-	// String hashedUserPassword, Date latestOnlineTime)
-	// {
-	// UserRegistrationRepository userRegistrationRepository = null;
-	// int auPairId = -1;
-	// try {
-	// userRegistrationRepository = new UserRegistrationRepository();
-	// auPairId = userRegistrationRepository.registerNewAuPairUser(personType,
-	// firstName, lastName, emailid, contactNo, gender,
-	// maritalStatus, languages, proficiency, countryCurrencyId, address, city,
-	// postCode, title,
-	// aboutMe, passportNumber, hasValidVisa, hasSalaryExpectation,
-	// hasDrivingLicense, hobbies,
-	// supervisesChildOfage, educationQualification, isActive, hashedUserPassword,
-	// latestOnlineTime);
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	//
-	// }
-	// return auPairId;
-	//
-	// }
-
 	public int insertIntoInterviewSchedule(String fromTime, String toTime, int auPairId) {
 
 		UserRegistrationRepository userRegistrationRepository = null;
@@ -126,8 +94,6 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 
 	public int registerNewHostUser(HostUser hostUser) {
 
-		// userRegistrationRepository = new UserRegistrationRepository();
-		// return 0;
 		UserRegistrationRepository userRegistrationRepository = null;
 		int personIdForCreatedHost = 0;
 		try {
@@ -141,7 +107,7 @@ public class UserRegistrationService implements IUserRegistrationInterface {
 	}
 
 	public int registerNewAuPairUser(AuPairUser aupairUser) {
-		
+
 		UserRegistrationRepository userRegistrationRepository = null;
 		int personIdForCreatedHost = 0;
 		try {

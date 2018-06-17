@@ -99,9 +99,8 @@ public class UserRegistrationGUI {
 
 		System.out.println("ENTER 1 FOR HOST or ENTER 2 FOR AU PAIR \n ");
 		int userChoice = input.nextInt();
-		// HostUser hostUser = new HostUser();
-
-		if (userChoice == 1) // for host
+		
+		if (userChoice == 1) 
 		{
 
 			personType = "HOST";
@@ -127,6 +126,7 @@ public class UserRegistrationGUI {
 
 				System.out.println("Enter last name: ");
 				lastName = input.next();
+				input.nextLine();
 				hostUser.setLastName(lastName);
 
 				System.out.println("Enter password: ");
@@ -137,6 +137,7 @@ public class UserRegistrationGUI {
 
 				System.out.println("Contact number: ");
 				contactNo = input.next();
+				input.nextLine();
 				hostUser.setContactNo(contactNo);
 
 				System.out.println("Gender ");
@@ -153,18 +154,22 @@ public class UserRegistrationGUI {
 
 				System.out.println("Preferred Language: ");
 				languages = input.next();
+				input.nextLine();
 				hostUser.setLanguages(languages);
 
 				System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
 				proficiency = input.next();
+				input.nextLine();
 				hostUser.setProficiency(proficiency);
 
 				System.out.println("Enter Address Line 1");
 				address = input.next();
+				input.nextLine();
 				hostUser.setAddress(address);
 
 				System.out.println("City: ");
 				city = input.next();
+				input.nextLine();
 				hostUser.setCity(city);
 
 				System.out.println("Postcode: ");
@@ -176,10 +181,12 @@ public class UserRegistrationGUI {
 
 				System.out.println("Enter title: ");
 				title = input.next();
+				input.nextLine();
 				hostUser.setTitle(title);
 
 				System.out.println("About me: ");
 				aboutMe = input.next();
+				input.nextLine();
 				hostUser.setAboutMe(aboutMe);
 
 				System.out.println("Is salary Provided(Enter True or False)?");
@@ -194,7 +201,7 @@ public class UserRegistrationGUI {
 				ageOfKid = input.nextInt();
 				hostUser.setAGE_OF_KIDS(ageOfKid);
 
-				System.out.println("Has physical disability(Enter True or False)");
+				System.out.println("Has physical disability(Enter True or False)?");
 				hasPhysicalDisability = input.nextBoolean();
 				hostUser.setHAS_PHYSICAL_DISABILITY(hasPhysicalDisability);
 
@@ -233,28 +240,29 @@ public class UserRegistrationGUI {
 
 				System.out.println("Enter first name: ");
 				firstName = input.next();
+				input.nextLine();
 				aupairUser.setFirstName(firstName);
 
 				System.out.println("Enter last name: ");
 				lastName = input.next();
+				input.nextLine();
 				aupairUser.setLastName(lastName);
 
 				System.out.println("Enter password: ");
 				userPassword = input.next();
 				hashedUserPassword = encryptPassword(userPassword);
 				aupairUser.setHashedUserPassword(hashedUserPassword);
-				// System.out.println("Enter email address: ");
-				// emailid = input.next();
-
+				
 				System.out.println("Please provide your contact number: ");
 				contactNo = input.next();
+				input.nextLine();
 				aupairUser.setContactNo(contactNo);
 
 				System.out.println("Gender ");
 				gender = input.next();
 				aupairUser.setGender(gender);
 
-				System.out.println("Marital Status : ");
+				System.out.println("Marital Status: ");
 				maritalStatus = input.next();
 				aupairUser.setMaritalStatus(maritalStatus);
 
@@ -264,18 +272,22 @@ public class UserRegistrationGUI {
 
 				System.out.println("Preferred Language: ");
 				languages = input.next();
+				input.nextLine();
 				aupairUser.setLanguages(languages);
 
 				System.out.println("Proficiency (Beginner, Intermediate, Expert): ");
 				proficiency = input.next();
+				input.nextLine();
 				aupairUser.setProficiency(proficiency);
 
 				System.out.println("Enter Address Line 1");
 				address = input.next();
+				input.nextLine();
 				aupairUser.setAddress(address);
 
 				System.out.println("City: ");
 				city = input.next();
+				input.nextLine();
 				aupairUser.setCity(city);
 
 				System.out.println("Postcode: ");
@@ -287,10 +299,12 @@ public class UserRegistrationGUI {
 
 				System.out.println("Enter title: ");
 				title = input.next();
+				input.nextLine();
 				aupairUser.setTitle(title);
 
 				System.out.println("About me: ");
 				aboutMe = input.next();
+				input.nextLine();
 				aupairUser.setAboutMe(aboutMe);
 
 				System.out.println("Do you have a valid visa(Enter True or False)?");
@@ -301,20 +315,23 @@ public class UserRegistrationGUI {
 				hasSalaryExpectation = input.nextBoolean();
 				aupairUser.setHasSalaryExpectation(hasSalaryExpectation);
 
-				System.out.println("Do you have a driving license(Enter True or False)");
+				System.out.println("Do you have a driving license(Enter True or False)?");
 				hasDrivingLicense = input.nextBoolean();
 				aupairUser.setHasDrivingLicense(hasDrivingLicense);
 
 				System.out.println("What are your hobbies?");
 				hobbies = input.next();
+				input.nextLine();
 				aupairUser.setHobbies(hobbies);
 
 				System.out.println("Which age group of kid you prefer to supervise?");
 				supervisesChildOfage = input.next();
+				input.nextLine();
 				aupairUser.setSupervisesChildOfage(supervisesChildOfage);
 
 				System.out.println("What is your education qualifiaction?");
 				educationQualification = input.next();
+				input.nextLine();
 				aupairUser.setEducationQualification(educationQualification);
 
 				System.out.println("Enter your suitable interview availability");
@@ -366,7 +383,7 @@ public class UserRegistrationGUI {
 				int personId = userRegistrationServiceObject.registerNewAuPairUser(aupairUser);
 
 				// System.out.println("Au Pair id entered " + auPairId);
-				System.out.println("***REGISTERATION SUCCESSFUL AS AU-PAIR USER***");
+				System.out.println("***REGISTRATION SUCCESSFUL AS AU PAIR USER***");
 
 				callingLoginSteps(input);
 

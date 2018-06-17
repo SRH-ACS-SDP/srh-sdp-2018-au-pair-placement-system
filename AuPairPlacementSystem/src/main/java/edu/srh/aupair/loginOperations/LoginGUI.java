@@ -35,8 +35,7 @@ public class LoginGUI {
 		userName = input.next();
 		System.out.println("Enter Password: ");
 		userPassword = input.next();
-		// String personType;
-
+	
 		if (loginAs == 1) {
 			loggedInPersonType = "HOST";
 			IloginServiceInterface obj = new LoginService();
@@ -48,21 +47,21 @@ public class LoginGUI {
 			int noOfAttempts = 0;
 
 			if (ids[0] == null) {
-				System.out.println("No such entry in database");
+				System.out.println("NO SUCH ENTRY IN DATABASE");
 			}
 			if (ids[0] != null) 
 			{
 				while (!(BCrypt.checkpw(userPassword, ids[0])) && (noOfAttempts < 2)) {
-					System.out.println("Login failed...Please enter your password again");
+					System.out.println("LOGIN FAILED.....PLEASE TRY TO LOGIN AGAIN");
 					userPassword = input.next();
 					noOfAttempts++;
 				}
 				if (BCrypt.checkpw(userPassword, ids[0])) {
-					System.out.println("Login successful");
-					System.out.println("---------------------------");
+					System.out.println("            ***LOGIN SUCCESSFUL***               ");
+					System.out.println("-----------------------------------------------");
 
 				} else {
-					System.out.println("Failed to login...Try again with correct password");
+					System.out.println("FAILED TO LOGIN....TRY TO LOGIN WITH ANOTHER PASSWORD");
 					loginUser();
 				}
 			}
@@ -77,21 +76,21 @@ public class LoginGUI {
 			int noOfAttempts = 0;
 
 			if (ids[0] == null) {
-				System.out.println("No such entry in database");
+				System.out.println("NO SUCH ENTRY IN DATABASE");
 			}
 
 			if (ids[0] != null) {
 				while (!(BCrypt.checkpw(userPassword, ids[0])) && (noOfAttempts < 2)) {
-					System.out.println("Login failed...Please enter your password again");
+					System.out.println("LOGIN FAILED....PLEASE TRY TO LOGIN AGAIN");
 					userPassword = input.next();
 					noOfAttempts++;
 				}
 				if (BCrypt.checkpw(userPassword, ids[0])) {
-					System.out.println("Login successful");
-					System.out.println("---------------------------");
+					System.out.println("            ***LOGIN SUCCESSFUL***               ");
+					System.out.println("-----------------------------------------------");
 
 				} else {
-					System.out.println("Failed to login...Try again with correct password");
+					System.out.println("FAILED TO LOGIN....TRY TO LOGIN WITH ANOTHER PASSWORD");
 					loginUser();
 				}
 			}
