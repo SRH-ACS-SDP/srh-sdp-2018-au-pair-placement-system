@@ -56,7 +56,7 @@ public class UserProfileOperationsRepository {
 	public void deleteSelfProfile(int personId) throws SQLException {
 		String query = "{CALL deleteSelfProfile(?)}";
 		CallableStatement statementdelete = connection.prepareCall(query);
-		statementdelete.setInt("PERSONID", 1);
+		statementdelete.setInt("PERSONID", personId);
 		statementdelete.executeUpdate();
 	}
 	

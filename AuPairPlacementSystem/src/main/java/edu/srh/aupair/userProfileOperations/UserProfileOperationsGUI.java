@@ -530,7 +530,7 @@ public class UserProfileOperationsGUI {
 
 	public void deleteSelfProfile(Scanner sc) throws SQLException {
 		Character deleteYesOrNo = '\0';
-		int personId = 1;
+		int personId = person_Id;
 		System.out.println("Are you sure you want to delete your Profile Y/N ?");
 		deleteYesOrNo = sc.next().charAt(0);
 		if (deleteYesOrNo == 'y' || deleteYesOrNo == 'Y') {
