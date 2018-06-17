@@ -10,7 +10,7 @@ public class BookingService implements IbookingServiceInterface {
 		return obj.bookingRepository(interviewId, hostId);
 	}
 
-	public ResultSet getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException {
+	public String[] getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException {
 		BookingRepository obj = new BookingRepository();
 		return obj.getInterviewSlotForAuPair(AU_PAIR_ID);
 	}

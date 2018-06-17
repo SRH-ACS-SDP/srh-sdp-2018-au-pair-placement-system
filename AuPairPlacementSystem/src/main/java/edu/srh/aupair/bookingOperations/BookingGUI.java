@@ -16,30 +16,24 @@ public class BookingGUI {
 		bookingServiceObject = new BookingService();
 	}
 
-	public void bookingOperation(int auPairpersonId, int hostId) throws SQLException {
-
-		// IbookingServiceInterface serviceObj = new BookingService();
+	public void bookingOperation(int auPairpersonId, int hostId) throws SQLException {		
 
 		int auPairId = bookingServiceObject.getAuPairIdFromPersonId(auPairpersonId);
-		// int AU_PAIR_ID = 23; // to do get this from search grid
-
-		System.out.println("**ENTER THE AU PAIR YOU WANT TO SCHEDULE AN INTERVIEW WITH**"); // to do : uncomment later
-		// int interviewId = 3;
-
-		ResultSet activeInterviewIds = bookingServiceObject.getInterviewSlotForAuPair(auPairId);
-		int interviewId = -1;
-		// ResultSet activeInterviewIds =
-		// serviceObj.getInterviewSlotForAuPair(interviewId, AU_PAIR_ID);
-
-		// to do Assume that user has clicked on an AU pair, and pass that AU pair id to
-		// db and fetch his/her interview availability schedule
-
-		if (activeInterviewIds.next()) {
-			String availableInterviewSlot = activeInterviewIds.getString(3) + " TO " + activeInterviewIds.getString(4);
-			interviewId = activeInterviewIds.getInt(1);
-			System.out.println("The available interview slot are " + availableInterviewSlot);
-			//System.out.println(interviewId);
+		
+		System.out.println("**ENTER THE AU PAIR YOU WANT TO SCHEDULE AN INTERVIEW WITH**"); 
+		
+		String[] activeInterviewIds = bookingServiceObject.getInterviewSlotForAuPair(auPairId);
 			
+		
+		int interviewId = -1;String empty = new String();
+		
+		if (!activeInterviewIds[0].equals(empty) ) 
+		{
+			String availableInterviewSlot = activeInterviewIds[0] + " TO " + activeInterviewIds[1];
+			
+			interviewId = Integer.parseInt(activeInterviewIds[2]);
+			
+			System.out.println("The available interview slot are " + availableInterviewSlot);			
 			System.out.println("Do you want to book this slot? Press 1 for yes \n");
 
 			Scanner input = new Scanner(System.in);
@@ -47,7 +41,7 @@ public class BookingGUI {
 
 			if (userWantsToBookInterviewSlot == 1) {
 				
-				System.out.println(interviewId +  hostId);
+				System.out.println(  hostId);
 				int activeInterviewId = bookingServiceObject.bookingOperation(interviewId, hostId);
 				
 				System.out.println("aaa" + activeInterviewId);

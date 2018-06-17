@@ -172,7 +172,7 @@ public class UserRegistrationRepository {
 		myStmt.setString(13, hostUser.getCity());
 		myStmt.setInt(14, hostUser.getPostCode());
 		myStmt.setInt(15, hostUser.getCountryCurrencyId());
-		myStmt.setBoolean(16, hostUser.isActive());
+		myStmt.setBoolean(16, true);
 		myStmt.setDate(17, latestOnlineTime);
 		myStmt.setString(18, hostUser.getTitle());
 		myStmt.setString(19, hostUser.getAboutMe());
@@ -220,7 +220,7 @@ public class UserRegistrationRepository {
 		myStmt.setString(13, aupairUser.getCity());
 		myStmt.setInt(14, aupairUser.getPostCode());
 		myStmt.setInt(15, aupairUser.getCountryCurrencyId());
-		myStmt.setBoolean(16, aupairUser.isActive());
+		myStmt.setBoolean(16, true);
 		myStmt.setDate(17, latestOnlineTime);
 		myStmt.setString(18, aupairUser.getTitle());
 		myStmt.setString(19, aupairUser.getAboutMe());

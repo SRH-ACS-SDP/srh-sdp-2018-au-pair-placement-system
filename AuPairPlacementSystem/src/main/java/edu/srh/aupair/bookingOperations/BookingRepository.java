@@ -17,10 +17,31 @@ public class BookingRepository {
 		}
 	}
 
-	public ResultSet getInterviewSlotForAuPair(int AU_PAIR_ID) throws SQLException {
-		String query = "SELECT * FROM interview_availability  where AU_PAIR_ID = " + AU_PAIR_ID;
-		CallableStatement stmt = conn.prepareCall(query);
-		return stmt.executeQuery(query);
+	public String[] getInterviewSlotForAuPair(int AU_PAIR_ID ) throws SQLException {
+		
+		String query;
+		query = "{CALL `getInterviewSchedule`(?,?,?,?)}";
+		CallableStatement cs = conn.prepareCall(query);
+		cs.setInt(1, AU_PAIR_ID);
+		cs.registerOutParameter(2, Types.VARCHAR); 
+		cs.registerOutParameter(3, Types.VARCHAR);
+		cs.registerOutParameter(4, Types.INTEGER);
+		cs.execute();
+		String fromTime = cs.getString(2);
+		String toTime = cs.getString(3);
+		int interviewId = cs.getInt(4);
+		String iId = String.valueOf(interviewId);
+		
+		String[] interviewSchedule = new String[5];
+		interviewSchedule[0] = fromTime;
+		interviewSchedule[1] = toTime;
+		interviewSchedule[2] = iId;
+		
+		
+		return interviewSchedule;
+			
+		
+		
 	}
 
 	public int bookingRepository(int interviewId, int hostId) throws SQLException {

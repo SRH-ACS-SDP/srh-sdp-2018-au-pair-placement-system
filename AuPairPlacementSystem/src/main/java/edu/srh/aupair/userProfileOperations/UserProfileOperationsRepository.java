@@ -66,6 +66,9 @@ public class UserProfileOperationsRepository {
 		statementview.setInt("PERSONID",personId);
 		statementview.setString("PERSONTYPE",persontype);
 		ResultSet result = statementview.executeQuery();
+		
+		System.out.println(personId+persontype);
+		//System.out.println();
 		return result;
 	}
 	
