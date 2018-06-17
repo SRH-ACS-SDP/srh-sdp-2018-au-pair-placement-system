@@ -13,9 +13,9 @@ public class ContractGenerationService
 			repository=new ContractGenerationRepository();
 		}
 
-		public void DynamicJasperReport(){
+		public void DynamicJasperReport(int hostID,int auPairId){
 			try {
-				repository.DynamicJasperReport();
+				repository.DynamicJasperReport(hostID,auPairId);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

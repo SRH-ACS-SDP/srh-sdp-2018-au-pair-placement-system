@@ -24,32 +24,33 @@ public class ContractGenerationRepository{
 		connection = edu.srh.aupair.utilities.utilities.getConnectionString();
 	}
 
-	public void DynamicJasperReport() throws Exception {
-		File file = OpenReport();
+	public void DynamicJasperReport(int hostID,int auPairId) throws Exception {
+		File file = OpenReport(hostID,auPairId);
 		SaveReport(file);
 	}
 
-	public File OpenReport() throws Exception {
+	public File OpenReport(int hostID,int auPairId) throws Exception {
 		File file =null;
 		
 		try {
 			ResultSet rs = null;
-			String query = "SELECT * FROM proposals INNER JOIN active_interviews ON \r\n"
-					+ "proposals.ACTIVE_INTERVIEW_ID =active_interviews.ACTIVE_INTERVIEW_ID INNER JOIN hostuser \r\n"
-					+ "ON active_interviews.HOST_ID=hostuser.HOST_ID INNER JOIN interview_availability ON \r\n"
-					+ "interview_availability.INTERVIEW_ID=active_interviews.INTERVIEW_ID INNER JOIN au_pair ON \r\n"
-					+ "AU_PAIR.AU_PAIR_ID=interview_availability.AU_PAIR_ID;";
+			String query = "SELECT CONCAT(AP.LAST_NAME,' ',AP.FIRST_NAME) AUPAIR_NAME,CONCAT(HP.LAST_NAME,' ',HP.FIRST_NAME) HOST_NAME,proposals.*,interview_availability.*,active_interviews.* " + 
+					" FROM proposals INNER JOIN active_interviews ON proposals.ACTIVE_INTERVIEW_ID =active_interviews.ACTIVE_INTERVIEW_ID INNER JOIN hostuser ON active_interviews.HOST_ID=hostuser.HOST_ID " + 
+					"INNER JOIN interview_availability ON interview_availability.INTERVIEW_ID=active_interviews.INTERVIEW_ID INNER JOIN au_pair ON AU_PAIR.AU_PAIR_ID=interview_availability.AU_PAIR_ID " + 
+					"inner join person AP ON AP.PERSON_ID=AU_PAIR.PERSON_ID INNER JOIN PERSON HP ON HP.PERSON_ID=HOSTUSER.PERSON_ID WHERE AU_PAIR.AU_PAIR_ID="+auPairId+" AND hostuser.HOST_ID="+hostID+";";
 
 			CallableStatement stmt = connection.prepareCall(query);
 			rs = stmt.executeQuery(query);
 			FastReportBuilder drb = new FastReportBuilder();
-			DynamicReport dr = drb.addColumn("Tasks", "TASKS_FOR_AU_PAIR", String.class.getName(), 30)
+			DynamicReport dr = drb.addColumn("Host", "HOST_NAME", String.class.getName(), 50)
+					.addColumn("Au Pair", "AUPAIR_NAME", String.class.getName(), 50)
+					.addColumn("Tasks", "TASKS_FOR_AU_PAIR", String.class.getName(), 50)
 					.addColumn("Working hours", "WORKING_HOURS_PROPOSED", String.class.getName(), 30)
 					.addColumn("Remuneration", "REMUNERATIONS_PROPOSED", String.class.getName(), 50)
-					.addColumn("Holidays", "HOLIDAYS_PROPOSED", String.class.getName(), 50)
-					.addColumn("Travel cost", "TRAVEL_COSTS", String.class.getName(), 50).addWatermark("CONTRACT")
+					.addColumn("Holidays", "HOLIDAYS_PROPOSED", String.class.getName(), 30)
+					.addColumn("Travel cost", "TRAVEL_COSTS", String.class.getName(), 20).addWatermark("CONTRACT")
 					.setTitle("Contract between Host family and Au-Pair")
-					.setSubtitle("Below are the features agreed upon by the host family and au-pair")
+					.setSubtitle("Below are the features agreed upon by the Host Family and Au-Pair")
 					.setPrintBackgroundOnOddRows(true).setUseFullPageWidth(true).build();
 
 			JRResultSetDataSource resultsetdatasource = new JRResultSetDataSource(rs);
