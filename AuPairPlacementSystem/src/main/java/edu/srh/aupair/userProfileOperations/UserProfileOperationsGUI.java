@@ -48,7 +48,7 @@ public class UserProfileOperationsGUI {
 
 		String firstName = "";
 		String lastName = "";
-		int contactNo = 0;
+		String contactNo = "";
 		String gender = "";
 		String maritalStatus = "";
 		Date dob = new Date();
@@ -76,7 +76,7 @@ public class UserProfileOperationsGUI {
 
 		firstName = result.getString("FIRST_NAME");
 		lastName = result.getString("LAST_NAME");
-		contactNo = result.getInt("CONTACT_NO");
+		contactNo = result.getString("CONTACT_NO");
 		gender = result.getString("GENDER");
 		maritalStatus = result.getString("MARITAL_STATUS");
 		dob = result.getDate("DOB"); /// check DOB Date time variable
@@ -176,7 +176,9 @@ public class UserProfileOperationsGUI {
 		String holidaysProposed = "";
 		boolean travelCosts = false;
 		String travelCostsStr = String.valueOf(travelCosts);
-
+		String jobOfferedByHost = "";
+		String jobAcceptedByAuPair = "";
+		
 		String PERSON_TYPE = loggedInPersonType;
 		ResultSet result = serviceObject.viewProposals(personId, PERSON_TYPE);
 		result.next();
@@ -187,7 +189,7 @@ public class UserProfileOperationsGUI {
 
 		table.addRow("PROPOSAL ID   ||  ", "      NAME         ||  ", "Tasks for Au Pair   ||  ",
 				"Working Hours Proposed  ||  ", "Remuneration Proposed  ||  ", "Holidays Proposed   ||  ",
-				"Travel Costs");
+				"Travel Costs  ||  ","Job accepted by Au Pair  ||  " , "Job proposed by Host  ||  " );
 
 		int count = 0;
 		while (result.next()) {
@@ -200,11 +202,14 @@ public class UserProfileOperationsGUI {
 			String proposalIdStr = String.valueOf(proposalId);
 			hostName = result.getString("HOSTNAME");
 			auPairName = result.getString("AUPAIRNAME");
-
+			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU-PAIR");
+			jobOfferedByHost = result.getString("JOB_OFFERED	_BY_HOSTS");
+			
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
-					"----------");
+					"----------", "----------", "----------");
 			table.addRow(proposalIdStr, PERSON_TYPE == "HOST" ? auPairName : hostName, tasksForAuPair,
-					workingHoursProposed, RemunerationsProposed, holidaysProposed, travelCostsStr);
+					workingHoursProposed, RemunerationsProposed, holidaysProposed, travelCostsStr, jobAcceptedByAuPair,
+					jobOfferedByHost);
 			count++;
 		}
 		System.out.println(table.toString());
@@ -244,7 +249,7 @@ public class UserProfileOperationsGUI {
 
 		String firstName = "";
 		String lastName = "";
-		int contactNo = 0;
+		String contactNo = "";
 
 		String maritalStatus = "";
 		Date dob = new Date();
@@ -275,10 +280,10 @@ public class UserProfileOperationsGUI {
 					"\nWhat parameters would you like to choose for searching? \n\nChoose the following options: ");
 			if (PERSON_TYPE == "AUPAIR") {
 				System.out.println(
-						" \n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
+						" \n1) Gender \n2) Country \n3) City \n4) Random Search \n5) Preferred Language \n6) Ratings");
 			} else if (PERSON_TYPE == "HOST")
 				System.out.println(
-						"\n1) Gender \n2) Qualification \n3) Country \n4) City \n5) Random Search \n6) Preferred Language \n7) Ratings");
+						"\n1) Gender  \n2) Country \n3) City \n4) Random Search \n5) Preferred Language \n6) Ratings \n7) Qualification");
 			/// see if you want to put random search in the end.
 
 			searchOptions = sc.nextInt();
@@ -293,37 +298,37 @@ public class UserProfileOperationsGUI {
 				// afterwards.
 				// // afterwards
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 2) {
+			} else if (searchOptions == 7 || PERSON_TYPE =="HOST") {
 				System.out.println("Enter the Qualification you want to search: ");
 				qualification = sc.next();
 				searchedParameter += "\nQualification: " + qualification;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 3) {
+			} else if (searchOptions == 2) {
 				System.out.println("Enter the name of the Country you want to search: ");
 				country = sc.next();
 				searchedParameter += "\nCountry: " + country;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 4) {
+			} else if (searchOptions == 3) {
 				System.out.println("Enter the name of the City you want to search: ");
 				city = sc.next();
 				searchedParameter += "\nCity: " + city;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 5) {
+			} else if (searchOptions == 4) {
 				System.out.println("Enter any Random search on the basis of which you want to search: ");
 				randomSearch = sc.next();
 				searchedParameter += "\nRandom Search: " + randomSearch;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 6) {
+			} else if (searchOptions == 5) {
 				System.out.println("Enter the preferred language you want to search: ");
 				preferredLanguage = sc.next();
 				searchedParameter += "\nPreferred Language " + preferredLanguage;
 				System.out.println("Do you want to add more parameters to your search criteria Y/N ?");
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 7) {
+			} else if (searchOptions == 6) {
 				System.out.println("Enter the rating between 1 to 5: ");
 				ratings = sc.nextInt();
 				searchedParameter += "\nRatings" + ratings;
@@ -366,7 +371,7 @@ public class UserProfileOperationsGUI {
 	}
 	
 	public void contactHost (int personIdContacted, String PERSON_TYPE, String gender,String qualification, String country, String city,
-			String randomSearch, String preferredLanguage, int ratings, int personId, String firstName, String lastName, int contactNo,  
+			String randomSearch, String preferredLanguage, int ratings, int personId, String firstName, String lastName, String contactNo,  
 			String maritalStatus, Date dob, Boolean isActive, 
 			String addressLine1, int postcode, String lastOnline, String title, String passportNo, boolean validVisa,
 			boolean salaryExpectation,boolean drivingLicense, String hobbies, String supervisesChildOfAge, int hostId, String aboutMe, 
@@ -419,7 +424,7 @@ public class UserProfileOperationsGUI {
 		}
 	}
 	
-	public void printSearch(int personId, String firstName, String lastName, int contactNo, String gender, String maritalStatus, Date dob, Boolean isActive, 
+	public void printSearch(int personId, String firstName, String lastName, String contactNo, String gender, String maritalStatus, Date dob, Boolean isActive, 
 							String addressLine1, String city, int postcode, String country, String lastOnline, String title, String passportNo, boolean validVisa,
 							boolean salaryExpectation,boolean drivingLicense, String hobbies, String supervisesChildOfAge, String qualification,int hostId, String aboutMe, 
 							String preferredLanguage, int ratings, String randomSearch, String PERSON_TYPE, int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability,
@@ -452,7 +457,7 @@ public class UserProfileOperationsGUI {
 			personId = result.getInt("PERSON_ID");
 			firstName = result.getString("FIRST_NAME");
 			lastName = result.getString("LAST_NAME");
-			contactNo = result.getInt("CONTACT_NO");
+			contactNo = result.getString("CONTACT_NO");
 			gender = result.getString("GENDER");
 			maritalStatus = result.getString("MARITAL_STATUS");
 			dob = result.getDate("DOB"); /// check DOB Date time variable
@@ -483,7 +488,7 @@ public class UserProfileOperationsGUI {
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
-			String contactNoStr = String.valueOf(contactNo);
+//			String contactNoStr = String.valueOf(contactNo);
 			String dobStr = String.valueOf(dob);
 			String postCodeStr = String.valueOf(postcode);
 			String numberOfKidsStr = String.valueOf(numberOfKids);
@@ -497,7 +502,8 @@ public class UserProfileOperationsGUI {
 			
 
 
-			table.addRow(personIdStr, firstName, lastName, contactNoStr, gender, maritalStatus, dobStr, isActiveStr,
+			table.addRow(personIdStr, firstName, lastName, contactNo, gender, maritalStatus, dobStr, isActiveStr,
+
 					addressLine1, city, postCodeStr, country, lastOnline, title, passportNo, aboutMe,
 					PERSON_TYPE == "HOST" ? salaryExpectationStr : salaryProvidedStr,
 					PERSON_TYPE == "HOST" ? validVisaStr : numberOfKidsStr,
