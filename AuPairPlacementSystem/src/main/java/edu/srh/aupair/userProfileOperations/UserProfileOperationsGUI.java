@@ -472,7 +472,6 @@ public class UserProfileOperationsGUI {
 	}
 
 	public void updateProfile(Scanner sc) throws SQLException {
-		int personId = 0;
 		String firstname = "";
 		String lastname = "";
 		String email = "";
@@ -543,11 +542,10 @@ public class UserProfileOperationsGUI {
 				updatedchanges += "\nMarital Status: " + maritalstatus;
 				System.out.println("Do you wish to update more fields? Y/N ");
 				wish = sc.next().charAt(0);
-	
 			}
 		}
 
-		serviceObject.updateProfile(personId, firstname, lastname, contact, aboutme, title, maritalstatus, passportnumber);
+		serviceObject.updateProfile(person_Id, firstname, lastname, contact, aboutme, title, maritalstatus, passportnumber);
 		System.out.println(+count + " changes updated successfully");
 		System.out.println("\n" + updatedchanges);
 		mainMenu(person_Id);
