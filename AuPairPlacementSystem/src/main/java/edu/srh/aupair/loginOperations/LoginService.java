@@ -1,14 +1,16 @@
 package edu.srh.aupair.loginOperations;
 
+import java.sql.SQLException;
+
 public class LoginService implements IloginServiceInterface {
 
 	
-	public  int loginUser (String userName, String userPassword,  String personType)
+	public  String[] loginUser (String userName,   String personType, String userPassword) throws SQLException
 	{
 			
 		LoginRepository obj=new LoginRepository();
-		int personid = obj.loginUser(userName, userPassword, personType);
-		return personid;
+		String[] ids = obj.loginUser(userName, personType ,userPassword );
+		return ids;
 	}
 
 }

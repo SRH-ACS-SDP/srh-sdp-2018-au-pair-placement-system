@@ -19,9 +19,8 @@ public class ProposalOperationsRepository {
 
 	public int saveProposalDetailsByHost(String tasksForAuPair, String workingHrsProposed, String remunerationsProposed,
 			String holidaysProposed, boolean travelCosts, int activeInterviewId, String proposedStartDate,
-			String proposedEndDate)
-	{
-		String saveProposalDetailsQuery= "{Call saveProposalDetails(?,?,?,?,?,?,?,?,?)}";
+			String proposedEndDate) throws SQLException {
+		String saveProposalDetailsQuery = "{Call saveProposalDetails(?,?,?,?,?,?,?,?,?)}";
 		CallableStatement myStmt = conn.prepareCall(saveProposalDetailsQuery);
 		myStmt.setInt(1, activeInterviewId);
 		myStmt.setString(2, tasksForAuPair);
@@ -31,13 +30,12 @@ public class ProposalOperationsRepository {
 		myStmt.setBoolean(6, travelCosts);
 		myStmt.setString(7, proposedStartDate);
 		myStmt.setString(8, proposedEndDate);
-		myStmt.registerOutParameter(9, Types.INTEGER);					
-		myStmt.execute();			
+		myStmt.registerOutParameter(9, Types.INTEGER);
+		myStmt.execute();
 		int proposaId = myStmt.getInt(9);
 		return proposaId;
 	}
-	
-	
+
 	public int[] acceptProposalByAuPair(int proposalIdForAcceptance) throws SQLException {
 		String query = "{CALL `acceptProposalByAuPair`(?,?,?,?)}";
 		CallableStatement cs = conn.prepareCall(query);
@@ -46,15 +44,14 @@ public class ProposalOperationsRepository {
 		cs.registerOutParameter(3, Types.INTEGER);
 		cs.registerOutParameter(4, Types.INTEGER);
 		cs.execute();
-		
-		int [] returnIds = new int[10] ; 
-		returnIds[0] =  = cs.getInt(2); //activeinterviewid
-		returnIds[1] = cs.getInt(3); //host id
-		returnIds[2] = cs.getInt(4); //au pair id
-		
+
+		int[] returnIds = new int[10];
+		returnIds[0] = cs.getInt(2); // activeinterviewid
+		returnIds[1] = cs.getInt(3); // host id
+		returnIds[2] = cs.getInt(4); // au pair id
+
 		return returnIds;
-		
-		
+
 	}
 
 	public int rejectProposalByAupair(int proposalIdForRejection) throws SQLException {
@@ -67,7 +64,7 @@ public class ProposalOperationsRepository {
 		int activeInterviewId = cs.getInt(2);
 		return activeInterviewId;
 	}
-	
+
 	public void saveRatingAndFeedback(int hostID, int auPairId, int ratings, String comments) throws SQLException {
 		String query;
 		query = "{CALL `saveRatingsAndFeedback`(?,?,?,?,?,?)}";
@@ -80,4 +77,5 @@ public class ProposalOperationsRepository {
 		stat.registerOutParameter(6, Types.INTEGER);
 		stat.execute();
 
+	}
 }

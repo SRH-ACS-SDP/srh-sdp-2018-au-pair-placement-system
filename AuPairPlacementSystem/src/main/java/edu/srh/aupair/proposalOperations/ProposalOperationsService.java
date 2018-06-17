@@ -12,9 +12,12 @@ public class ProposalOperationsService implements IProposalOperations {
 	
 	public int saveProposalDetailsByHost(String tasksForAuPair, String workingHrsProposed, String remunerationsProposed,
 			String holidaysProposed, boolean travelCosts, int activeInterviewId, String proposedStartDate,
-			String proposedEndDate) {
+			String proposedEndDate) throws SQLException {
 		ProposalOperationsRepository proposalOperationsRepository = new ProposalOperationsRepository();
-		int proposalId = proposalOperationsRepository.saveProposalDetailsByHost(tasksForAuPair, workingHrsProposed, remunerationsProposed, holidaysProposed, travelCosts, activeInterviewId, proposedStartDate, proposedEndDate)
+		int proposalId = 
+				proposalOperationsRepository.saveProposalDetailsByHost(tasksForAuPair,
+						workingHrsProposed, remunerationsProposed, holidaysProposed, travelCosts, 
+						activeInterviewId, proposedStartDate, proposedEndDate);
 		return proposalId;
 	}
 
@@ -43,7 +46,7 @@ public class ProposalOperationsService implements IProposalOperations {
 
 	public int rejectProposalByAupair(int proposalIdForRejection) {
 		ProposalOperationsRepository proposalOperationsRepository = new ProposalOperationsRepository();
-		int propId;
+		int propId = 0;
 		try {
 			propId = proposalOperationsRepository.rejectProposalByAupair(proposalIdForRejection);
 		} catch (SQLException e) {
