@@ -32,7 +32,7 @@ public class LoginRepository {
 
 		ids[0] = hashedPassword;
 		ids[1] = pid;
-		System.out.println(cs.getString(3));
+//		System.out.println(cs.getString(3));
 		return ids;
 	}
 

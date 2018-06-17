@@ -84,8 +84,6 @@ public class UserRegistrationGUI {
 
 		Connection conn = null;
 
-		String x = "1990-03-30";
-
 		Date db = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dob = sdf.format(db);
@@ -124,6 +122,7 @@ public class UserRegistrationGUI {
 			if (the_count == 0) {
 				System.out.println("Enter first name: ");
 				firstName = input.next();
+				input.nextLine();
 				hostUser.setFirstName(firstName);
 
 				System.out.println("Enter last name: ");
@@ -389,6 +388,7 @@ public class UserRegistrationGUI {
 
 			if (personId != 0) {
 				UserProfileOperationsGUI userProfileOperationsGUI = new UserProfileOperationsGUI();
+
 				userProfileOperationsGUI.getProfile(LoginGUI.loggedInPersonType, personId);
 			}
 
