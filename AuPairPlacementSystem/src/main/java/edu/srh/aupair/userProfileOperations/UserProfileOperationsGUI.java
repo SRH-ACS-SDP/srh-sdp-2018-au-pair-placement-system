@@ -363,7 +363,7 @@ public class UserProfileOperationsGUI {
 			if (personIdChoosen != 0) {
 				BookingGUI bookingGUI = new BookingGUI();	
 				int host_id= serviceObject.getHostId(person_Id);
-				System.out.println("in booking host id" + host_id);
+				//System.out.println("in booking host id" + host_id);
 				bookingGUI.bookingOperation(personIdChoosen, host_id);
 				
 			} else if (personIdChoosen == 0) {
