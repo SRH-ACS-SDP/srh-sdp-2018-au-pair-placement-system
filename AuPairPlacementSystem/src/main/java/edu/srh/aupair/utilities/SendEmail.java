@@ -14,12 +14,6 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-//	public static void main(String[] args) throws AddressException, MessagingException {
-//		
-//		sendEmail();
-//
-//	}
-
 	public static void sendEmail() {
 		
 		String to = "selesab17@gmail.com";
@@ -40,7 +34,6 @@ public class SendEmail {
 		properties.put("mail.store.protocol", "pop3");
 		properties.put("mail.transport.protocol", "smtp");
 
-		//Session session = Session.getDefaultInstance(properties);
 		
 		Session session = Session.getDefaultInstance(properties,
 			    new Authenticator() {

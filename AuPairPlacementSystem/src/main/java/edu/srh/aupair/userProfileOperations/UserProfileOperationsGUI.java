@@ -30,8 +30,6 @@ public class UserProfileOperationsGUI {
 			int personId = 1;
 			UserProfileOperationsGUI userProfileOperationsObject = new UserProfileOperationsGUI();
 			userProfileOperationsObject.getProfile(PERSON_TYPE, personId);
-			// userProfileOperationsObject.printSearch();
-
 		}
 
 		catch (Exception ex) {
@@ -51,7 +49,8 @@ public class UserProfileOperationsGUI {
 		String contactNo = "";
 		String gender = "";
 		String maritalStatus = "";
-		Date dob = new Date();
+		//Date dob = new Date();
+		String dob = "";
 		Boolean isActive = false;
 		String addressLine1 = "";
 		String city = "";
@@ -79,8 +78,8 @@ public class UserProfileOperationsGUI {
 		contactNo = result.getString("CONTACT_NO");
 		gender = result.getString("GENDER");
 		maritalStatus = result.getString("MARITAL_STATUS");
-		dob = result.getDate("DOB"); /// check DOB Date time variable
-		isActive = result.getBoolean("IS_ACTIVE"); // check boolean type
+		dob = result.getString("DOB"); 
+		isActive = result.getBoolean("IS_ACTIVE"); 
 		addressLine1 = result.getString("ADDRESS_LINE1");
 		city = result.getString("CITY");
 		postcode = result.getInt("POSTCODE");
@@ -100,7 +99,7 @@ public class UserProfileOperationsGUI {
 			numberOfKids = result.getInt("NUMBER_OF_KIDS");
 			ageOfKids = result.getInt("AGE_OF_KIDS");
 			hasPyhsicalDisability = result.getBoolean("HAS_PHYSICAL_DISABILITY");
-		} // check boolean type
+		}
 		aboutMe = result.getString("ABOUT_ME");
 
 		if (PERSON_TYPE == "AUPAIR") {
@@ -178,7 +177,7 @@ public class UserProfileOperationsGUI {
 		String travelCostsStr = String.valueOf(travelCosts);
 		String jobOfferedByHost = "";
 		String jobAcceptedByAuPair = "";
-		
+
 		String PERSON_TYPE = loggedInPersonType;
 		ResultSet result = serviceObject.viewProposals(personId, PERSON_TYPE);
 		result.next();
@@ -189,7 +188,7 @@ public class UserProfileOperationsGUI {
 
 		table.addRow("PROPOSAL ID   ||  ", "      NAME         ||  ", "Tasks for Au Pair   ||  ",
 				"Working Hours Proposed  ||  ", "Remuneration Proposed  ||  ", "Holidays Proposed   ||  ",
-				"Travel Costs  ||  ","Job accepted by Au Pair  ||  " , "Job proposed by Host  ||  " );
+				"Travel Costs  ||  ", "Job accepted by Au Pair  ||  ", "Job proposed by Host  ||  ");
 
 		int count = 0;
 		while (result.next()) {
@@ -204,7 +203,11 @@ public class UserProfileOperationsGUI {
 			auPairName = result.getString("AUPAIRNAME");
 			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU-PAIR");
 			jobOfferedByHost = result.getString("JOB_OFFERED_BY_HOSTS");
+<<<<<<< Updated upstream
 			
+=======
+
+>>>>>>> Stashed changes
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------", "----------", "----------");
 			table.addRow(proposalIdStr, PERSON_TYPE == "HOST" ? auPairName : hostName, tasksForAuPair,
@@ -221,17 +224,12 @@ public class UserProfileOperationsGUI {
 				proposalGUI.saveProposalResponseByAuPair();
 			}
 		}
-
-		// TO DO call the Proposal Operations.java where you have the option to accept
-		// or reject the proposals
 	}
 
 	public void searchByPreference(Scanner sc) throws SQLException {
-		String PERSON_TYPE = loggedInPersonType; ///// REMEMEBER TO REMOVE THIS AND UPAR WALE update MEIN AFTER U GET
-													///// INPUTS FROM
-		///// db diRECTLY ***********TO DO
-		
-		int searchOptions = '0';
+		String PERSON_TYPE = loggedInPersonType; 
+
+		int searchOptions = 0;
 		Character searchMore = 'y';
 		String gender = "";
 		String qualification = "";
@@ -252,7 +250,7 @@ public class UserProfileOperationsGUI {
 		String contactNo = "";
 
 		String maritalStatus = "";
-		Date dob = new Date();
+		String dob = "";
 		Boolean isActive = false;
 		String addressLine1 = "";
 
@@ -271,9 +269,9 @@ public class UserProfileOperationsGUI {
 		String aboutMe = "";
 		int ratings = 0;
 		int hostId = 0;
-		
-		int count =0;
-		
+
+		int count = 0;
+
 		while (searchMore == 'y' || searchMore == 'Y') {
 
 			System.out.println(
@@ -284,21 +282,16 @@ public class UserProfileOperationsGUI {
 			} else if (PERSON_TYPE == "HOST")
 				System.out.println(
 						"\n1) Gender  \n2) Country \n3) City \n4) Random Search \n5) Preferred Language \n6) Ratings \n7) Qualification");
-			/// see if you want to put random search in the end.
-
+			
 			searchOptions = sc.nextInt();
 
 			if (searchOptions == 1) {
 				System.out.println("Enter the Gender you want to search: ");
 				gender = sc.next();
 				searchedParameter += "\nGender: " + gender;
-				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); // Try to
-				// eliminate
-				// this
-				// afterwards.
-				// // afterwards
+				System.out.println("Do you want to add more parameters to your search criteria Y/N ?"); 
 				searchMore = sc.next().charAt(0);
-			} else if (searchOptions == 7 && PERSON_TYPE =="HOST") {
+			} else if (searchOptions == 7 && PERSON_TYPE == "HOST") {
 				System.out.println("Enter the Qualification you want to search: ");
 				qualification = sc.next();
 				searchedParameter += "\nQualification: " + qualification;
@@ -336,26 +329,24 @@ public class UserProfileOperationsGUI {
 				searchMore = sc.next().charAt(0);
 			}
 		}
-		
+
 		System.out.println("Displaying the results based on following parameters :\n" + searchedParameter + "\n");
-		
-		
-		printSearch(personId, firstName, lastName, contactNo, gender, maritalStatus, dob, isActive, addressLine1, city, postcode, 
-				country, lastOnline, title, passportNo, validVisa, salaryExpectation, drivingLicense, hobbies, supervisesChildOfAge, 
-				qualification, hostId, aboutMe, preferredLanguage, ratings, randomSearch, PERSON_TYPE, numberOfKids, ageOfKids, 
-				hasPyhsicalDisability, salaryProvided, count);
-		
-		int personIdContacted =0;
-		contactHost(personIdContacted , PERSON_TYPE, gender, qualification, country, city, randomSearch, preferredLanguage, 
-				ratings, personId, firstName, lastName, contactNo, maritalStatus, dob, isActive, addressLine1, postcode, lastOnline,
-				title, passportNo, validVisa, salaryExpectation, drivingLicense, hobbies, supervisesChildOfAge, hostId, aboutMe, numberOfKids,
-				ageOfKids, hasPyhsicalDisability, salaryProvided, count);
-	
-		
+
+		printSearch(personId, firstName, lastName, contactNo, gender, maritalStatus, dob, isActive, addressLine1, city,
+				postcode, country, lastOnline, title, passportNo, validVisa, salaryExpectation, drivingLicense, hobbies,
+				supervisesChildOfAge, qualification, hostId, aboutMe, preferredLanguage, ratings, randomSearch,
+				PERSON_TYPE, numberOfKids, ageOfKids, hasPyhsicalDisability, salaryProvided, count);
+
+		int personIdContacted = 0;
+		contactHost(personIdContacted, PERSON_TYPE, gender, qualification, country, city, randomSearch,
+				preferredLanguage, ratings, personId, firstName, lastName, contactNo, maritalStatus, dob, isActive,
+				addressLine1, postcode, lastOnline, title, passportNo, validVisa, salaryExpectation, drivingLicense,
+				hobbies, supervisesChildOfAge, hostId, aboutMe, numberOfKids, ageOfKids, hasPyhsicalDisability,
+				salaryProvided, count);
 
 		int personIdChoosen = 0;
 
-		if (PERSON_TYPE == "HOST") { /////// to do yAHA PE SAMPLE DIYA HAI HOST CHECK KARO BAAD MEIN
+		if (PERSON_TYPE == "HOST") { 
 			System.out.println(
 					"Do you want to book an appointment with any of the searches above? Please enter the respective AU-PAIR ID"
 							+ "\n\nOR \n\nEnter 0 to go back to the Main Menu");
@@ -369,66 +360,66 @@ public class UserProfileOperationsGUI {
 			}
 		}
 	}
-	
-	public void contactHost (int personIdContacted, String PERSON_TYPE, String gender,String qualification, String country, String city,
-			String randomSearch, String preferredLanguage, int ratings, int personId, String firstName, String lastName, String contactNo,  
-			String maritalStatus, Date dob, Boolean isActive, 
+
+	public void contactHost(int personIdContacted, String PERSON_TYPE, String gender, String qualification,
+			String country, String city, String randomSearch, String preferredLanguage, int ratings, int personId,
+			String firstName, String lastName, String contactNo, String maritalStatus, String dob, Boolean isActive,
 			String addressLine1, int postcode, String lastOnline, String title, String passportNo, boolean validVisa,
-			boolean salaryExpectation,boolean drivingLicense, String hobbies, String supervisesChildOfAge, int hostId, String aboutMe, 
-			int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability,
-			boolean salaryProvided, int count ) throws SQLException
-	{	
-		Scanner sc=new Scanner(System.in);
+			boolean salaryExpectation, boolean drivingLicense, String hobbies, String supervisesChildOfAge, int hostId,
+			String aboutMe, int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability, boolean salaryProvided,
+			int count) throws SQLException {
+		Scanner sc = new Scanner(System.in);
 		char contactYesOrNo = '\0';
 		personIdContacted = 0;
-		String email ="";
+		String email = "";
 
-		if (loggedInPersonType=="AUPAIR")
-		{
-			System.out.println("\nDo you want to contact any of the HOST's from above? Insert Y for Yes/N to go back to the main menu\n");
-			contactYesOrNo =sc.next().charAt(0);
-			if(contactYesOrNo=='y' || contactYesOrNo=='Y')
-			{
+		if (loggedInPersonType == "AUPAIR") {
+			System.out.println(
+					"\nDo you want to contact any of the HOST's from above? Insert Y for Yes/N to go back to the main menu\n");
+			contactYesOrNo = sc.next().charAt(0);
+			if (contactYesOrNo == 'y' || contactYesOrNo == 'Y') {
 				System.out.println("\nPlease enter the respective HOST ID from the above searches to contact");
-				personIdContacted=sc.nextInt();
-				
-				ResultSet result = serviceObject.searchByPreference(personIdContacted, PERSON_TYPE, gender, qualification, country, city,
-						randomSearch, preferredLanguage, ratings);
-				
+				personIdContacted = sc.nextInt();
+
+				ResultSet result = serviceObject.searchByPreference(personIdContacted, PERSON_TYPE, gender,
+						qualification, country, city, randomSearch, preferredLanguage, ratings);
+
 				result.next();
 				email = result.getString("EMAIL");
-				 firstName = result.getString("FIRST_NAME");
-				 lastName = result.getString("LAST_NAME");
-				// To do Can add Send email method here if required!!!
+				firstName = result.getString("FIRST_NAME");
+				lastName = result.getString("LAST_NAME");
 				
-				System.out.println("\nCongratulations you have successfully contacted " + firstName + " " + lastName + " , HOST ID = " +personIdContacted +
-						"\n\nEmail Sent to :" +email);
-				
+				System.out.println("\nCongratulations you have successfully contacted " + firstName + " " + lastName
+						+ " , HOST ID = " + personIdContacted + "\n\nEmail Sent to :" + email);
+
 				System.out.println("\n");
-				
-				printSearch(personId, firstName, lastName, contactNo, gender, maritalStatus, dob, isActive, addressLine1, city, postcode, 
-						country, lastOnline, title, passportNo, validVisa, salaryExpectation, drivingLicense, hobbies, supervisesChildOfAge, 
-						qualification, hostId, aboutMe, preferredLanguage, ratings, randomSearch, PERSON_TYPE, numberOfKids, ageOfKids, 
+
+				printSearch(personId, firstName, lastName, contactNo, gender, maritalStatus, dob, isActive,
+						addressLine1, city, postcode, country, lastOnline, title, passportNo, validVisa,
+						salaryExpectation, drivingLicense, hobbies, supervisesChildOfAge, qualification, hostId,
+						aboutMe, preferredLanguage, ratings, randomSearch, PERSON_TYPE, numberOfKids, ageOfKids,
 						hasPyhsicalDisability, salaryProvided, count);
 
-				contactHost(personIdContacted , PERSON_TYPE, gender, qualification, country, city, randomSearch, preferredLanguage, 
-						ratings, personId, firstName, lastName, contactNo, maritalStatus, dob, isActive, addressLine1, postcode, lastOnline,
-						title, passportNo, validVisa, salaryExpectation, drivingLicense, hobbies, supervisesChildOfAge, hostId, aboutMe, numberOfKids,
-						ageOfKids, hasPyhsicalDisability, salaryProvided, count);
-				
-			}
-			else {
+				contactHost(personIdContacted, PERSON_TYPE, gender, qualification, country, city, randomSearch,
+						preferredLanguage, ratings, personId, firstName, lastName, contactNo, maritalStatus, dob,
+						isActive, addressLine1, postcode, lastOnline, title, passportNo, validVisa, salaryExpectation,
+						drivingLicense, hobbies, supervisesChildOfAge, hostId, aboutMe, numberOfKids, ageOfKids,
+						hasPyhsicalDisability, salaryProvided, count);
+
+			} else {
 				mainMenu(person_Id);
 			}
-			
+
 		}
 	}
-	
-	public void printSearch(int personId, String firstName, String lastName, String contactNo, String gender, String maritalStatus, Date dob, Boolean isActive, 
-							String addressLine1, String city, int postcode, String country, String lastOnline, String title, String passportNo, boolean validVisa,
-							boolean salaryExpectation,boolean drivingLicense, String hobbies, String supervisesChildOfAge, String qualification,int hostId, String aboutMe, 
-							String preferredLanguage, int ratings, String randomSearch, String PERSON_TYPE, int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability,
-							boolean salaryProvided, int count ) throws SQLException	 {
+
+	public void printSearch(int personId, String firstName, String lastName, String contactNo, String gender,
+			String maritalStatus, String dob, Boolean isActive, String addressLine1, String city, int postcode,
+			String country, String lastOnline, String title, String passportNo, boolean validVisa,
+			boolean salaryExpectation, boolean drivingLicense, String hobbies, String supervisesChildOfAge,
+			String qualification, int hostId, String aboutMe, String preferredLanguage, int ratings,
+			String randomSearch, String PERSON_TYPE, int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability,
+			boolean salaryProvided, int count) throws SQLException {
 		BuildTable table = new BuildTable();
 
 		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" ,  "First Name   ||  ",
@@ -448,19 +439,19 @@ public class UserProfileOperationsGUI {
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
 				randomSearch, preferredLanguage, ratings);
-		
-		count =0;
+
+		count = 0;
 
 		while (result.next()) {
-			
+
 			personId = result.getInt("PERSON_ID");
 			firstName = result.getString("FIRST_NAME");
 			lastName = result.getString("LAST_NAME");
 			contactNo = result.getString("CONTACT_NO");
 			gender = result.getString("GENDER");
 			maritalStatus = result.getString("MARITAL_STATUS");
-			dob = result.getDate("DOB"); /// check DOB Date time variable
-			isActive = result.getBoolean("IS_ACTIVE"); // check boolean type
+			dob = result.getString("DOB"); 
+			isActive = result.getBoolean("IS_ACTIVE"); 
 			addressLine1 = result.getString("ADDRESS_LINE1");
 			city = result.getString("CITY");
 			postcode = result.getInt("POSTCODE");
@@ -477,17 +468,16 @@ public class UserProfileOperationsGUI {
 				qualification = result.getString("EDU_QUALIFICATION");
 				hostId = serviceObject.getHostId(person_Id);
 			} else {
-			} // check boolean type
+			} 
 			aboutMe = result.getString("ABOUT_ME");
 			preferredLanguage = result.getString("LANGUAGES");
-			if(ratings!=0){
+			if (ratings != 0) {
 				ratings = result.getInt("RATINGS");
 			}
 
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
-//			String contactNoStr = String.valueOf(contactNo);
 			String dobStr = String.valueOf(dob);
 			String postCodeStr = String.valueOf(postcode);
 			String numberOfKidsStr = String.valueOf(numberOfKids);
@@ -498,8 +488,6 @@ public class UserProfileOperationsGUI {
 			String salaryProvidedStr = String.valueOf(salaryProvided);
 			String isActiveStr = String.valueOf(isActive);
 			String ratingsStr = String.valueOf(ratings);
-			
-
 
 			table.addRow(personIdStr, firstName, lastName, contactNo, gender, maritalStatus, dobStr, isActiveStr,
 
@@ -517,11 +505,11 @@ public class UserProfileOperationsGUI {
 					"----------", "----------", "----------", "----------");
 			count++;
 		}
-		
+
 		System.out.println(table.toString());
-		
+
 		if (count == 0) {
-			Scanner sc =new Scanner(System.in);
+			Scanner sc = new Scanner(System.in);
 			System.out.println("Sorry no searches found ! \n");
 			searchByPreference(sc);
 		}
@@ -534,7 +522,6 @@ public class UserProfileOperationsGUI {
 		deleteYesOrNo = sc.next().charAt(0);
 		if (deleteYesOrNo == 'y' || deleteYesOrNo == 'Y') {
 			System.out.println("Thank you for being a part of Au-Pair Placement System! :)");
-			// to do Throw him to APPlication home page
 			serviceObject.deleteSelfProfile(personId);
 		} else {
 			mainMenu(person_Id);
