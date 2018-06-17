@@ -99,12 +99,11 @@ public class UserRegistrationGUI {
 
 		System.out.println("ENTER 1 FOR HOST or ENTER 2 FOR AU PAIR \n ");
 		int userChoice = input.nextInt();
-		
-		if (userChoice == 1) 
-		{
+
+		if (userChoice == 1) {
 
 			personType = "HOST";
-			System.out.println(">Enter passport number: ");
+			System.out.println("Enter passport number: ");
 			passportNumber = input.next();
 
 			HostUser hostUser = new HostUser();
@@ -252,7 +251,7 @@ public class UserRegistrationGUI {
 				userPassword = input.next();
 				hashedUserPassword = encryptPassword(userPassword);
 				aupairUser.setHashedUserPassword(hashedUserPassword);
-				
+
 				System.out.println("Please provide your contact number: ");
 				contactNo = input.next();
 				input.nextLine();
@@ -369,20 +368,8 @@ public class UserRegistrationGUI {
 
 				aupairUser.setCountryCurrencyId(countryCurrencyId);
 
-				// int personId =
-				// userRegistrationServiceObject.registerNewAuPairUser(personType, firstName,
-				// lastName,
-				// emailid, contactNo, gender, maritalStatus, languages, proficiency,
-				// countryCurrencyId, address,
-				// city, postCode, title, aboutMe, passportNumber, hasValidVisa,
-				// hasSalaryExpectation,
-				// hasDrivingLicense, hobbies, supervisesChildOfage, educationQualification,
-				// isActive,
-				// hashedUserPassword, latestOnlineTime, fromTime, toTime);
-
 				int personId = userRegistrationServiceObject.registerNewAuPairUser(aupairUser);
 
-				// System.out.println("Au Pair id entered " + auPairId);
 				System.out.println("***REGISTRATION SUCCESSFUL AS AU PAIR USER***");
 
 				callingLoginSteps(input);

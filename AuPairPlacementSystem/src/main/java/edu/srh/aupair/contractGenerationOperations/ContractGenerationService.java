@@ -17,7 +17,6 @@ public class ContractGenerationService
 			try {
 				repository.DynamicJasperReport();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

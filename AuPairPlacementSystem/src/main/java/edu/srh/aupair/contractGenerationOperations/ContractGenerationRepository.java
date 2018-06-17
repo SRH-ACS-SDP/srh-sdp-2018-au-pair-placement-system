@@ -17,7 +17,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-public class ContractGenerationRepository{
+public class ContractGenerationRepository {
 	Connection connection;
 
 	public ContractGenerationRepository() throws SQLException {
@@ -30,8 +30,8 @@ public class ContractGenerationRepository{
 	}
 
 	public File OpenReport() throws Exception {
-		File file =null;
-		
+		File file = null;
+
 		try {
 			ResultSet rs = null;
 			String query = "SELECT * FROM proposals INNER JOIN active_interviews ON \r\n"

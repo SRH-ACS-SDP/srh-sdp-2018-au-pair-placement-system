@@ -48,14 +48,10 @@ public class BookingGUI {
 				
 				System.out.println(activeInterviewId + "Congratulations your interview has been scheduled");
 
-				// Assuming that interview has happened
-				// send email to do
-
 				ProposalOperationsGUI proposalOperationsGUI = new ProposalOperationsGUI();
 				proposalOperationsGUI.saveProposalDetailsByHost(activeInterviewId);
 
-				//proposalOperationsGUI.saveProposalResponseByAuPair();
-
+				
 			} else {
 				System.out.println("No slots booked yet");
 			}

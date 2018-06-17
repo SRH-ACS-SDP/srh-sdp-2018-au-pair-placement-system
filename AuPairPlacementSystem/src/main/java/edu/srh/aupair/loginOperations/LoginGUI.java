@@ -35,7 +35,7 @@ public class LoginGUI {
 		userName = input.next();
 		System.out.println("Enter Password: ");
 		userPassword = input.next();
-	
+
 		if (loginAs == 1) {
 			loggedInPersonType = "HOST";
 			IloginServiceInterface obj = new LoginService();
@@ -49,8 +49,7 @@ public class LoginGUI {
 			if (ids[0] == null) {
 				System.out.println("NO SUCH ENTRY IN DATABASE");
 			}
-			if (ids[0] != null) 
-			{
+			if (ids[0] != null) {
 				while (!(BCrypt.checkpw(userPassword, ids[0])) && (noOfAttempts < 2)) {
 					System.out.println("LOGIN FAILED.....PLEASE TRY TO LOGIN AGAIN");
 					userPassword = input.next();

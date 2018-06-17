@@ -30,7 +30,7 @@ public class UserProfileOperationsGUI {
 			int personId = 1;
 			UserProfileOperationsGUI userProfileOperationsObject = new UserProfileOperationsGUI();
 			userProfileOperationsObject.getProfile(PERSON_TYPE, personId);
-			// userProfileOperationsObject.printSearch();
+			
 
 		}
 
@@ -51,7 +51,7 @@ public class UserProfileOperationsGUI {
 		String contactNo = "";
 		String gender = "";
 		String maritalStatus = "";
-		Date dob = new Date();
+		String dob = "";
 		Boolean isActive = false;
 		String addressLine1 = "";
 		String city = "";
@@ -79,8 +79,8 @@ public class UserProfileOperationsGUI {
 		contactNo = result.getString("CONTACT_NO");
 		gender = result.getString("GENDER");
 		maritalStatus = result.getString("MARITAL_STATUS");
-		dob = result.getDate("DOB"); /// check DOB Date time variable
-		isActive = result.getBoolean("IS_ACTIVE"); // check boolean type
+		dob = result.getString("DOB"); 
+		isActive = result.getBoolean("IS_ACTIVE"); 
 		addressLine1 = result.getString("ADDRESS_LINE1");
 		city = result.getString("CITY");
 		postcode = result.getInt("POSTCODE");
@@ -182,9 +182,6 @@ public class UserProfileOperationsGUI {
 		String PERSON_TYPE = loggedInPersonType;		
 		
 		ResultSet result = serviceObject.viewProposals(personId, PERSON_TYPE);
-		result.next();
-
-		System.out.println(PERSON_TYPE +personId);
 		BuildTable table = new BuildTable();
 
 		System.out.println("\n =============== PROPOSALS =============== \n");
@@ -204,8 +201,8 @@ public class UserProfileOperationsGUI {
 			String proposalIdStr = String.valueOf(proposalId);
 			hostName = result.getString("HOSTNAME");
 			auPairName = result.getString("AUPAIRNAME");
-			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU-PAIR");
-			jobOfferedByHost = result.getString("JOB_OFFERED	_BY_HOSTS");
+			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU_PAIR");
+			jobOfferedByHost = result.getString("JOB_OFFERED_BY_HOSTS");
 
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
 					"----------", "----------", "----------");
@@ -224,14 +221,13 @@ public class UserProfileOperationsGUI {
 			}
 		}
 
-		// TO DO call the Proposal Operations.java where you have the option to accept
-		// or reject the proposals
+		
 	}
 
 	public void searchByPreference(Scanner sc, int person_id) throws SQLException {
 		String PERSON_TYPE = loggedInPersonType; 
 		
-		int searchOptions = '0';
+		int searchOptions = 0;
 		Character searchMore = 'y';
 		String gender = "";
 		String qualification = "";
@@ -252,7 +248,7 @@ public class UserProfileOperationsGUI {
 		String contactNo = "";
 
 		String maritalStatus = "";
-		Date dob = new Date();
+		String dob = "";
 		Boolean isActive = false;
 		String addressLine1 = "";
 
@@ -363,7 +359,6 @@ public class UserProfileOperationsGUI {
 			if (personIdChoosen != 0) {
 				BookingGUI bookingGUI = new BookingGUI();	
 				int host_id= serviceObject.getHostId(person_Id);
-				//System.out.println("in booking host id" + host_id);
 				bookingGUI.bookingOperation(personIdChoosen, host_id);
 				
 			} else if (personIdChoosen == 0) {
@@ -374,7 +369,7 @@ public class UserProfileOperationsGUI {
 
 	public void contactHost(int personIdContacted, String PERSON_TYPE, String gender, String qualification,
 			String country, String city, String randomSearch, String preferredLanguage, int ratings, int personId,
-			String firstName, String lastName, String contactNo, String maritalStatus, Date dob, Boolean isActive,
+			String firstName, String lastName, String contactNo, String maritalStatus, String dob, Boolean isActive,
 			String addressLine1, int postcode, String lastOnline, String title, String passportNo, boolean validVisa,
 			boolean salaryExpectation, boolean drivingLicense, String hobbies, String supervisesChildOfAge, int hostId,
 			String aboutMe, int numberOfKids, int ageOfKids, boolean hasPyhsicalDisability, boolean salaryProvided,
@@ -426,7 +421,7 @@ public class UserProfileOperationsGUI {
 	}
 
 	public void printSearch(int personId, String firstName, String lastName, String contactNo, String gender,
-			String maritalStatus, Date dob, Boolean isActive, String addressLine1, String city, int postcode,
+			String maritalStatus, String dob, Boolean isActive, String addressLine1, String city, int postcode,
 			String country, String lastOnline, String title, String passportNo, boolean validVisa,
 			boolean salaryExpectation, boolean drivingLicense, String hobbies, String supervisesChildOfAge,
 			String qualification, int hostId, String aboutMe, String preferredLanguage, int ratings,
@@ -463,8 +458,8 @@ public class UserProfileOperationsGUI {
 			contactNo = result.getString("CONTACT_NO");
 			gender = result.getString("GENDER");
 			maritalStatus = result.getString("MARITAL_STATUS");
-			dob = result.getDate("DOB"); /// check DOB Date time variable
-			isActive = result.getBoolean("IS_ACTIVE"); // check boolean type
+			dob = result.getString("DOB"); 
+			isActive = result.getBoolean("IS_ACTIVE"); 
 			addressLine1 = result.getString("ADDRESS_LINE1");
 			city = result.getString("CITY");
 			postcode = result.getInt("POSTCODE");
@@ -481,7 +476,7 @@ public class UserProfileOperationsGUI {
 				qualification = result.getString("EDU_QUALIFICATION");
 				hostId = serviceObject.getHostId(person_Id);
 			} else {
-			} // check boolean type
+			} 
 			aboutMe = result.getString("ABOUT_ME");
 			preferredLanguage = result.getString("LANGUAGES");
 			if (ratings != 0) {
@@ -491,7 +486,6 @@ public class UserProfileOperationsGUI {
 			String personIdStr = String.valueOf(personId);
 			String validVisaStr = String.valueOf(validVisa);
 			String drivingLicenseStr = String.valueOf(drivingLicense);
-			// String contactNoStr = String.valueOf(contactNo);
 			String dobStr = String.valueOf(dob);
 			String postCodeStr = String.valueOf(postcode);
 			String numberOfKidsStr = String.valueOf(numberOfKids);
@@ -536,7 +530,6 @@ public class UserProfileOperationsGUI {
 		deleteYesOrNo = sc.next().charAt(0);
 		if (deleteYesOrNo == 'y' || deleteYesOrNo == 'Y') {
 			System.out.println("Thank you for being a part of Au-Pair Placement System! :)");
-			// to do Throw him to APPlication home page
 			serviceObject.deleteSelfProfile(personId);
 		} else {
 			mainMenu(person_Id);
