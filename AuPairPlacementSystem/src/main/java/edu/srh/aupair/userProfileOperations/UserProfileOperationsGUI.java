@@ -203,10 +203,10 @@ public class UserProfileOperationsGUI {
 			hostName = result.getString("HOSTNAME");
 			auPairName = result.getString("AUPAIRNAME");
 			jobAcceptedByAuPair = result.getString("JOB_ACCEPTED_BY_AU-PAIR");
-			jobOfferedByHost = result.getString("JOB_OFFERED	_BY_HOSTS");
+			jobOfferedByHost = result.getString("JOB_OFFERED_BY_HOSTS");
 			
 			table.addRow("----------", "----------", "----------", "----------", "----------", "----------",
-					"----------", "----------", "----------");
+					"----------", "----------", "----------", "----------", "----------");
 			table.addRow(proposalIdStr, PERSON_TYPE == "HOST" ? auPairName : hostName, tasksForAuPair,
 					workingHoursProposed, RemunerationsProposed, holidaysProposed, travelCostsStr, jobAcceptedByAuPair,
 					jobOfferedByHost);
@@ -431,7 +431,7 @@ public class UserProfileOperationsGUI {
 							boolean salaryProvided, int count ) throws SQLException	 {
 		BuildTable table = new BuildTable();
 
-		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" + "  ", "First Name   ||  ",
+		table.addRow(PERSON_TYPE == "HOST" ? "AU-PAIR ID   ||  " : "HOST ID   ||" ,  "First Name   ||  ",
 				"Last Name   ||  ", "Contact No   ||  ", "Gender   ||  ", "Marital Status   ||  ",
 				"Date of Birth  ||  ", "Is Active User  ||  ", "Address   ||  ", "City   ||  ", "Postcode   ||  ",
 				"Country   ||  ", "Last Online   ||  ", "Title   ||  ", "Passport Number  ||  ", "About me   ||  ",
@@ -444,8 +444,7 @@ public class UserProfileOperationsGUI {
 
 		table.addRow("----------", "----------", "----------", "----------", "----------", "----------", "----------",
 				"----------", "----------", "----------", "----------", "----------", "----------", "----------",
-				"----------", "----------", "----------", "----------", "----------", "----------", "----------",
-				"----------", "----------");
+				"----------", "----------", "----------", "----------", "----------", "----------", "----------", "----------");
 
 		ResultSet result = serviceObject.searchByPreference(personId, PERSON_TYPE, gender, qualification, country, city,
 				randomSearch, preferredLanguage, ratings);
